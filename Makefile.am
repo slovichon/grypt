@@ -13,10 +13,9 @@ grypt_la_SOURCES = plugin.c gui.c misc.c grypt.c crypto.c
 
 endif
 
-CFLAGS += $(DEBUG_CFLAGS) -DDATADIR=\"$(datadir)\"
-
-
-INCLUDES = \
-	-I$(top_srcdir) \
+AM_CPPFLAGS = \
+	-DDATADIR=\"$(datadir)\" \
+	-DVERSION=\"$(VERSION)\" \
 	-I$(top_srcdir)/src \
-	-DVERSION=\"$(VERSION)\"
+	$(DEBUG_CFLAGS) \
+	$(GTK_CFLAGS)
