@@ -1,0 +1,31 @@
+--- Makefile.in.old	Thu May 22 12:43:26 2003
++++ Makefile.in	Thu May 22 12:38:46 2003
+@@ -127,11 +127,11 @@
+ perlpath = @perlpath@
+ sedpath = @sedpath@
+ 
+-DIST_SUBDIRS = docklet gestures perl ticker
++DIST_SUBDIRS = docklet gestures perl ticker grypt
+ 
+ @USE_PERL_TRUE@PERL_DIR = perl
+ 
+-SUBDIRS = docklet gestures $(PERL_DIR) ticker
++SUBDIRS = docklet gestures $(PERL_DIR) ticker grypt
+ 
+ plugindir = $(libdir)/gaim
+ 
+--- Makefile.am.old	Thu May 22 12:43:26 2003
++++ Makefile.am	Thu May 22 12:38:33 2003
+@@ -1,10 +1,10 @@
+-DIST_SUBDIRS = docklet gestures perl ticker
++DIST_SUBDIRS = docklet gestures perl ticker grypt
+ 
+ if USE_PERL
+ PERL_DIR = perl
+ endif
+ 
+-SUBDIRS = docklet gestures $(PERL_DIR) ticker
++SUBDIRS = docklet gestures $(PERL_DIR) ticker grypt
+ 
+ plugindir = $(libdir)/gaim
+ 

@@ -1,0 +1,14 @@
+Install Notes For Grypt
+
+Apply the file named `patch' in the `plugins' directory:
+
+	$ cd gaim-0.63/plugins
+	$ patch < grypt/patch
+
+Now run Gaim's ./configure && make install. Grypt should
+compile and install correctly. Finally, copy the grypt
+icon install Gaim's button icon directory:
+
+	$ cp plugins/grypt/grypt.png $(datadir)/pixmaps/gaim/buttons
+
+And that's it!
