@@ -58,8 +58,7 @@ plugin_unload(GaimPlugin *p)
 
 static GaimGtkPluginUiInfo ui_info = { grypt_gui_config };
 
-static GaimPluginInfo info =
-{
+static GaimPluginInfo info = {
 	2,						/* api_version */
 	GAIM_PLUGIN_STANDARD,				/* type */
 	GAIM_GTK_PLUGIN_TYPE,				/* ui_requirement */
