@@ -1,0 +1,14 @@
+- The "extra data" member of the gaim_conversation
+  structure will be used to store encryption session
+  information related to the particular conversation.
+  Any such field is prefixed with `grypt_'.
+
+  These fields include:
+
++-----------------------+---------------+-----------------------+
+| Type			| Field		| Description		|
++-----------------------+---------------+-----------------------+
+| GtkWidget *		| button	| GTK button widget	|
+| int *			| state		| Session crypto state	|
+| GpgmeRecipients *	| rep		| Gpgme recipient	|
++-----------------------+---------------+-----------------------+
