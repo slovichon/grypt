@@ -10,7 +10,7 @@
 GpgmeCtx ctx;
 GpgmeError gpgmerr;
 GValue **identities = NULL;
-char fingerprint[FPRSIZ+1];
+char fingerprint[FPRSIZ + 1];
 
 int grypt_crypto_init(void)
 {
@@ -38,7 +38,8 @@ void grypt_crypto_encdec_cb(GtkWidget *w, GaimConversation *gaimconv)
 	}
 
 	switch (*state) {
-		case ST_UN: { /* Initiate encryption */
+		case ST_UN: {
+			/* Initiate encryption */
 			char msg[6+FPRSIZ+1] = "GRYPT:";
 			strncat(msg, fingerprint, FPRSIZ);
 			msg[FPRSIZ+6] = '\0';
@@ -55,7 +56,8 @@ void grypt_crypto_encdec_cb(GtkWidget *w, GaimConversation *gaimconv)
 			break;
 		}
 
-		case ST_EN: /* End encryption */
+		case ST_EN:
+			/* End encryption */
 			bark("Set state to ST_UN");
 			*state = ST_UN;
 
@@ -67,7 +69,8 @@ void grypt_crypto_encdec_cb(GtkWidget *w, GaimConversation *gaimconv)
 				"GRYPT:END", 0);
 			break;
 
-		case ST_PND: /* Cancel initiation */
+		case ST_PND:
+			/* Cancel initiation */
 			bark("Cancel, set state to ST_UN");
 			*state = ST_UN;
 			break;
