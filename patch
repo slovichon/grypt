@@ -1,31 +1,92 @@
---- Makefile.in.old	Thu May 22 12:43:26 2003
-+++ Makefile.in	Thu May 22 12:38:46 2003
-@@ -127,11 +127,11 @@
- perlpath = @perlpath@
- sedpath = @sedpath@
+$Id$
+
+--- configure.orig	Tue Jul 29 10:36:58 2003
++++ configure	Tue Jul 29 10:54:35 2003
+@@ -18720,7 +18720,18 @@
+    fi
  
--DIST_SUBDIRS = docklet gestures perl ticker
-+DIST_SUBDIRS = docklet gestures perl ticker grypt
+ 
+-                                                                                                                                                                                                                                                                                                  ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile intl/Makefile pixmaps/Makefile pixmaps/smileys/Makefile pixmaps/smileys/default/Makefile pixmaps/status/Makefile pixmaps/status/default/Makefile plugins/Makefile plugins/docklet/Makefile plugins/gaim-remote/Makefile plugins/gestures/Makefile plugins/perl/Makefile plugins/ticker/Makefile po/Makefile.in sounds/Makefile src/Makefile src/protocols/Makefile src/protocols/gg/Makefile src/protocols/irc/Makefile src/protocols/jabber/Makefile src/protocols/msn/Makefile src/protocols/napster/Makefile src/protocols/oscar/Makefile src/protocols/toc/Makefile src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.spec"
++ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile
++intl/Makefile pixmaps/Makefile pixmaps/smileys/Makefile
++pixmaps/smileys/default/Makefile pixmaps/status/Makefile
++pixmaps/status/default/Makefile plugins/Makefile
++plugins/docklet/Makefile plugins/gaim-remote/Makefile
++plugins/gestures/Makefile plugins/perl/Makefile plugins/grypt/Makefile
++plugins/ticker/Makefile po/Makefile.in sounds/Makefile
++src/Makefile src/protocols/Makefile src/protocols/gg/Makefile
++src/protocols/irc/Makefile src/protocols/jabber/Makefile
++src/protocols/msn/Makefile src/protocols/napster/Makefile
++src/protocols/oscar/Makefile src/protocols/toc/Makefile
++src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.spec"
+ cat >confcache <<\_ACEOF
+ # This file is a shell script that caches the results of configure
+ # tests run on this system so they can be shared between configure
+@@ -19399,6 +19410,7 @@
+   "pixmaps/status/default/Makefile" ) CONFIG_FILES="$CONFIG_FILES pixmaps/status/default/Makefile" ;;
+   "plugins/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/Makefile" ;;
+   "plugins/docklet/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/docklet/Makefile" ;;
++  "plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/grypt/Makefile" ;;
+   "plugins/gaim-remote/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gaim-remote/Makefile" ;;
+   "plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gestures/Makefile" ;;
+   "plugins/perl/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/perl/Makefile" ;;
+--- plugins/Makefile.in.orig	Tue Jul 29 11:02:19 2003
++++ plugins/Makefile.in	Tue Jul 29 10:32:41 2003
+@@ -144,7 +144,7 @@
  
  @USE_PERL_TRUE@PERL_DIR = perl
  
--SUBDIRS = docklet gestures $(PERL_DIR) ticker
-+SUBDIRS = docklet gestures $(PERL_DIR) ticker grypt
+-SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker
++SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker grypt
  
  plugindir = $(libdir)/gaim
  
---- Makefile.am.old	Thu May 22 12:43:26 2003
-+++ Makefile.am	Thu May 22 12:38:33 2003
-@@ -1,10 +1,10 @@
--DIST_SUBDIRS = docklet gestures perl ticker
-+DIST_SUBDIRS = docklet gestures perl ticker grypt
- 
- if USE_PERL
+--- plugins/Makefile.am.orig	Tue Jul 29 11:02:19 2003
++++ plugins/Makefile.am	Tue Jul 29 10:31:48 2003
+@@ -4,7 +4,7 @@
  PERL_DIR = perl
  endif
  
--SUBDIRS = docklet gestures $(PERL_DIR) ticker
-+SUBDIRS = docklet gestures $(PERL_DIR) ticker grypt
+-SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker
++SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker grypt
  
  plugindir = $(libdir)/gaim
  
+--- pixmaps/Makefile.am.orig	Tue Jul 29 13:14:06 2003
++++ pixmaps/Makefile.am	Tue Jul 29 13:14:27 2003
+@@ -30,6 +30,7 @@
+ 		tb_drag_arrow_right.xpm		\
+ 		tb_drag_arrow_up.xpm		\
+ 		text_bigger.png			\
++		../plugins/grypt/grypt.png	\
+ 		text_normal.png			\
+ 		text_smaller.png		\
+ 		typed.png			\
+@@ -51,7 +52,7 @@
+ 
+ 
+ gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
+-gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png
++gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png ../plugins/grypt/grypt.png text_normal.png text_smaller.png send-im.png
+ 
+ gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
+ gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
+--- pixmaps/Makefile.in.orig	Tue Jul 29 13:13:20 2003
++++ pixmaps/Makefile.in	Tue Jul 29 13:14:01 2003
+@@ -174,6 +174,7 @@
+ 		text_bigger.png			\
+ 		text_normal.png			\
+ 		text_smaller.png		\
++		../plugins/grypt/grypt.png	\
+ 		typed.png			\
+ 		typing.png			\
+ 		Makefile.mingw			\
+@@ -193,7 +194,7 @@
+ 
+ 
+ gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
+-gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png
++gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png ../plugins/grypt/grypt.png text_normal.png text_smaller.png send-im.png
+ 
+ gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
+ gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png

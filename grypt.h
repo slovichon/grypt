@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <gpgme.h>
 #include "gaim.h"
+#include "conversation.h"
 #include "gtkplugin.h"
 
 #define GRYPT_DEBUG
@@ -31,7 +32,7 @@
 int grypt_crypto_init();
 char *encrypt(char *msg, GpgmeRecipients *);
 char *decrypt(char *msg, GpgmeRecipients *);
-void grypt_crypto_encdec_cb(GtkWidget *, struct gaim_conversation *);
+void grypt_crypto_encdec_cb(GtkWidget *, GaimConversation *);
 void grypt_gather_identities(void);
 void grypt_free_identities(void);
 
@@ -46,16 +47,16 @@ void croak(char *fmt, ...);				/* Die */
 void grypt_gui_add_icon(void);
 GtkWidget *grypt_gui_config(GaimPlugin *p);
 void grypt_gui_gather_ids(GtkListStore *);		/* Gather GPG identities */
-GtkWidget *grypt_gui_show_button(struct gaim_conversation *);
+GtkWidget *grypt_gui_show_button(GaimConversation *);
 void grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
 
 /* grypt.c */
 void grypt_evt_new_conversation(char *);
-void grypt_evt_del_conversation(struct gaim_conversation *);
-void grypt_evt_im_recv(struct gaim_connection *, char **, char **, guint32);
-void grypt_evt_im_send(struct gaim_connection *, char **, char **);
-void grypt_session_end(struct gaim_conversation *);
-void grypt_session_start(struct gaim_conversation *, char *);
+void grypt_evt_del_conversation(GaimConversation *);
+void grypt_evt_im_recv(GaimConnection *, char **, char **, guint *, void *);
+void grypt_evt_im_send(GaimConnection *, char **, char **, void *);
+void grypt_session_end(GaimConversation *);
+void grypt_session_start(GaimConversation *, char *);
 
 /* crypto.c */
 extern GpgmeCtx ctx;

@@ -4,7 +4,12 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gpgme.h>
 #include <glib.h>
+#include "internal.h"
+#include "conversation.h"
 #include "grypt.h"
+#include "gtkplugin.h"
+#include "gtkutils.h"
+#include "ui.h"
 
 #define GAIM_STOCK_GRYPT "gaim-grypt"
 
@@ -56,7 +61,7 @@ GtkWidget *grypt_gui_config(GaimPlugin *p)
 	ret = gtk_vbox_new(FALSE, 18);
 	gtk_container_set_border_width(GTK_CONTAINER(ret), 12);
 
-	frame = make_frame(ret, _("Select An Identity"));
+	frame = gaim_gtk_make_frame(ret, _("Select An Identity"));
 	vbox = gtk_vbox_new(FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(frame), vbox);
 
@@ -153,12 +158,12 @@ void grypt_gui_gather_ids(GtkListStore *t)
 	}
 }
 
-GtkWidget *grypt_gui_show_button(struct gaim_conversation *gaimconv)
+GtkWidget *grypt_gui_show_button(GaimConversation *gaimconv)
 {
 	GtkWidget *hbox, *vbox;
 	GList *iter;
 	GtkWidget *button;
-	struct gaim_gtk_conversation *gtkconv;
+	GaimGtkConversation *gtkconv;
 
 	gtkconv = GAIM_GTK_CONVERSATION(gaimconv);
 

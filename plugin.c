@@ -1,9 +1,12 @@
 /* $Id$ */
 
 #include <gpgme.h>
+#include "internal.h"
+#include "conversation.h"
 #include "gaim.h"
 #include "gtkplugin.h"
 #include "grypt.h"
+#include "gtkplugin.h"
 
 static gboolean
 plugin_load(GaimPlugin *p)
@@ -34,13 +37,13 @@ plugin_unload(GaimPlugin *p)
 {
 /*
 	GList *iter;
-	struct gaim_conversation *gaimconv;
+	GaimConversation *gaimconv;
 */
 	/* Free encryption-session data */
 /*
 	for (iter = gaim_get_conversations(); iter != NULL; iter = iter->next)
 	{
-		gaimconv = (struct gaim_conversation *)iter->data;
+		gaimconv = (GaimConversation *)iter->data;
 		grypt_free_conv(gaimconv);
 	}
 */

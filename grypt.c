@@ -9,7 +9,7 @@
 
 void grypt_evt_new_conversation(char *name)
 {
-	struct gaim_conversation *gaimconv = gaim_find_conversation(name);
+	GaimConversation *gaimconv = gaim_find_conversation(name);
 	int *state;
 	GtkWidget *button;
 
@@ -23,7 +23,7 @@ void grypt_evt_new_conversation(char *name)
 	gaim_conversation_set_data(gaimconv, "grypt_state", state);
 }
 
-void grypt_session_start(struct gaim_conversation *gaimconv, char *fpr)
+void grypt_session_start(GaimConversation *gaimconv, char *fpr)
 {
 	GpgmeRecipients *rep;
 
@@ -35,7 +35,7 @@ void grypt_session_start(struct gaim_conversation *gaimconv, char *fpr)
 	gaim_conversation_set_data(gaimconv, "grypt_rep", rep);
 }
 
-void grypt_evt_del_conversation(struct gaim_conversation *gaimconv)
+void grypt_evt_del_conversation(GaimConversation *gaimconv)
 {
 	GtkWidget *button;
 	int *state;
@@ -62,7 +62,7 @@ void grypt_evt_del_conversation(struct gaim_conversation *gaimconv)
 //	bark("Values overwritten with NULL");
 }
 
-void grypt_session_end(struct gaim_conversation *gaimconv)
+void grypt_session_end(GaimConversation *gaimconv)
 {
 	GpgmeRecipients *rep;
 
@@ -76,9 +76,9 @@ void grypt_session_end(struct gaim_conversation *gaimconv)
 //	bark("Values overwritten with NULL");
 }
 
-void grypt_evt_im_recv(struct gaim_connection *c, char **who, char **text, guint32 flags)
+void grypt_evt_im_recv(GaimConnection *c, char **who, char **text, guint *flags, void *data)
 {
-	struct gaim_conversation *gaimconv = gaim_find_conversation(*who);
+	GaimConversation *gaimconv = gaim_find_conversation(*who);
 	int *state = (int *)gaim_conversation_get_data(gaimconv, "grypt_state");
 
 	bark("RECVING %s", *text);
@@ -151,9 +151,9 @@ void grypt_evt_im_recv(struct gaim_connection *c, char **who, char **text, guint
 	}}}
 }
 
-void grypt_evt_im_send(struct gaim_connection *c, char **who, char **text)
+void grypt_evt_im_send(GaimConnection *c, char **who, char **text, void *data)
 {
-	struct gaim_conversation *gaimconv = gaim_find_conversation(who);
+	GaimConversation *gaimconv = gaim_find_conversation(who);
 	int *state = (int *)gaim_conversation_get_data(gaimconv, "grypt_state");
 
 	bark("SENDING %s", *text);

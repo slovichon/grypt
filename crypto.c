@@ -2,6 +2,7 @@
 
 #include <gpgme.h>
 #include <glib.h>
+#include <gtk/gtk.h>
 #include "gaim.h"
 #include "grypt.h"
 
@@ -25,9 +26,9 @@ int grypt_crypto_init()
 	return TRUE;
 }
 
-void grypt_crypto_encdec_cb(GtkWidget *w, struct gaim_conversation *gaimconv)
+void grypt_crypto_encdec_cb(GtkWidget *w, GaimConversation *gaimconv)
 {
-	struct gaim_connection *gaimconn;
+	GaimConnection *gaimconn;
 	int *state = gaim_conversation_get_data(gaimconv, "grypt_state");
 	if (state == NULL)
 	{

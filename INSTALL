@@ -2,7 +2,7 @@ Install Notes For Grypt
 
 Apply the file named `patch' in the `plugins' directory:
 
-	$ cd gaim-0.63/plugins
+	$ cd gaim-0.66/plugins
 	$ patch < grypt/patch
 
 Now run Gaim's ./configure && make install. Grypt should
