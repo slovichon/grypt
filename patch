@@ -1,48 +1,62 @@
-$Id$
-
---- configure.orig	Tue Jul 29 10:36:58 2003
-+++ configure	Tue Jul 29 10:54:35 2003
-@@ -18720,7 +18720,18 @@
+diff -ru gaim-0.66.orig/configure gaim-0.66/configure
+--- gaim-0.66.orig/configure	Fri Jul 18 11:16:30 2003
++++ gaim-0.66/configure	Tue Jul 29 13:50:07 2003
+@@ -18720,7 +18720,7 @@
     fi
  
  
 -                                                                                                                                                                                                                                                                                                  ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile intl/Makefile pixmaps/Makefile pixmaps/smileys/Makefile pixmaps/smileys/default/Makefile pixmaps/status/Makefile pixmaps/status/default/Makefile plugins/Makefile plugins/docklet/Makefile plugins/gaim-remote/Makefile plugins/gestures/Makefile plugins/perl/Makefile plugins/ticker/Makefile po/Makefile.in sounds/Makefile src/Makefile src/protocols/Makefile src/protocols/gg/Makefile src/protocols/irc/Makefile src/protocols/jabber/Makefile src/protocols/msn/Makefile src/protocols/napster/Makefile src/protocols/oscar/Makefile src/protocols/toc/Makefile src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.spec"
-+ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile
-+intl/Makefile pixmaps/Makefile pixmaps/smileys/Makefile
-+pixmaps/smileys/default/Makefile pixmaps/status/Makefile
-+pixmaps/status/default/Makefile plugins/Makefile
-+plugins/docklet/Makefile plugins/gaim-remote/Makefile
-+plugins/gestures/Makefile plugins/perl/Makefile plugins/grypt/Makefile
-+plugins/ticker/Makefile po/Makefile.in sounds/Makefile
-+src/Makefile src/protocols/Makefile src/protocols/gg/Makefile
-+src/protocols/irc/Makefile src/protocols/jabber/Makefile
-+src/protocols/msn/Makefile src/protocols/napster/Makefile
-+src/protocols/oscar/Makefile src/protocols/toc/Makefile
-+src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.spec"
++                                                                                                                                                                                                                                                                                                  ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile intl/Makefile pixmaps/Makefile pixmaps/smileys/Makefile pixmaps/smileys/default/Makefile pixmaps/status/Makefile pixmaps/status/default/Makefile plugins/Makefile plugins/docklet/Makefile plugins/gaim-remote/Makefile plugins/gestures/Makefile plugins/perl/Makefile plugins/ticker/Makefile plugins/grypt/Makefile po/Makefile.in sounds/Makefile src/Makefile src/protocols/Makefile src/protocols/gg/Makefile src/protocols/irc/Makefile src/protocols/jabber/Makefile src/protocols/msn/Makefile src/protocols/napster/Makefile src/protocols/oscar/Makefile src/protocols/toc/Makefile src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.spec"
  cat >confcache <<\_ACEOF
  # This file is a shell script that caches the results of configure
  # tests run on this system so they can be shared between configure
-@@ -19399,6 +19410,7 @@
-   "pixmaps/status/default/Makefile" ) CONFIG_FILES="$CONFIG_FILES pixmaps/status/default/Makefile" ;;
-   "plugins/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/Makefile" ;;
-   "plugins/docklet/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/docklet/Makefile" ;;
-+  "plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/grypt/Makefile" ;;
-   "plugins/gaim-remote/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gaim-remote/Makefile" ;;
+@@ -19403,6 +19403,7 @@
    "plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gestures/Makefile" ;;
    "plugins/perl/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/perl/Makefile" ;;
---- plugins/Makefile.in.orig	Tue Jul 29 11:02:19 2003
-+++ plugins/Makefile.in	Tue Jul 29 10:32:41 2003
-@@ -144,7 +144,7 @@
+   "plugins/ticker/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/ticker/Makefile" ;;
++  "plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/grypt/Makefile" ;;
+   "po/Makefile.in" ) CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
+   "sounds/Makefile" ) CONFIG_FILES="$CONFIG_FILES sounds/Makefile" ;;
+   "src/Makefile" ) CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+diff -ru gaim-0.66.orig/pixmaps/Makefile.am gaim-0.66/pixmaps/Makefile.am
+--- gaim-0.66.orig/pixmaps/Makefile.am	Thu Jul 17 21:36:40 2003
++++ gaim-0.66/pixmaps/Makefile.am	Tue Jul 29 13:51:21 2003
+@@ -47,11 +47,12 @@
+                 gaim_msgpend_4bit_16.ico	\
+                 gaim_msgunread_4bit_16.ico	\
+                 gaim_offline.ico		\
+-                gaim_offline_4bit_16.ico
++                gaim_offline_4bit_16.ico	\
++		../plugins/grypt/grypt.png
  
- @USE_PERL_TRUE@PERL_DIR = perl
  
--SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker
-+SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker grypt
+ gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
+-gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png
++gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png ../plugins/grypt/grypt.png
  
- plugindir = $(libdir)/gaim
+ gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
+ gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
+diff -ru gaim-0.66.orig/pixmaps/Makefile.in gaim-0.66/pixmaps/Makefile.in
+--- gaim-0.66.orig/pixmaps/Makefile.in	Fri Jul 18 11:16:43 2003
++++ gaim-0.66/pixmaps/Makefile.in	Tue Jul 29 13:51:45 2003
+@@ -189,11 +189,12 @@
+                 gaim_msgpend_4bit_16.ico	\
+                 gaim_msgunread_4bit_16.ico	\
+                 gaim_offline.ico		\
+-                gaim_offline_4bit_16.ico
++                gaim_offline_4bit_16.ico	\
++		../plugins/grypt/grypt.png
  
---- plugins/Makefile.am.orig	Tue Jul 29 11:02:19 2003
-+++ plugins/Makefile.am	Tue Jul 29 10:31:48 2003
+ 
+ gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
+-gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png
++gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png ../plugins/grypt/grypt.png
+ 
+ gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
+ gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
+diff -ru gaim-0.66.orig/plugins/Makefile.am gaim-0.66/plugins/Makefile.am
+--- gaim-0.66.orig/plugins/Makefile.am	Sun Jun 15 05:00:48 2003
++++ gaim-0.66/plugins/Makefile.am	Tue Jul 29 13:53:08 2003
 @@ -4,7 +4,7 @@
  PERL_DIR = perl
  endif
@@ -52,41 +66,47 @@ $Id$
  
  plugindir = $(libdir)/gaim
  
---- pixmaps/Makefile.am.orig	Tue Jul 29 13:14:06 2003
-+++ pixmaps/Makefile.am	Tue Jul 29 13:14:27 2003
-@@ -30,6 +30,7 @@
- 		tb_drag_arrow_right.xpm		\
- 		tb_drag_arrow_up.xpm		\
- 		text_bigger.png			\
-+		../plugins/grypt/grypt.png	\
- 		text_normal.png			\
- 		text_smaller.png		\
- 		typed.png			\
-@@ -51,7 +52,7 @@
+diff -ru gaim-0.66.orig/plugins/Makefile.in gaim-0.66/plugins/Makefile.in
+--- gaim-0.66.orig/plugins/Makefile.in	Fri Jul 18 11:16:46 2003
++++ gaim-0.66/plugins/Makefile.in	Tue Jul 29 13:53:19 2003
+@@ -144,7 +144,7 @@
  
+ @USE_PERL_TRUE@PERL_DIR = perl
  
- gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
--gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png
-+gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png ../plugins/grypt/grypt.png text_normal.png text_smaller.png send-im.png
+-SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker
++SUBDIRS = docklet gaim-remote gestures $(PERL_DIR) ticker grypt
  
- gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
- gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
---- pixmaps/Makefile.in.orig	Tue Jul 29 13:13:20 2003
-+++ pixmaps/Makefile.in	Tue Jul 29 13:14:01 2003
-@@ -174,6 +174,7 @@
- 		text_bigger.png			\
- 		text_normal.png			\
- 		text_smaller.png		\
-+		../plugins/grypt/grypt.png	\
- 		typed.png			\
- 		typing.png			\
- 		Makefile.mingw			\
-@@ -193,7 +194,7 @@
+ plugindir = $(libdir)/gaim
  
+diff -ru gaim-0.66.orig/plugins/Makefile.mingw gaim-0.66/plugins/Makefile.mingw
+--- gaim-0.66.orig/plugins/Makefile.mingw	Thu Jul 10 19:39:57 2003
++++ gaim-0.66/plugins/Makefile.mingw	Tue Jul 29 13:52:46 2003
+@@ -18,6 +18,7 @@
+ WINPREFS :=		./win32/winprefs
+ PERL_PLUGIN_LOADER :=	./perl
+ DOCKLET :=		./docklet
++GRYPT :=		./grypt
  
- gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
--gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png text_normal.png text_smaller.png send-im.png
-+gaimbuttonpix_DATA = about_menu.png accounts.png change-bgcolor-small.png change-fgcolor-small.png edit.png insert-image-small.png insert-link-small.png insert-smiley-small.png pause.png text_bigger.png ../plugins/grypt/grypt.png text_normal.png text_smaller.png send-im.png
+ ##
+ ## VARIABLE DEFINITIONS
+@@ -88,6 +89,7 @@
+ 	$(MAKE) -C $(TRANSPARENCY) -f Makefile.mingw
+ 	$(MAKE) -C $(PERL_PLUGIN_LOADER) -f Makefile.mingw
+ 	$(MAKE) -C $(DOCKLET) -f Makefile.mingw
++	$(MAKE) -C $(GRYPT) -f Makefile.mingw
  
- gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
- gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
+ install:
+ 	cp $(GAIM_PLUGINS)/*.dll $(GAIM_INSTALL_DIR)/plugins
+@@ -96,6 +98,7 @@
+ 	$(MAKE) -C $(TRANSPARENCY) -f Makefile.mingw install
+ 	$(MAKE) -C $(PERL_PLUGIN_LOADER) -f Makefile.mingw install
+ 	$(MAKE) -C $(DOCKLET) -f Makefile.mingw install
++	$(MAKE) -C $(GRYPT) -f Makefile.mingw install
+ 
+ #
+ # BUILD Plugin
+@@ -120,3 +123,4 @@
+ 	$(MAKE) -C $(WINPREFS) -f Makefile.mingw clean
+ 	$(MAKE) -C $(PERL_PLUGIN_LOADER) -f Makefile.mingw clean
+ 	$(MAKE) -C $(DOCKLET) -f Makefile.mingw clean
++	$(MAKE) -C $(GRYPT) -f Makefile.mingw clean
