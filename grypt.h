@@ -2,6 +2,7 @@
 
 #ifndef GRYPT_H
 #define GRYPT_H
+
 #include <gtk/gtk.h>
 #include <gpgme.h>
 #include "gaim.h"
@@ -21,15 +22,15 @@
 #define ST_EN  3 /* Encrypted */
 
 /* GPGME assert macro */
-#define _GA(c,d)	if ((gpgmerr = (c)) != GPGME_No_Error)			\
-			{							\
-				bark("GPGME error: %s\nCode (line %d): %s",	\
-					gpgme_strerror(gpgmerr), __LINE__, #c);	\
-				d;						\
-			}
+#define _GA(c, d)						\
+	if ((gpgmerr = (c)) != GPGME_No_Error) {		\
+		bark("GPGME error: %s\nCode (line %d): %s",	\
+		gpgme_strerror(gpgmerr), __LINE__, #c);		\
+		d;						\
+	}
 
 /* crypto.c */
-int grypt_crypto_init();
+int grypt_crypto_init(void);
 char *encrypt(char *msg, GpgmeRecipients *);
 char *decrypt(char *msg, GpgmeRecipients *);
 void grypt_crypto_encdec_cb(GtkWidget *, GaimConversation *);
@@ -37,8 +38,8 @@ void grypt_gather_identities(void);
 void grypt_free_identities(void);
 
 /* misc.c */
-void grypt_identity_load();
-void grypt_identity_save();
+void grypt_identity_load(void);
+void grypt_identity_save(void);
 void bark(char *fmt, ...);				/* Debug print */
 void flog(char *fmt, ...);				/* Error print */
 void croak(char *fmt, ...);				/* Die */

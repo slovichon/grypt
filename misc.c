@@ -3,15 +3,15 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <errno.h>
+#include <string.h>
 #include <gpgme.h>
 #include "grypt.h"
 
-void grypt_identity_load()
+void grypt_identity_load(void)
 {
 }
 
-void grypt_identity_save()
+void grypt_identity_save(void)
 {
 }
 

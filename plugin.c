@@ -11,6 +11,8 @@
 static gboolean
 plugin_load(GaimPlugin *p)
 {
+	void *h = gaim_conversations_get_handle();
+
 	/* Initialize GPGME */
 	if (!grypt_crypto_init())
 		return (gboolean)FALSE;
@@ -24,10 +26,10 @@ plugin_load(GaimPlugin *p)
 
 	/* Attach callbacks */
 	bark("Attaching callbacks");
-	gaim_signal_connect(p, event_new_conversation, grypt_evt_new_conversation, NULL);
-	gaim_signal_connect(p, event_del_conversation, grypt_evt_del_conversation, NULL);
-	gaim_signal_connect(p, event_im_recv, grypt_evt_im_recv, NULL);
-	gaim_signal_connect(p, event_im_send, grypt_evt_im_send, NULL);
+	gaim_signal_connect(h, "conversation-created",  p, GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
+	gaim_signal_connect(h, "deleting-conversation", p, GAIM_CALLBACK(grypt_evt_del_conversation), NULL);
+	gaim_signal_connect(h, "received-im-msg",       p, GAIM_CALLBACK(grypt_evt_im_recv), NULL);
+	gaim_signal_connect(h, "sent-im-msg",           p, GAIM_CALLBACK(grypt_evt_im_send), NULL);
 
 	return (gboolean)TRUE;
 }
@@ -35,23 +37,22 @@ plugin_load(GaimPlugin *p)
 static gboolean
 plugin_unload(GaimPlugin *p)
 {
-/*
+#if 0
 	GList *iter;
 	GaimConversation *gaimconv;
-*/
+
 	/* Free encryption-session data */
-/*
-	for (iter = gaim_get_conversations(); iter != NULL; iter = iter->next)
-	{
+	for (iter = gaim_get_conversations(); iter != NULL; iter = iter->next) {
 		gaimconv = (GaimConversation *)iter->data;
 		grypt_free_conv(gaimconv);
 	}
-*/
+#endif
+
 	gpgme_release(ctx);
 	grypt_free_identities();
-/*
-	gpgme_recipients_release(recipients);
-*/
+
+	/* gpgme_recipients_release(recipients); */
+
 	return (gboolean)TRUE;
 }
 

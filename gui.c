@@ -13,13 +13,13 @@
 
 #define GAIM_STOCK_GRYPT "gaim-grypt"
 
-static struct
-{
+static struct {
 	const char *name;
 	const char *dir;
 	const char *filename;
-
-} const grypt_stock_icon = { GAIM_STOCK_GRYPT, "buttons", "grypt.png" };
+} const grypt_stock_icon = {
+	GAIM_STOCK_GRYPT, "buttons", "grypt.png"
+};
 
 /* Register the fucking icon in an icon factory */
 void grypt_gui_add_icon(void)
@@ -30,13 +30,11 @@ void grypt_gui_add_icon(void)
 	gchar *file;
 
 	if ((file = g_build_filename(DATADIR, "pixmaps", "gaim",
-			grypt_stock_icon.dir, grypt_stock_icon.filename, NULL)) == NULL)
-	{
+			grypt_stock_icon.dir, grypt_stock_icon.filename, NULL)) == NULL) {
 		bark("g_build_filename() returned NULL for icon");
 		return;
 	}
-	if ((icons = gtk_icon_factory_new()) == NULL)
-	{
+	if ((icons = gtk_icon_factory_new()) == NULL) {
 		bark("gtk_icon_factory_new() return NULL");
 		return;
 	}
@@ -122,8 +120,7 @@ void grypt_gui_id_select_cb(GtkTreeSelection *sel, gpointer data)
 		g_free(fpr);
 */
 
-	if (gtk_tree_selection_get_selected(sel, &model, &iter))
-	{
+	if (gtk_tree_selection_get_selected(sel, &model, &iter)) {
 		char *name, *fpr;
 
 		gtk_tree_model_get(model, &iter, FPR_COL, (gchar *)&fpr, -1);
@@ -145,8 +142,7 @@ void grypt_gui_gather_ids(GtkListStore *t)
 	grypt_gather_identities();
 
 	bark("Looping through identities to add to gui config panel");
-	for (v = identities; *v != NULL; v++)
-	{
+	for (v = identities; *v != NULL; v++) {
 		u = *v;
 		/* Create row */
 		gtk_list_store_append(t, &row);
@@ -160,7 +156,8 @@ void grypt_gui_gather_ids(GtkListStore *t)
 
 GtkWidget *grypt_gui_show_button(GaimConversation *gaimconv)
 {
-	GtkWidget *hbox, *vbox;
+	GtkWidget *hbox = NULL;
+	GtkWidget *vbox;
 	GList *iter;
 	GtkWidget *button;
 	GaimGtkConversation *gtkconv;
@@ -173,12 +170,13 @@ GtkWidget *grypt_gui_show_button(GaimConversation *gaimconv)
 	/* Find the fucking hbox */
 	vbox = gtkconv->toolbar.toolbar;
 	for (iter = GTK_BOX(vbox)->children; iter != NULL; iter = g_list_next(iter))
-	{
 		if (GTK_IS_BOX(hbox = ((GtkBoxChild *)iter->data)->widget))
 			break;
-		else
-			hbox = NULL;
-	}
+
+#if 0
+	if (hbox == NULL)
+		croak("this is bullshit");
+#endif
 
 	button = gaim_pixbuf_toolbar_button_from_stock(GAIM_STOCK_GRYPT);
 	gtk_size_group_add_widget(gtkconv->sg, button);
