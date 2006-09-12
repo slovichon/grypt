@@ -7,6 +7,7 @@
 #include "gtkplugin.h"
 #include "grypt.h"
 #include "gtkplugin.h"
+#include "version.h"
 
 static gboolean
 plugin_load(GaimPlugin *p)
@@ -39,12 +40,12 @@ plugin_unload(GaimPlugin *p)
 {
 #if 0
 	GList *iter;
-	GaimConversation *gaimconv;
+	GaimConversation *conv;
 
 	/* Free encryption-session data */
 	for (iter = gaim_get_conversations(); iter != NULL; iter = iter->next) {
-		gaimconv = (GaimConversation *)iter->data;
-		grypt_free_conv(gaimconv);
+		conv = (GaimConversation *)iter->data;
+		grypt_free_conv(conv);
 	}
 #endif
 
@@ -56,36 +57,36 @@ plugin_unload(GaimPlugin *p)
 	return (gboolean)TRUE;
 }
 
-static GaimGtkPluginUiInfo ui_info = { grypt_gui_config };
+static GaimGtkPluginUiInfo ui_info = { grypt_gui_config, 0 };
 
 static GaimPluginInfo info = {
-	2,						/* api_version */
+	GAIM_PLUGIN_MAGIC,				/* api_version */
+	GAIM_MAJOR_VERSION,				/* major */
+	GAIM_MINOR_VERSION,				/* minor */
 	GAIM_PLUGIN_STANDARD,				/* type */
 	GAIM_GTK_PLUGIN_TYPE,				/* ui_requirement */
 	0,						/* flags */
 	NULL,						/* dependencies */
 	GAIM_PRIORITY_DEFAULT,				/* priority */
-
 	"grypt",					/* id */
 	N_("Grypt"),		 			/* name */
 	"0.1",						/* version */
 	N_("Encryption plugin"),			/* summary */
-							/* description */
-	N_("Grypt is an encryption plugin for Gaim."),
+	N_("GPG encryption controls."),			/* description */
 	"Jared Yanovich <jaredy@closeedge.net>",	/* author */
 	"http://www.closeedge.net/",			/* homepage */
-
 	plugin_load,					/* load */
 	plugin_unload,					/* unload */
 	NULL,						/* destroy */
-
 	&ui_info,					/* ui_info */
-	NULL
+	NULL,						/* extra_info */
+	NULL,						/* prefs info */
+	NULL						/* actions */
 };
 
 static void
-__init_plugin(GaimPlugin *p)
+init_plugin(GaimPlugin *p)
 {
 }
 
-GAIM_INIT_PLUGIN(grypt, __init_plugin, info);
+GAIM_INIT_PLUGIN(grypt, init_plugin, info);
