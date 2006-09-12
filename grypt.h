@@ -10,10 +10,7 @@
 #include "gtkplugin.h"
 
 #define GRYPT_DEBUG
-#define GRYPT_VERSION "0.1"
-
-#define TRUE  1
-#define FALSE 0
+#define GRYPT_VERSION "0.2"
 
 #define FPRSIZ 40
 
@@ -22,17 +19,22 @@
 #define ST_EN  3 /* Encrypted */
 
 /* GPGME assert macro */
-#define _GA(c, d)						\
-	if ((gpgmerr = (c)) != GPGME_No_Error) {		\
-		bark("GPGME error: %s\nCode (line %d): %s",	\
-		gpgme_strerror(gpgmerr), __LINE__, #c);		\
-		d;						\
-	}
+#define _GA(c, d)							\
+	do {								\
+		gpgme_error_t error;					\
+									\
+		if ((error = (c)) != GPGME_No_Error) {			\
+			bark("GPGME error: %s\nCode (line %d): %s",	\
+			gpgme_strerror(error), __LINE__, #c);		\
+			d;						\
+		}							\
+	} while (0)
+
 
 /* crypto.c */
 int grypt_crypto_init(void);
-char *encrypt(char *msg, GpgmeRecipients *);
-char *decrypt(char *msg, GpgmeRecipients *);
+char *encrypt(char *msg, gpgme_recipient_t *);
+char *decrypt(char *msg, gpgme_recipient_t *);
 void grypt_crypto_encdec_cb(GtkWidget *, GaimConversation *);
 void grypt_gather_identities(void);
 void grypt_free_identities(void);
@@ -52,7 +54,7 @@ GtkWidget *grypt_gui_show_button(GaimConversation *);
 void grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
 
 /* grypt.c */
-void grypt_evt_new_conversation(char *);
+void grypt_evt_new_conversation(GaimConversation *);
 void grypt_evt_del_conversation(GaimConversation *);
 void grypt_evt_im_recv(GaimConnection *, char **, char **, guint *, void *);
 void grypt_evt_im_send(GaimConnection *, char **, char **, void *);
@@ -60,8 +62,7 @@ void grypt_session_end(GaimConversation *);
 void grypt_session_start(GaimConversation *, char *);
 
 /* crypto.c */
-extern GpgmeCtx ctx;
-extern GpgmeError gpgmerr;
+extern gpgme_ctx_t ctx;
 extern GValue **identities;
 extern char fingerprint[];
 

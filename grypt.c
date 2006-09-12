@@ -1,6 +1,7 @@
 /* $Id$ */
 
 #include <string.h>
+
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gpgme.h>
@@ -8,84 +9,94 @@
 #include "gtkplugin.h"
 #include "grypt.h"
 
-void grypt_evt_new_conversation(char *name)
+void
+grypt_evt_new_conversation(GaimConversation *conv)
 {
-	GaimConversation *gaimconv = gaim_find_conversation(name);
-	int *state;
 	GtkWidget *button;
+	int *state;
 
 	/* bark("button created, saving pointer"); */
-	button = (GtkWidget *)grypt_gui_show_button(gaimconv);
-	gaim_conversation_set_data(gaimconv, "grypt_button", button);
+	button = (GtkWidget *)grypt_gui_show_button(conv);
+	gaim_conversation_set_data(conv, "grypt_button", button);
 
 	/* bark("saving state"); */
 	if ((state = (int *)malloc(sizeof(int))) == NULL)
 		croak("couldn't malloc");
 	*state = ST_UN;
-	gaim_conversation_set_data(gaimconv, "grypt_state", state);
+	gaim_conversation_set_data(conv, "grypt_state", state);
 }
 
-void grypt_session_start(GaimConversation *gaimconv, char *fpr)
+void
+grypt_session_start(GaimConversation *conv, char *fpr)
 {
-	GpgmeRecipients *rep;
+	gpgme_recipient_t rep;
 
 	/* bark("saving recipients"); */
-	if ((rep = (GpgmeRecipients *)malloc(sizeof(GpgmeRecipients))) == NULL)
+	if ((rep = (gpgme_recipient_t *)malloc(sizeof(*rep))) == NULL)
 		croak("couldn't malloc");
 	_GA(gpgme_recipients_new(rep), croak("Cannot create new recipients"));
 	_GA(gpgme_recipients_add_name_with_validity(*rep, fpr, GPGME_VALIDITY_FULL),
-		croak("Couldn't add fingerprint"));
-	gaim_conversation_set_data(gaimconv, "grypt_rep", rep);
+	    croak("Couldn't add fingerprint"));
+	gaim_conversation_set_data(conv, "grypt_rep", rep);
 }
 
-void grypt_evt_del_conversation(GaimConversation *gaimconv)
+void
+grypt_evt_del_conversation(GaimConversation *conv)
 {
 	GtkWidget *button;
 	int *state;
 
 	/* bark("Conversation free request"); */
 
-	if ((button = (GtkWidget *)gaim_conversation_get_data(gaimconv, "grypt_button")) != NULL)
+	if ((button = (GtkWidget *)gaim_conversation_get_data(conv,
+	    "grypt_button")) != NULL)
 		gtk_widget_destroy(button);
 
 	/* bark("button destroyed"); */
 
-	if ((state = (int *)gaim_conversation_get_data(gaimconv, "grypt_state")) != NULL) {
+	if ((state = (int *)gaim_conversation_get_data(conv, "grypt_state")) != NULL) {
 		if (*state == ST_EN)
-			grypt_session_end(gaimconv);
+			grypt_session_end(conv);
 		free(state);
 	}
 
 #if 0
 	bark("encryption state destroyed");
 
-	gaim_conversation_set_data(gaimconv, "grypt_button",	(gpointer)NULL);
-	gaim_conversation_set_data(gaimconv, "grypt_state",	(gpointer)NULL);
+	gaim_conversation_set_data(conv, "grypt_button",	(gpointer)NULL);
+	gaim_conversation_set_data(conv, "grypt_state",	(gpointer)NULL);
 
 	bark("Values overwritten with NULL");
 #endif
 }
 
-void grypt_session_end(GaimConversation *gaimconv)
+void
+grypt_session_end(GaimConversation *conv)
 {
-	GpgmeRecipients *rep;
+	gpgme_recipient_t *rep;
 
-	if ((rep = (GpgmeRecipients *)gaim_conversation_get_data(gaimconv, "grypt_rep")) != NULL)
+	if ((rep = (gpgme_recipient_t *)gaim_conversation_get_data(conv,
+	    "grypt_rep")) != NULL)
 		gpgme_recipients_release(*rep);
 
 	bark("recipients destroyed");
 
 #if 0
-	gaim_conversation_set_data(gaimconv, "grypt_rep",	(gpointer)NULL);
+	gaim_conversation_set_data(conv, "grypt_rep",	(gpointer)NULL);
 
 	bark("Values overwritten with NULL");
 #endif
 }
 
-void grypt_evt_im_recv(GaimConnection *c, char **who, char **text, guint *flags, void *data)
+void
+grypt_evt_im_recv(GaimConnection *c, char **who, char **text, guint *flags, void *data)
 {
-	GaimConversation *gaimconv = gaim_find_conversation(*who);
-	int *state = (int *)gaim_conversation_get_data(gaimconv, "grypt_state");
+	char msg[6 + FPRSIZ + 1] = "GRYPT:";
+	GaimConversation *conv;
+	int *state;
+
+	conv = gaim_find_conversation(*who);
+	state = (int *)gaim_conversation_get_data(conv, "grypt_state");
 
 	bark("RECEIVED %s", *text);
 
@@ -97,23 +108,25 @@ void grypt_evt_im_recv(GaimConnection *c, char **who, char **text, guint *flags,
 
 	if (*state == ST_PND) {
 		/* Session pending, message received, must be the response */
-		bark("[RECV] Session should be started: received %s from %s", *text, *who);
-		if (strncmp(*text, "GRYPT:", 6) == 0 && *text+6 != '\0') {
-			bark("[RECV] Started with fingerprint %s", *text+6);
-			grypt_session_start(gaimconv, *text+6);
+		bark("[RECV] Session should be started: received %s from %s",
+		    *text, *who);
+		if (strncmp(*text, "GRYPT:", 6) == 0 && *(*text + 6) != '\0') {
+			bark("[RECV] Started with fingerprint %s", *text + 6);
+			grypt_session_start(conv, *text + 6);
 			*state = ST_EN;
 		} else {
 			GtkWidget *button;
 			/* They must not have this plugin. Oh well. */
 			bark("[RECV] Could not be started");
 			*state = ST_UN;
-			button = (GtkWidget *)gaim_conversation_get_data(gaimconv, "grypt_button");
+			button = (GtkWidget *)gaim_conversation_get_data(conv,
+			    "grypt_button");
 			g_signal_handlers_block_by_func(G_OBJECT(button),
-				G_CALLBACK(grypt_crypto_encdec_cb), gaimconv);
+			    G_CALLBACK(grypt_crypto_encdec_cb), conv);
 			gtk_toggle_button_set_active(
-				GTK_TOGGLE_BUTTON(button), FALSE);
+			    GTK_TOGGLE_BUTTON(button), FALSE);
 			g_signal_handlers_unblock_by_func(G_OBJECT(button),
-				G_CALLBACK(grypt_crypto_encdec_cb), gaimconv);
+			    G_CALLBACK(grypt_crypto_encdec_cb), conv);
 		}
 	} else if (*state == ST_EN) {
 		/* Decrypt message */
@@ -123,25 +136,23 @@ void grypt_evt_im_recv(GaimConnection *c, char **who, char **text, guint *flags,
 			bark("[RECV] Ending encryption");
 			/* Request to end encryption */
 			*state = ST_UN;
-			grypt_session_end(gaimconv);
+			grypt_session_end(conv);
 			/* Flip button state */
 		} else {
 			/* Encrypt, free *text, change *text*/
 		}
 	} else {
 		bark("[RECV] State must be ST_UN (%s)", *text);
-		
-		if ((strncmp(*text, "GRYPT:", 6) == 0) && (*((*text)+6) != '\0')) {
-			char msg[6+FPRSIZ+1] = "GRYPT:";
 
+		if (strncmp(*text, "GRYPT:", 6) == 0 && *(*text + 6) != '\0') {
 			bark("[RECV] Received request to start session: %s", *text);
 			/* Request to initiate crypto */
-			grypt_session_start(gaimconv, (*text)+6);
+			grypt_session_start(conv, *text + 6);
 			*state = ST_EN;
 			*text = NULL;
 
 			strncat(msg, fingerprint, FPRSIZ);
-			msg[6+FPRSIZ] = '\0';
+			msg[6 + FPRSIZ] = '\0';
 
 			bark("[RECV] Responding with message %s", msg);
 
@@ -150,10 +161,14 @@ void grypt_evt_im_recv(GaimConnection *c, char **who, char **text, guint *flags,
 	}
 }
 
-void grypt_evt_im_send(GaimConnection *c, char **who, char **text, void *data)
+void
+grypt_evt_im_send(GaimConnection *c, char **who, char **text, void *data)
 {
-	GaimConversation *gaimconv = gaim_find_conversation(who);
-	int *state = (int *)gaim_conversation_get_data(gaimconv, "grypt_state");
+	GaimConversation *conv;
+	int *state;
+
+	conv = gaim_find_conversation(who);
+	state = (int *)gaim_conversation_get_data(conv, "grypt_state");
 
 	bark("SENDING %s", *text);
 
