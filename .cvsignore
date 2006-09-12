@@ -1,0 +1,2 @@
+.deps .libs *.lo *.loT
+Makefile
