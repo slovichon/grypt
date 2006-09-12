@@ -1,21 +1,26 @@
 /* $Id$ */
 
+#include <errno.h>
 #include <stdarg.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
 #include <gpgme.h>
 #include "grypt.h"
 
-void grypt_identity_load(void)
+void
+grypt_identity_load(void)
 {
 }
 
-void grypt_identity_save(void)
+void
+grypt_identity_save(void)
 {
 }
 
-void bark(char *fmt, ...)
+void
+bark(char *fmt, ...)
 {
 #ifdef GRYPT_DEBUG
 	va_list ap;
@@ -28,7 +33,8 @@ void bark(char *fmt, ...)
 #endif
 }
 
-void flog(char *fmt, ...)
+void
+flog(char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
@@ -39,9 +45,9 @@ void flog(char *fmt, ...)
 	va_end(ap);
 }
 
-void croak(char *fmt, ...)
+void
+croak(char *fmt, ...)
 {
-	extern int errno;
 	va_list ap;
 	va_start(ap, fmt);
 	fprintf(stderr, "[GRYPT FATAL] ");
