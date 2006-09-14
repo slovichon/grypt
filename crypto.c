@@ -1,6 +1,7 @@
 /* $Id$ */
 
 #include <string.h>
+#include <stdlib.h>
 
 #include <gpgme.h>
 #include <glib.h>
@@ -8,93 +9,109 @@
 #include "gaim.h"
 #include "grypt.h"
 
-GpgmeCtx ctx;
-GpgmeError gpgmerr;
+gpgme_ctx_t ctx;
 GValue **identities = NULL;
 char fingerprint[FPRSIZ + 1];
 
 int
 grypt_crypto_init(void)
 {
-	bark("Initializing GPGME");
-	_GA(gpgme_new(&ctx), return FALSE);
+	gpgme_error_t error;
+
+bark("Initializing GPGME");
+	error = gpgme_new(&ctx);
+	if (error) {
+		bark("unable to initalize gpgme: %s",
+		    gpgme_strerror(error));
+		return (FALSE);
+	}
 
 	gpgme_set_armor(ctx, 1);
-
-#if 0
-	bark("Initializing recipients");
-	_GA(gpgme_recipients_new(&recipients), return (gboolean)FALSE);
-#endif
-
 	return (TRUE);
 }
 
 void
 grypt_crypto_encdec_cb(GtkWidget *w, GaimConversation *conv)
 {
-	GaimConnection *gaimconn;
 	char msg[6 + FPRSIZ + 1] = "GRYPT:";
+	GaimConnection *gaimconn;
 	int *state;
 
-	state = gaim_conversation_get_data(conv, "grypt_state");
+	state = (int *)gaim_conversation_get_data(conv, "/grypt/state");
 	if (state == NULL) {
 		/* This shouldn't happen */
-		flog("couldn't retrieve encryption state from convo");
+		bark("couldn't retrieve encryption state from conv");
 		return;
 	}
 
 	switch (*state) {
 	case ST_UN: /* Initiate encryption */
 		strncat(msg, fingerprint, FPRSIZ);
-		msg[FPRSIZ+6] = '\0';
+		msg[FPRSIZ + 6] = '\0';
 
-		bark("Set state to ST_PND");
+bark("Set state to ST_PND");
 		*state = ST_PND;
 
-		bark("Sending message %s", msg);
+bark("Sending message %s", msg);
 		gaimconn = gaim_conversation_get_gc(conv);
-		serv_send_im(gaimconn,
-		    (char *)gaim_conversation_get_name(conv),
+		serv_send_im(gaimconn, gaim_conversation_get_name(conv),
 		    msg, 0);
-
 		break;
 	case ST_EN: /* End encryption */
-		bark("Set state to ST_UN");
+bark("Set state to ST_UN");
 		*state = ST_UN;
 
 		grypt_session_end(conv);
 
 		gaimconn = gaim_conversation_get_gc(conv);
-		serv_send_im(gaimconn,
-		    (char *)gaim_conversation_get_name(conv),
+		serv_send_im(gaimconn, gaim_conversation_get_name(conv),
 		    "GRYPT:END", 0);
 		break;
 	case ST_PND:
 		/* Cancel initiation */
-		bark("Cancel, set state to ST_UN");
+bark("Cancel, set state to ST_UN");
 		*state = ST_UN;
 		break;
 	}
 }
 
 char *
-encrypt(char *plaintext, gpgme_recipient_t *rep)
+encrypt(char *plaintext, gpgme_key_t key)
 {
-	GpgmeData plain, cipher;
+	gpgme_data_t plain, cipher;
+	gpgme_error_t error;
+	gpgme_key_t keys[2];
 	char *ciphertext;
-	int len;
+	size_t len;
 
-	_GA(gpgme_data_new_from_mem(&plain, plaintext, strlen(plaintext), 0), return NULL);
-	_GA(gpgme_data_new(&cipher), return NULL);
-	_GA(gpgme_op_encrypt(ctx, *rep, plain, cipher), return NULL);
+	error = gpgme_data_new_from_mem(&plain, plaintext,
+	    strlen(plaintext), 0);
+	if (error) {
+bark("gpgme_data_new_from_mem: %s", gpgme_strerror(error));
+		return (NULL);
+	}
+
+	error = gpgme_data_new(&cipher);
+	if (error) {
+bark("gpgme_data_new: %s", gpgme_strerror(error));
+		return (NULL);
+	}
+
+	keys[0] = key;
+	keys[1] = NULL;
+	error = gpgme_op_encrypt(ctx, keys, 0, plain, cipher);
+	if (error) {
+bark("gpgme_op_encrypt: %s", gpgme_strerror(error));
+		return (NULL);
+	}
+
 	gpgme_data_release(plain);
 	ciphertext = gpgme_data_release_and_get_mem(cipher, &len);
-
-	return ciphertext;
+	return (ciphertext);
 }
 
 char *
-decrypt(char *msg, gpgme_recipient_t *rep)
+decrypt(char *msg, gpgme_key_t key)
 {
 	return "decrypted...";
 }
@@ -102,69 +119,78 @@ decrypt(char *msg, gpgme_recipient_t *rep)
 void
 grypt_gather_identities(void)
 {
-	GpgmeKey k;
-	size_t keys = 0;
+	gpgme_error_t error;
+	gpgme_key_t k;
+	size_t nkeys;
 	GValue **v, *u;
 
 	/* We only need to do this once */
 	if (identities != NULL) {
-		bark("Already gathered identities");
+bark("Already gathered identities");
 		return;
 	}
 
-	_GA(gpgme_op_keylist_start(ctx, NULL, 1), return);
-	while ((gpgmerr = gpgme_op_keylist_next(ctx, &k)) == GPGME_No_Error) {
-		keys++;
+	nkeys = 0;
+
+	error = gpgme_op_keylist_start(ctx, NULL, 1);
+	if (error) {
+bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
+		return;
+	}
+
+	for (;;) {
+		error = gpgme_op_keylist_next(ctx, &k);
+		if (error || k == NULL)
+			break;
+		nkeys++;
 		gpgme_key_release(k);
 	}
-	if (gpgmerr == GPGME_EOF) {
-		bark("Finished counting identities successfully (%d)", keys);
-		/* gpgmerr = GPGME_No_Error; */
-	} else
-		bark("Cannot list identities: %s", gpgme_strerror(gpgmerr));
+	if (error != GPG_ERR_EOF)
+		bark("gpgme_op_keylist_next: %s [%d:%d]", gpgme_strerror(error), error, GPG_ERR_EOF);
 
-	if ((v = identities = (GValue **)calloc(keys, sizeof(GValue *))) == NULL)
-		croak("Couldn't calloc()");
+	if ((v = identities = calloc(nkeys, sizeof(GValue *))) == NULL)
+		croak("calloc");
+	error = gpgme_op_keylist_end(ctx);
 
-	bark("Gathering secret identities");
-	/* Gather secret keys (identities) */
-	_GA(gpgme_op_keylist_start(ctx, NULL, 1), return);
-	while ((gpgmerr = gpgme_op_keylist_next(ctx, &k)) == GPGME_No_Error) {
-		bark("%s: %s <%s>\n",
-		    gpgme_key_get_string_attr(k, GPGME_ATTR_FPR, 0, 0),
-		    gpgme_key_get_string_attr(k, GPGME_ATTR_NAME, 0, 0),
-		    gpgme_key_get_string_attr(k, GPGME_ATTR_COMMENT, 0, 0));
+bark("Gathering secret identities");
+	error = gpgme_op_keylist_start(ctx, NULL, 1);
+	if (error) {
+bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
+		return;
+	}
 
-		if ((u = *v = (GValue *)calloc(COL_CNT, sizeof(GValue))) == NULL)
-			croak("Couldn't calloc()");
+	for (;;) {
+		error = gpgme_op_keylist_next(ctx, &k);
+		if (error || k == NULL)
+			break;
 
-		bark("Filling fingerprint");
+bark("%s: %s <%s>\n", k->subkeys->fpr, k->uids->name, k->uids->comment);
+
+		if ((u = *v = calloc(COL_CNT, sizeof(GValue))) == NULL)
+			croak("calloc");
+
+bark("Filling fingerprint");
 		/* Fill fingerprint */
 		memset(u, 0, sizeof(GValue));
 		g_value_init(u, G_TYPE_STRING);
-		g_value_set_string(u,
-		    gpgme_key_get_string_attr(k, GPGME_ATTR_FPR, 0, 0));
+		g_value_set_string(u, k->subkeys->fpr);
 
 		/* Fill name */
 		memset(++u, 0, sizeof(GValue));
 		g_value_init(u, G_TYPE_STRING);
-		g_value_set_string(u,
-		    gpgme_key_get_string_attr(k, GPGME_ATTR_NAME, 0, 0));
+		g_value_set_string(u, k->uids->name);
 
 		/* Fill description */
 		memset(++u, 0, sizeof(GValue));
 		g_value_init(u, G_TYPE_STRING);
-		g_value_set_string(u,
-		    gpgme_key_get_string_attr(k, GPGME_ATTR_COMMENT, 0, 0));
+		g_value_set_string(u, k->uids->comment);
 
 		gpgme_key_release(k);
 		*++v = NULL;
 	}
-	if (gpgmerr == GPGME_EOF) {
-		bark("Finished listing identities successfully");
-		/* gpgmerr = GPGME_No_Error; */
-	} else
-		bark("Cannot list identities: %s", gpgme_strerror(gpgmerr));
+	if (error != GPG_ERR_EOF)
+		bark("gpgme_op_keylist_next: %s", gpgme_strerror(error));
+	error = gpgme_op_keylist_end(ctx);
 }
 
 void
@@ -175,12 +201,9 @@ grypt_free_identities(void)
 	if (identities == NULL)
 		return;
 
-	bark("Freeing identities");
-	for (v = identities; *v != NULL; v++) {
-		if (*v != NULL) {
-			/* bark("Freeing identity"); */
+bark("Freeing identities");
+	for (v = identities; *v != NULL; v++)
+		if (*v != NULL)
 			free(*v);
-			/* bark("Freed"); */
-		}
-	}
+bark("done freeing");
 }
