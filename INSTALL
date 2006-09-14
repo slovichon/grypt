@@ -1,12 +1,13 @@
+$Id$
+
 Install Notes For Grypt
+=======================
 
-Apply the file named `patch' outside the main Gaim directory:
+Apply the file named `patch' outside the main Gaim source root:
 
-	$ ls -d gaim-0.66
-	gaim-0.66
-	$ patch < gaim-0.66/plugins/grypt/patch
+	$ patch < gaim-2.0.0beta3/plugins/grypt/patch
 
-Now run Gaim's ./configure && make install. Grypt should
-compile and install correctly.
+Then proceed to run Gaim usual installation process:
 
-And that's it!
+	./configure
+	make && make install
