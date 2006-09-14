@@ -127,3 +127,52 @@ diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.mingw gaim-2.0.0beta3/plugins/Mak
  	$(MAKE) -C $(DOCKLET) -f Makefile.mingw clean
  	$(MAKE) -C $(SSL) -f Makefile.mingw clean
 +	$(MAKE) -C $(GRYPT) -f Makefile.mingw clean
+diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/family_locate.c gaim-2.0.0beta3/src/protocols/oscar/family_locate.c
+--- gaim-2.0.0beta3.orig/src/protocols/oscar/family_locate.c	2006-02-12 16:27:03.000000000 -0500
++++ gaim-2.0.0beta3/src/protocols/oscar/family_locate.c	2006-09-14 16:09:54.000000000 -0400
+@@ -142,6 +142,10 @@
+ 	 {0x09, 0x46, 0x13, 0x49, 0x4c, 0x7f, 0x11, 0xd1,
+ 	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
+ 
++	{AIM_CAPS_GRYPT,
++	 {0x09, 0x46, 0x13, 0x50, 0x4c, 0x7f, 0x11, 0xd1,
++	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
++
+ 	/*
+ 	 * Indeed, there are two of these.  The former appears to be correct,
+ 	 * but in some versions of winaim, the second one is set.  Either they
+diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.c gaim-2.0.0beta3/src/protocols/oscar/oscar.c
+--- gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.c	2006-03-26 11:18:02.000000000 -0500
++++ gaim-2.0.0beta3/src/protocols/oscar/oscar.c	2006-09-14 16:38:06.000000000 -0400
+@@ -75,7 +75,7 @@
+ #define FT_REDIR_TIMEOUT	10000	/* 20000 */	/* Time to wait for redirected transfer */
+ #define FT_PROXYIP_TIMEOUT	300000	/* 120000 */	/* Time to create a checksum for VERY large files */
+ 
+-static int caps_aim = AIM_CAPS_CHAT | AIM_CAPS_BUDDYICON | AIM_CAPS_DIRECTIM | AIM_CAPS_SENDFILE | AIM_CAPS_INTEROPERATE | AIM_CAPS_ICHAT;
++static int caps_aim = AIM_CAPS_CHAT | AIM_CAPS_BUDDYICON | AIM_CAPS_DIRECTIM | AIM_CAPS_SENDFILE | AIM_CAPS_INTEROPERATE | AIM_CAPS_ICHAT | AIM_CAPS_GRYPT;
+ static int caps_icq = AIM_CAPS_BUDDYICON | AIM_CAPS_DIRECTIM | AIM_CAPS_SENDFILE | AIM_CAPS_ICQUTF8 | AIM_CAPS_INTEROPERATE | AIM_CAPS_ICHAT;
+ 
+ static guint8 features_aim[] = {0x01, 0x01, 0x01, 0x02};
+@@ -766,6 +766,9 @@
+ 			case AIM_CAPS_CAMERA:
+ 				tmp = _("Camera");
+ 				break;
++			case AIM_CAPS_GRYPT:
++				tmp = _("Grypt Encryption");
++				break;
+ 			default:
+ 				tmp = NULL;
+ 				break;
+diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.h gaim-2.0.0beta3/src/protocols/oscar/oscar.h
+--- gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.h	2006-02-12 18:59:30.000000000 -0500
++++ gaim-2.0.0beta3/src/protocols/oscar/oscar.h	2006-09-14 14:18:14.000000000 -0400
+@@ -1054,7 +1054,8 @@
+ #define AIM_CAPS_ICHATAV		0x02000000
+ #define AIM_CAPS_LIVEVIDEO		0x04000000
+ #define AIM_CAPS_CAMERA			0x08000000
+-#define AIM_CAPS_LAST			0x10000000
++#define AIM_CAPS_GRYPT			0x10000000
++#define AIM_CAPS_LAST			0x20000000
+ 
+ #define AIM_SENDMEMBLOCK_FLAG_ISREQUEST  0
+ #define AIM_SENDMEMBLOCK_FLAG_ISHASH     1
