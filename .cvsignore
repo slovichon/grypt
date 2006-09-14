@@ -1,2 +1,3 @@
 .deps .libs *.lo *.loT
-Makefile
+Makefile Makefile.in
+grypt.la
