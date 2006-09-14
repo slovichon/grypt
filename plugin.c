@@ -18,19 +18,18 @@ plugin_load(GaimPlugin *p)
 	if (!grypt_crypto_init())
 		return (FALSE);
 
-	/* Read last key */
-bark("Loading previous identity");
-	grypt_identity_load();
+	grypt_gather_identities();
 
-	/* Add "encrypt/decrypt" icon */
-	grypt_gui_add_icon();
+	/* XXX: read last key */
+bark("Loading previous identity");
+	if (identities[0])
+		fingerprint = g_value_get_string(&identities[0][FPR_COL]);
+//	grypt_identity_load();
 
 	/* Attach callbacks */
 bark("Attaching callbacks");
 	gaim_signal_connect(h, "conversation-created", p,
 	    GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
-	gaim_signal_connect(h, "deleting-conversation", p,
-	    GAIM_CALLBACK(grypt_evt_del_conversation), NULL);
 	gaim_signal_connect(h, "receiving-im-msg", p,
 	    GAIM_CALLBACK(grypt_evt_im_recv), NULL);
 	gaim_signal_connect(h, "sending-im-msg", p,
@@ -74,8 +73,11 @@ static GaimPluginInfo info = {
 	"grypt",					/* id */
 	N_("Grypt"),		 			/* name */
 	GRYPT_VERSION,					/* version */
-	N_("Encryption plugin"),			/* summary */
-	N_("GPG encryption controls."),			/* description */
+	N_("Uses GnuPG for AIM encryption."),		/* summary */
+	N_("During new conversation, messages are sent "
+	    "to establish a secure communication channel "
+	    "using GnuPG over AIM with others also using "
+	    "this plug-in."),				/* description */
 	"Jared Yanovich <jaredy@closeedge.net>",	/* author */
 	"http://www.closeedge.net/",			/* homepage */
 	plugin_load,					/* load */
