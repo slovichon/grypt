@@ -34,18 +34,6 @@ bark(char *fmt, ...)
 }
 
 void
-flog(char *fmt, ...)
-{
-	va_list ap;
-	va_start(ap, fmt);
-	fprintf(stderr, "[GRYPT ERROR] ");
-	vfprintf(stderr, fmt, ap);
-	fprintf(stderr, "\n");
-	fflush(stderr);
-	va_end(ap);
-}
-
-void
 croak(char *fmt, ...)
 {
 	va_list ap;
