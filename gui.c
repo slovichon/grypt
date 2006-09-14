@@ -20,33 +20,6 @@ static struct {
 	GAIM_STOCK_GRYPT, "buttons", "grypt.png"
 };
 
-/* Register the fucking icon in an icon factory */
-void
-grypt_gui_add_icon(void)
-{
-	GtkIconFactory *icons;
-	GtkIconSet *set;
-	GdkPixbuf *buf;
-	gchar *file;
-
-	if ((file = g_build_filename(DATADIR, "pixmaps", "gaim",
-	    grypt_stock_icon.dir, grypt_stock_icon.filename, NULL)) == NULL) {
-		bark("g_build_filename() returned NULL for icon");
-		return;
-	}
-	if ((icons = gtk_icon_factory_new()) == NULL) {
-		bark("gtk_icon_factory_new() return NULL");
-		return;
-	}
-	buf = gdk_pixbuf_new_from_file(file, NULL);
-	g_free(file);
-	set = gtk_icon_set_new_from_pixbuf(buf);
-	gtk_icon_factory_add(icons, grypt_stock_icon.name, set);
-	gtk_icon_set_unref(set);
-	gtk_icon_factory_add_default(icons);
-	g_object_unref(G_OBJECT(icons));
-}
-
 GtkWidget *
 grypt_gui_config(GaimPlugin *p)
 {
@@ -60,11 +33,11 @@ grypt_gui_config(GaimPlugin *p)
 	ret = gtk_vbox_new(FALSE, 18);
 	gtk_container_set_border_width(GTK_CONTAINER(ret), 12);
 
-	frame = gaim_gtk_make_frame(ret, _("Select an Identity"));
+	frame = gaim_gtk_make_frame(ret, _("Select a GPG Identity"));
 	vbox = gtk_vbox_new(FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(frame), vbox);
 
-	store = gtk_list_store_new(COL_CNT, G_TYPE_STRING,
+	store = gtk_list_store_new(COL_CNT - 1, G_TYPE_STRING,
 	    G_TYPE_STRING, G_TYPE_STRING);
 
 	/* Gather GPG keys */
@@ -84,7 +57,7 @@ grypt_gui_config(GaimPlugin *p)
 	/* Key column */
 	r = gtk_cell_renderer_text_new();
 	col = gtk_tree_view_column_new_with_attributes(
-	    "Fingerprint", r, "text", FPR_COL, NULL);
+	    "Key ID", r, "text", KEYID_COL, NULL);
 	gtk_tree_view_column_set_resizable(col, TRUE);
 	gtk_tree_view_append_column(GTK_TREE_VIEW(list), col);
 
@@ -114,25 +87,23 @@ grypt_gui_config(GaimPlugin *p)
 void
 grypt_gui_id_select_cb(GtkTreeSelection *sel, gpointer data)
 {
-	char *name, *fpr;
-
-	GtkTreeIter iter;
 	GtkTreeModel *model;
-
-/*
-	if (fpr != NULL)
-		g_free(fpr);
-*/
+	GtkTreeIter iter;
+	GValue **v, *u;
+	char *keyid;
 
 	if (gtk_tree_selection_get_selected(sel, &model, &iter)) {
-		gtk_tree_model_get(model, &iter, FPR_COL, (gchar *)&fpr, -1);
-		strncpy(fingerprint, fpr, FPRSIZ);
-		fingerprint[FPRSIZ] = '\0';
-		g_free(fpr);
-
-		gtk_tree_model_get(model, &iter, NAME_COL, (gchar *)&name, -1);
-		bark("Changing identity to: %s", name);
-		g_free(name);
+		gtk_tree_model_get(model, &iter, KEYID_COL, &keyid, -1);
+		for (v = identities; (u = *v) != NULL; v++) {
+			g_value_get_string(u);
+			if (strcmp(keyid,
+			    g_value_get_string(&u[KEYID_COL])) == 0) {
+bark("changing identity %s -> %s", fingerprint, g_value_get_string(&u[NAME_COL]));
+				fingerprint = g_value_get_string(&u[FPR_COL]);
+				break;
+			}
+}
+		g_free(keyid);
 	}
 }
 
@@ -142,8 +113,6 @@ grypt_gui_gather_ids(GtkListStore *t)
 	GtkTreeIter row;
 	GValue **v, *u;
 
-	grypt_gather_identities();
-
 	bark("Looping through identities to add to gui config panel");
 	for (v = identities; *v != NULL; v++) {
 		u = *v;
@@ -151,43 +120,8 @@ grypt_gui_gather_ids(GtkListStore *t)
 		gtk_list_store_append(t, &row);
 
 		/* Fill key */
-		gtk_list_store_set_value(t, &row, FPR_COL,  u++);
-		gtk_list_store_set_value(t, &row, NAME_COL, u++);
-		gtk_list_store_set_value(t, &row, DESC_COL, u++);
+		gtk_list_store_set_value(t, &row, KEYID_COL, u++);
+		gtk_list_store_set_value(t, &row, NAME_COL,  u++);
+		gtk_list_store_set_value(t, &row, DESC_COL,  u++);
 	}
-}
-
-GtkWidget *
-grypt_gui_show_button(GaimConversation *conv)
-{
-	GtkWidget *hbox = NULL;
-	GtkWidget *vbox;
-	GList *iter;
-	GtkWidget *button;
-	GaimGtkConversation *gtkconv;
-
-	gtkconv = GAIM_GTK_CONVERSATION(conv);
-
-	/* Display widget */
-	bark("Displaying crypt widget");
-
-	/* Find the fucking hbox */
-	vbox = gtkconv->toolbar;
-	for (iter = GTK_BOX(vbox)->children; iter != NULL; iter = g_list_next(iter))
-		if (GTK_IS_BOX(hbox = ((GtkBoxChild *)iter->data)->widget))
-			break;
-
-	if (hbox == NULL)
-		croak("can't find toolbar hbox");
-
-	button = gaim_pixbuf_toolbar_button_from_stock(GAIM_STOCK_GRYPT);
-	gtk_size_group_add_widget(gtkconv->sg, button);
-	gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-	gtk_tooltips_set_tip(gtkconv->tooltips, button, _("Encrypt/Decrypt"), NULL);
-
-	g_signal_connect(G_OBJECT(button), "clicked",
-	    G_CALLBACK(grypt_crypto_encdec_cb), conv);
-	gtk_widget_show(button);
-
-	return (button);
 }
