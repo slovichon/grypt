@@ -16,23 +16,26 @@ plugin_load(GaimPlugin *p)
 
 	/* Initialize GPGME */
 	if (!grypt_crypto_init())
-		return (gboolean)FALSE;
+		return (FALSE);
 
-	/* Read last key*/
-	bark("Loading previous identity");
+	/* Read last key */
+bark("Loading previous identity");
 	grypt_identity_load();
 
 	/* Add "encrypt/decrypt" icon */
 	grypt_gui_add_icon();
 
 	/* Attach callbacks */
-	bark("Attaching callbacks");
-	gaim_signal_connect(h, "conversation-created",  p, GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
-	gaim_signal_connect(h, "deleting-conversation", p, GAIM_CALLBACK(grypt_evt_del_conversation), NULL);
-	gaim_signal_connect(h, "received-im-msg",       p, GAIM_CALLBACK(grypt_evt_im_recv), NULL);
-	gaim_signal_connect(h, "sent-im-msg",           p, GAIM_CALLBACK(grypt_evt_im_send), NULL);
-
-	return (gboolean)TRUE;
+bark("Attaching callbacks");
+	gaim_signal_connect(h, "conversation-created", p,
+	    GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
+	gaim_signal_connect(h, "deleting-conversation", p,
+	    GAIM_CALLBACK(grypt_evt_del_conversation), NULL);
+	gaim_signal_connect(h, "receiving-im-msg", p,
+	    GAIM_CALLBACK(grypt_evt_im_recv), NULL);
+	gaim_signal_connect(h, "sending-im-msg", p,
+	    GAIM_CALLBACK(grypt_evt_im_send), NULL);
+	return (TRUE);
 }
 
 static gboolean
@@ -54,7 +57,7 @@ plugin_unload(GaimPlugin *p)
 
 	/* gpgme_recipients_release(recipients); */
 
-	return (gboolean)TRUE;
+	return (TRUE);
 }
 
 static GaimGtkPluginUiInfo ui_info = { grypt_gui_config, 0 };
@@ -70,7 +73,7 @@ static GaimPluginInfo info = {
 	GAIM_PRIORITY_DEFAULT,				/* priority */
 	"grypt",					/* id */
 	N_("Grypt"),		 			/* name */
-	"0.1",						/* version */
+	GRYPT_VERSION,					/* version */
 	N_("Encryption plugin"),			/* summary */
 	N_("GPG encryption controls."),			/* description */
 	"Jared Yanovich <jaredy@closeedge.net>",	/* author */
