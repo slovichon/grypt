@@ -33,8 +33,8 @@
 
 /* crypto.c */
 int grypt_crypto_init(void);
-char *encrypt(char *msg, gpgme_recipient_t *);
-char *decrypt(char *msg, gpgme_recipient_t *);
+char *encrypt(char *msg, gpgme_key_t);
+char *decrypt(char *msg, gpgme_key_t);
 void grypt_crypto_encdec_cb(GtkWidget *, GaimConversation *);
 void grypt_gather_identities(void);
 void grypt_free_identities(void);
@@ -43,21 +43,20 @@ void grypt_free_identities(void);
 void grypt_identity_load(void);
 void grypt_identity_save(void);
 void bark(char *fmt, ...);				/* Debug print */
-void flog(char *fmt, ...);				/* Error print */
 void croak(char *fmt, ...);				/* Die */
 
 /* gui.c */
-void grypt_gui_add_icon(void);
-GtkWidget *grypt_gui_config(GaimPlugin *p);
-void grypt_gui_gather_ids(GtkListStore *);		/* Gather GPG identities */
-GtkWidget *grypt_gui_show_button(GaimConversation *);
-void grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
+void		 grypt_gui_add_icon(void);
+GtkWidget	*grypt_gui_config(GaimPlugin *p);
+void		 grypt_gui_gather_ids(GtkListStore *);	/* Gather GPG identities */
+GtkWidget	*grypt_gui_show_button(GaimConversation *);
+void		 grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
 
 /* grypt.c */
 void grypt_evt_new_conversation(GaimConversation *);
 void grypt_evt_del_conversation(GaimConversation *);
-void grypt_evt_im_recv(GaimConnection *, char **, char **, guint *, void *);
-void grypt_evt_im_send(GaimConnection *, char **, char **, void *);
+void grypt_evt_im_recv(GaimAccount *, char **, char **, GaimConversation *, int *, void *);
+void grypt_evt_im_send(GaimAccount *, char *, char **, void *);
 void grypt_session_end(GaimConversation *);
 void grypt_session_start(GaimConversation *, char *);
 
