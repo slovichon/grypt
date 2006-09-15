@@ -133,15 +133,29 @@ grypt_evt_new_conversation(GaimConversation *conv)
 	if (!grypt_possible(conv))
 		return;
 
-	state = gaim_conversation_get_data(conv, "/grypt/state");
-	if (state == NULL) {
-		if ((state = malloc(sizeof(*state))) == NULL)
-			croak("couldn't malloc");
-		*state = ST_UN;
-		gaim_conversation_set_data(conv, "/grypt/state", state);
+	if ((state = malloc(sizeof(*state))) == NULL)
+		croak("couldn't malloc");
+	*state = ST_UN;
+	gaim_conversation_set_data(conv, "/grypt/state", state);
+	grypt_crypto_toggle(conv);
+}
+
+void
+grypt_evt_del_conversation(GaimConversation *conv)
+{
+	gpgme_key_t key;
+	int *state;
+
+	if ((state = gaim_conversation_get_data(conv,
+	    "/grypt/state")) != NULL) {
+		free(state);
+//		gaim_conversation_set_data(conv, "/grypt/state", NULL);
 	}
-	if (*state == ST_UN)
-		grypt_crypto_toggle(conv);
+	if ((key = gaim_conversation_get_data(conv,
+	    "/grypt/key")) != NULL) {
+//		gaim_conversation_set_data(conv, "/grypt/key", NULL);
+		gpgme_key_release(key);
+	}
 }
 
 int
@@ -171,7 +185,7 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 	char *plaintext, msg[6 + FPRSIZ + 1] = "GRYPT:";
 	int ret, *state;
 
-	if ((state = (int *)gaim_conversation_get_data(conv,
+	if ((state = gaim_conversation_get_data(conv,
 	    "/grypt/state")) == NULL) {
 		/* This shouldn't happen */
 		bark("[RECV] in recv_im, state ptr is NULL");
@@ -185,13 +199,15 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 bark("[RECV] Session should be started: received %s from %s", *buf, *sender);
 		if (strncmp(*buf, "GRYPT:", 6) == 0 && (*buf)[6] != '\0') {
 bark("[RECV] Started with fingerprint %s", *buf + 6);
-			grypt_session_start(conv, *buf + 6);
-			*state = ST_EN;
+			if (grypt_session_start(conv, *buf + 6)) {
+				*state = ST_EN;
+bark("[RECV] encryption enabled");
 
-			// print encryption enabled to window/log
-			ret = TRUE;
+				// print encryption enabled to window/log
+				ret = TRUE;
+			}
 		} else {
-			/* Remote user must not have grypt. */
+			/* Remote user must not have grypt... */
 bark("[RECV] Could not be started");
 			*state = ST_UN;
 		}
@@ -210,7 +226,8 @@ bark("[RECV] Ending encryption");
 			/* Encrypt, free *text, change buf */
 			plaintext = grypt_decrypt(conv, *buf);
 bark("[RECV] ciphertext: %s, plaintext: %s", *buf, plaintext);
-			free(plaintext);
+			if (plaintext)
+				*buf = plaintext;
 		}
 		break;
 	default:
@@ -224,14 +241,15 @@ bark("no fingerprint available");
 			}
 
 			/* Request to initiate crypto */
-			grypt_session_start(conv, *buf + 6);
+			if (!grypt_session_start(conv, *buf + 6))
+				break;
 			*state = ST_EN;
 			*buf = NULL;
 
 			strncat(msg, fingerprint, FPRSIZ);
 			msg[6 + FPRSIZ] = '\0';
 
-bark("[RECV] Responding with message %s", msg);
+bark("[RECV] encryption enabled, responding (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);
 		}
 		break;
@@ -249,15 +267,17 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
 	if ((conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
 	    rep, account)) == NULL)
 		return;
-	if ((state = (int *)gaim_conversation_get_data(conv,
+	if ((state = gaim_conversation_get_data(conv,
 	    "/grypt/state")) == NULL)
 		return;
 
+bark("sending, state=%d", *state);
 	switch (*state) {
 	case ST_EN:
-		ciphertext = grypt_decrypt(conv, *buf);
-bark("send: plaintext: %s, ciphertext: %s", *buf, ciphertext);
-		free(ciphertext);
+		ciphertext = grypt_encrypt(conv, *buf);
+bark("send: plaintext: %s, ciphertext: <%s>", *buf, ciphertext);
+		if (ciphertext)
+			*buf = ciphertext;
 		break;
 	}
 }
