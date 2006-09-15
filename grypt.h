@@ -30,10 +30,12 @@ void	 croak(char *fmt, ...);
 GtkWidget *grypt_gui_config(GaimPlugin *p);
 void	   grypt_gui_gather_ids(GtkListStore *);
 void	   grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
+void	   grypt_choose(GValue *);
 
 /* grypt.c */
 int	 grypt_session_start(GaimConversation *, char *);
 void	 grypt_evt_new_conversation(GaimConversation *);
+void	 grypt_evt_del_conversation(GaimConversation *);
 void	 grypt_evt_im_send(GaimAccount *, char *, char **, void *);
 int	 grypt_evt_im_recv(GaimAccount *, char **, char **,
     GaimConversation *, int *, void *);
@@ -41,6 +43,7 @@ int	 grypt_evt_im_recv(GaimAccount *, char **, char **,
 /* crypto.c */
 extern GValue **identities;
 extern const char *fingerprint;
+extern char *passphrase;
 extern gpgme_ctx_t ctx;
 
 /* Column types for the "select identity" window */
