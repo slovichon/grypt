@@ -94,15 +94,12 @@ grypt_gui_id_select_cb(GtkTreeSelection *sel, gpointer data)
 
 	if (gtk_tree_selection_get_selected(sel, &model, &iter)) {
 		gtk_tree_model_get(model, &iter, KEYID_COL, &keyid, -1);
-		for (v = identities; (u = *v) != NULL; v++) {
-			g_value_get_string(u);
+		for (v = identities; (u = *v) != NULL; v++)
 			if (strcmp(keyid,
 			    g_value_get_string(&u[KEYID_COL])) == 0) {
-bark("changing identity %s -> %s", fingerprint, g_value_get_string(&u[NAME_COL]));
-				fingerprint = g_value_get_string(&u[FPR_COL]);
+				grypt_choose(u);
 				break;
 			}
-}
 		g_free(keyid);
 	}
 }
@@ -113,7 +110,6 @@ grypt_gui_gather_ids(GtkListStore *t)
 	GtkTreeIter row;
 	GValue **v, *u;
 
-	bark("Looping through identities to add to gui config panel");
 	for (v = identities; *v != NULL; v++) {
 		u = *v;
 		/* Create row */

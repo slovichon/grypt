@@ -108,17 +108,13 @@ grypt_possible(GaimConversation *conv)
 	GaimConnection *gc;
 	OscarData *od;
 
-bark("oscar?");
 	if (strcmp(gaim_account_get_protocol_id(conv->account),
 	    "prpl-oscar") != 0)
 		return (FALSE);
-bark("grypt?");
 
 	gc = gaim_conversation_get_gc(conv);
 	od = gc->proto_data;
 	userinfo = grypt_aim_locate_finduserinfo(od->sess, conv->name);
-if (userinfo)
- bark("cap: %d", userinfo->capabilities);
 	if (userinfo == NULL ||
 	    (userinfo->capabilities & AIM_CAPS_GRYPT) == 0)
 		return (FALSE);
@@ -147,15 +143,11 @@ grypt_evt_del_conversation(GaimConversation *conv)
 	int *state;
 
 	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) != NULL) {
+	    "/grypt/state")) != NULL)
 		free(state);
-//		gaim_conversation_set_data(conv, "/grypt/state", NULL);
-	}
 	if ((key = gaim_conversation_get_data(conv,
-	    "/grypt/key")) != NULL) {
-//		gaim_conversation_set_data(conv, "/grypt/key", NULL);
+	    "/grypt/key")) != NULL)
 		gpgme_key_release(key);
-	}
 }
 
 int

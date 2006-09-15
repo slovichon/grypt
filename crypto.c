@@ -42,7 +42,6 @@ grypt_crypto_init(void)
 {
 	gpgme_error_t error;
 
-bark("Initializing GPGME");
 	error = gpgme_new(&ctx);
 	if (error) {
 		bark("unable to initalize gpgme: %s",
@@ -247,20 +246,18 @@ grypt_gather_identities(void)
 	gpgme_key_t k;
 	size_t nkeys;
 
-	/* We only need to do this once */
-	if (identities != NULL) {
-bark("Already gathered identities");
+	if (identities) {
+		bark("identities already loaded");
+		return;
+	}
+
+	error = gpgme_op_keylist_start(ctx, NULL, 1);
+	if (error) {
+		bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
 		return;
 	}
 
 	nkeys = 0;
-
-	error = gpgme_op_keylist_start(ctx, NULL, 1);
-	if (error) {
-bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
-		return;
-	}
-
 	for (;;) {
 		error = gpgme_op_keylist_next(ctx, &k);
 		if (error || k == NULL)
@@ -275,10 +272,9 @@ bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
 		croak("calloc");
 	error = gpgme_op_keylist_end(ctx);
 
-bark("Gathering secret identities");
 	error = gpgme_op_keylist_start(ctx, NULL, 1);
 	if (error) {
-bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
+		bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
 		return;
 	}
 
@@ -286,8 +282,6 @@ bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
 		error = gpgme_op_keylist_next(ctx, &k);
 		if (error || k == NULL)
 			break;
-
-bark("%s: %s <%s>\n", k->subkeys->fpr, k->uids->name, k->uids->comment);
 
 		if ((u = *v = calloc(COL_CNT, sizeof(GValue))) == NULL)
 			croak("calloc");
@@ -328,11 +322,9 @@ grypt_free_identities(void)
 	if (identities == NULL)
 		return;
 
-bark("Freeing identities");
 	for (v = identities; *v != NULL; v++)
 		if (*v != NULL)
 			free(*v);
 	free(identities);
 	identities = NULL;
-bark("done freeing");
 }
