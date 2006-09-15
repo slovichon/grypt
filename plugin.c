@@ -23,13 +23,15 @@ plugin_load(GaimPlugin *p)
 	/* XXX: read last key */
 bark("Loading previous identity");
 	if (identities[0])
-		fingerprint = g_value_get_string(&identities[0][FPR_COL]);
+		grypt_choose(identities[0]);
 //	grypt_identity_load();
 
 	/* Attach callbacks */
 bark("Attaching callbacks");
 	gaim_signal_connect(h, "conversation-created", p,
 	    GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
+	gaim_signal_connect(h, "deleting-conversation", p,
+	    GAIM_CALLBACK(grypt_evt_del_conversation), NULL);
 	gaim_signal_connect(h, "receiving-im-msg", p,
 	    GAIM_CALLBACK(grypt_evt_im_recv), NULL);
 	gaim_signal_connect(h, "sending-im-msg", p,
