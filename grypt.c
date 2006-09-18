@@ -178,11 +178,8 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 	int ret, *state;
 
 	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) == NULL) {
-		/* This shouldn't happen */
-		bark("[RECV] in recv_im, state ptr is NULL");
+	    "/grypt/state")) == NULL)
 		return (FALSE);
-	}
 
 	ret = FALSE;
 	switch (*state) {
