@@ -1,7 +1,7 @@
-diff -ru gaim-2.0.0beta3.orig/configure gaim-2.0.0beta3/configure
---- gaim-2.0.0beta3.orig/configure	2006-03-28 17:38:56.000000000 -0500
-+++ gaim-2.0.0beta3/configure	2006-09-12 13:54:41.000000000 -0400
-@@ -36044,7 +36044,7 @@
+diff -ru gaim-2.0.0beta3.1.orig/configure gaim-2.0.0beta3.1/configure
+--- gaim-2.0.0beta3.1.orig/configure	2006-08-19 16:38:03.000000000 -0400
++++ gaim-2.0.0beta3.1/configure	2006-09-18 17:13:13.000000000 -0400
+@@ -34991,7 +34991,7 @@
  
  
  
@@ -10,7 +10,7 @@ diff -ru gaim-2.0.0beta3.orig/configure gaim-2.0.0beta3/configure
  cat >confcache <<\_ACEOF
  # This file is a shell script that caches the results of configure
  # tests run on this system so they can be shared between configure
-@@ -36964,6 +36964,7 @@
+@@ -35909,6 +35909,7 @@
    "plugins/docklet/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/docklet/Makefile" ;;
    "plugins/gevolution/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gevolution/Makefile" ;;
    "plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gestures/Makefile" ;;
@@ -18,9 +18,9 @@ diff -ru gaim-2.0.0beta3.orig/configure gaim-2.0.0beta3/configure
    "plugins/mono/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/mono/Makefile" ;;
    "plugins/mono/api/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/mono/api/Makefile" ;;
    "plugins/mono/loader/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/mono/loader/Makefile" ;;
-diff -ru gaim-2.0.0beta3.orig/pixmaps/Makefile.am gaim-2.0.0beta3/pixmaps/Makefile.am
---- gaim-2.0.0beta3.orig/pixmaps/Makefile.am	2006-01-10 00:24:45.000000000 -0500
-+++ gaim-2.0.0beta3/pixmaps/Makefile.am	2006-09-12 13:56:59.000000000 -0400
+diff -ru gaim-2.0.0beta3.1.orig/pixmaps/Makefile.am gaim-2.0.0beta3.1/pixmaps/Makefile.am
+--- gaim-2.0.0beta3.1.orig/pixmaps/Makefile.am	2006-08-19 16:35:48.000000000 -0400
++++ gaim-2.0.0beta3.1/pixmaps/Makefile.am	2006-09-18 17:13:13.000000000 -0400
 @@ -51,6 +51,7 @@
  		text_smaller.png		\
  		typed.png			\
@@ -38,10 +38,10 @@ diff -ru gaim-2.0.0beta3.orig/pixmaps/Makefile.am gaim-2.0.0beta3/pixmaps/Makefi
  
  gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
  gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
-diff -ru gaim-2.0.0beta3.orig/pixmaps/Makefile.in gaim-2.0.0beta3/pixmaps/Makefile.in
---- gaim-2.0.0beta3.orig/pixmaps/Makefile.in	2006-03-28 17:39:02.000000000 -0500
-+++ gaim-2.0.0beta3/pixmaps/Makefile.in	2006-09-12 13:58:11.000000000 -0400
-@@ -424,6 +424,7 @@
+diff -ru gaim-2.0.0beta3.1.orig/pixmaps/Makefile.in gaim-2.0.0beta3.1/pixmaps/Makefile.in
+--- gaim-2.0.0beta3.1.orig/pixmaps/Makefile.in	2006-08-19 16:46:50.000000000 -0400
++++ gaim-2.0.0beta3.1/pixmaps/Makefile.in	2006-09-18 17:13:13.000000000 -0400
+@@ -425,6 +425,7 @@
  		text_smaller.png		\
  		typed.png			\
  		typing.png			\
@@ -49,7 +49,7 @@ diff -ru gaim-2.0.0beta3.orig/pixmaps/Makefile.in gaim-2.0.0beta3/pixmaps/Makefi
  		Makefile.mingw			\
  		smileys/Makefile.mingw		\
  		smileys/default/Makefile.mingw	\
-@@ -445,7 +446,7 @@
+@@ -446,7 +447,7 @@
  		gaim_offline_4bit_16.ico
  
  gaimbuttonpixdir = $(datadir)/pixmaps/gaim/buttons
@@ -58,9 +58,9 @@ diff -ru gaim-2.0.0beta3.orig/pixmaps/Makefile.in gaim-2.0.0beta3/pixmaps/Makefi
  gaimdialogpixdir = $(datadir)/pixmaps/gaim/dialogs
  gaimdialogpix_DATA = gaim_error.png gaim_info.png gaim_question.png gaim_warning.png gaim_cool.png gaim_auth.png
  gaimiconpixdir = $(datadir)/pixmaps/gaim/icons
-diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.am gaim-2.0.0beta3/plugins/Makefile.am
---- gaim-2.0.0beta3.orig/plugins/Makefile.am	2006-03-23 13:42:25.000000000 -0500
-+++ gaim-2.0.0beta3/plugins/Makefile.am	2006-09-12 13:58:44.000000000 -0400
+diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.am gaim-2.0.0beta3.1/plugins/Makefile.am
+--- gaim-2.0.0beta3.1.orig/plugins/Makefile.am	2006-08-19 16:36:32.000000000 -0400
++++ gaim-2.0.0beta3.1/plugins/Makefile.am	2006-09-18 17:13:13.000000000 -0400
 @@ -1,4 +1,4 @@
 -DIST_SUBDIRS = docklet gevolution gestures mono musicmessaging perl ssl tcl ticker
 +DIST_SUBDIRS = docklet gevolution gestures grypt mono musicmessaging perl ssl tcl ticker
@@ -75,10 +75,10 @@ diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.am gaim-2.0.0beta3/plugins/Makefi
  	$(MONO_DIR) \
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
-diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.in gaim-2.0.0beta3/plugins/Makefile.in
---- gaim-2.0.0beta3.orig/plugins/Makefile.in	2006-03-28 17:39:06.000000000 -0500
-+++ gaim-2.0.0beta3/plugins/Makefile.in	2006-09-12 13:59:24.000000000 -0400
-@@ -456,7 +456,7 @@
+diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.in gaim-2.0.0beta3.1/plugins/Makefile.in
+--- gaim-2.0.0beta3.1.orig/plugins/Makefile.in	2006-08-19 16:46:51.000000000 -0400
++++ gaim-2.0.0beta3.1/plugins/Makefile.in	2006-09-18 17:13:13.000000000 -0400
+@@ -455,7 +455,7 @@
  target_cpu = @target_cpu@
  target_os = @target_os@
  target_vendor = @target_vendor@
@@ -87,7 +87,7 @@ diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.in gaim-2.0.0beta3/plugins/Makefi
  @BUILD_GEVOLUTION_TRUE@GEVOLUTION_DIR = gevolution
  @USE_PERL_TRUE@PERL_DIR = perl
  @USE_TCL_TRUE@TCL_DIR = tcl
-@@ -469,6 +469,7 @@
+@@ -468,6 +468,7 @@
  	docklet \
  	$(GEVOLUTION_DIR) \
  	gestures \
@@ -95,9 +95,9 @@ diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.in gaim-2.0.0beta3/plugins/Makefi
  	$(MONO_DIR) \
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
-diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.mingw gaim-2.0.0beta3/plugins/Makefile.mingw
---- gaim-2.0.0beta3.orig/plugins/Makefile.mingw	2006-03-11 10:22:13.000000000 -0500
-+++ gaim-2.0.0beta3/plugins/Makefile.mingw	2006-09-12 14:00:37.000000000 -0400
+diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.mingw gaim-2.0.0beta3.1/plugins/Makefile.mingw
+--- gaim-2.0.0beta3.1.orig/plugins/Makefile.mingw	2006-08-19 16:36:32.000000000 -0400
++++ gaim-2.0.0beta3.1/plugins/Makefile.mingw	2006-09-18 17:13:13.000000000 -0400
 @@ -20,6 +20,7 @@
  TCL_PLUGIN_LOADER :=    ./tcl
  DOCKLET :=		./docklet
@@ -127,9 +127,9 @@ diff -ru gaim-2.0.0beta3.orig/plugins/Makefile.mingw gaim-2.0.0beta3/plugins/Mak
  	$(MAKE) -C $(DOCKLET) -f Makefile.mingw clean
  	$(MAKE) -C $(SSL) -f Makefile.mingw clean
 +	$(MAKE) -C $(GRYPT) -f Makefile.mingw clean
-diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/family_locate.c gaim-2.0.0beta3/src/protocols/oscar/family_locate.c
---- gaim-2.0.0beta3.orig/src/protocols/oscar/family_locate.c	2006-02-12 16:27:03.000000000 -0500
-+++ gaim-2.0.0beta3/src/protocols/oscar/family_locate.c	2006-09-14 16:09:54.000000000 -0400
+diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/family_locate.c gaim-2.0.0beta3.1/src/protocols/oscar/family_locate.c
+--- gaim-2.0.0beta3.1.orig/src/protocols/oscar/family_locate.c	2006-08-19 16:35:58.000000000 -0400
++++ gaim-2.0.0beta3.1/src/protocols/oscar/family_locate.c	2006-09-18 17:13:13.000000000 -0400
 @@ -142,6 +142,10 @@
  	 {0x09, 0x46, 0x13, 0x49, 0x4c, 0x7f, 0x11, 0xd1,
  	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
@@ -141,9 +141,9 @@ diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/family_locate.c gaim-2.0.0beta
  	/*
  	 * Indeed, there are two of these.  The former appears to be correct,
  	 * but in some versions of winaim, the second one is set.  Either they
-diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.c gaim-2.0.0beta3/src/protocols/oscar/oscar.c
---- gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.c	2006-03-26 11:18:02.000000000 -0500
-+++ gaim-2.0.0beta3/src/protocols/oscar/oscar.c	2006-09-14 16:38:06.000000000 -0400
+diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.c gaim-2.0.0beta3.1/src/protocols/oscar/oscar.c
+--- gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.c	2006-08-19 16:35:58.000000000 -0400
++++ gaim-2.0.0beta3.1/src/protocols/oscar/oscar.c	2006-09-18 17:13:13.000000000 -0400
 @@ -75,7 +75,7 @@
  #define FT_REDIR_TIMEOUT	10000	/* 20000 */	/* Time to wait for redirected transfer */
  #define FT_PROXYIP_TIMEOUT	300000	/* 120000 */	/* Time to create a checksum for VERY large files */
@@ -163,9 +163,9 @@ diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.c gaim-2.0.0beta3/src/pr
  			default:
  				tmp = NULL;
  				break;
-diff -ru gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.h gaim-2.0.0beta3/src/protocols/oscar/oscar.h
---- gaim-2.0.0beta3.orig/src/protocols/oscar/oscar.h	2006-02-12 18:59:30.000000000 -0500
-+++ gaim-2.0.0beta3/src/protocols/oscar/oscar.h	2006-09-14 14:18:14.000000000 -0400
+diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.h gaim-2.0.0beta3.1/src/protocols/oscar/oscar.h
+--- gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.h	2006-08-19 16:35:58.000000000 -0400
++++ gaim-2.0.0beta3.1/src/protocols/oscar/oscar.h	2006-09-18 17:13:13.000000000 -0400
 @@ -1054,7 +1054,8 @@
  #define AIM_CAPS_ICHATAV		0x02000000
  #define AIM_CAPS_LIVEVIDEO		0x04000000
