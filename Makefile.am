@@ -3,7 +3,7 @@ EXTRA_DIST = \
 
 plugindir = $(libdir)/gaim
 
-grypt_la_LDFLAGS = -module -avoid-version `gpgme-config --libs`
+grypt_la_LDFLAGS = -module -avoid-version $(GTK_LIBS) `gpgme-config --libs`
 
 if PLUGINS
 
@@ -18,4 +18,5 @@ AM_CPPFLAGS = \
 	-DVERSION=\"$(VERSION)\" \
 	-I$(top_srcdir)/src \
 	$(DEBUG_CFLAGS) \
+	$(X_CFLAGS) \
 	$(GTK_CFLAGS)

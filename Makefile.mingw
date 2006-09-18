@@ -8,11 +8,8 @@
 # PATHS
 #
 
-INCLUDE_DIR :=		.
-
 GTK_TOP :=		../../../win32-dev/gtk_2_0
 GAIM_TOP :=		../..
-GRYPT_ROOT :=		.
 GAIM_INSTALL_DIR :=	$(GAIM_TOP)/win32-install-dir
 DLL_INSTALL_DIR :=	$(GAIM_INSTALL_DIR)/plugins
 
@@ -28,7 +25,6 @@ CFLAGS =
 
 DEFINES =
 
-
 ##
 ## INCLUDE  MAKEFILES
 ##
@@ -39,7 +35,7 @@ include $(GAIM_TOP)/src/win32/global.mak
 ## INCLUDE PATHS
 ##
 
-INCLUDE_PATHS +=	-I$(GRYPT_ROOT) \
+INCLUDE_PATHS +=	-I. \
 			-I$(GTK_TOP)/include \
 			-I$(GTK_TOP)/include/gtk-2.0 \
 			-I$(GTK_TOP)/include/glib-2.0 \
@@ -77,8 +73,9 @@ LIBS =			-lgtk-win32-2.0 \
 			-lgobject-2.0 \
 			-lws2_32 \
 			-lintl \
-			-lgaim \
-			`gpgme-config --libs`
+			`gpgme-config --libs` \
+			-lgaim
+
 
 ##
 ## RULES
@@ -97,8 +94,8 @@ LIBS =			-lgtk-win32-2.0 \
 
 all: $(TARGET).dll
 
-install:
-	cp $(GRYPT_ROOT)/$(TARGET).dll $(DLL_INSTALL_DIR)
+install: all
+	cp $(TARGET).dll $(DLL_INSTALL_DIR)
 
 
 ##
