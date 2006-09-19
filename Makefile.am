@@ -19,4 +19,5 @@ AM_CPPFLAGS = \
 	-I$(top_srcdir)/src \
 	$(DEBUG_CFLAGS) \
 	$(X_CFLAGS) \
+	`gpgme-config --cflags` \
 	$(GTK_CFLAGS)
