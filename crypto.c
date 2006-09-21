@@ -107,8 +107,8 @@ grypt_choose(GValue *id)
 void
 grypt_crypto_toggle(GaimConversation *conv)
 {
-	char msg[6 + FPRSIZ + 1] = "GRYPT:";
 	GaimConnection *gaimconn;
+	char msg[BUFSIZ];
 	int *state;
 
 	state = gaim_conversation_get_data(conv, "/grypt/state");
@@ -118,37 +118,31 @@ grypt_crypto_toggle(GaimConversation *conv)
 		return;
 	}
 
+	if (fingerprint == NULL) {
+		bark("no fingerprint available");
+		return;
+	}
+
 	switch (*state) {
-	case ST_UN: /* Initiate encryption */
-		if (fingerprint == NULL) {
-bark("no fingerprint available");
-			return;
-		}
-		strncat(msg, fingerprint, FPRSIZ);
-		msg[FPRSIZ + 6] = '\0';
+	case ST_UN:	/* Initiate encryption */
+		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s", fingerprint);
 
 bark("Set state to ST_PND");
 		*state = ST_PND;
 
-bark("Sending message %s", msg);
+bark("initiate crypto, SEND %s", msg);
 		gaimconn = gaim_conversation_get_gc(conv);
 		serv_send_im(gaimconn, gaim_conversation_get_name(conv),
 		    msg, 0);
 		break;
-	case ST_EN: /* End encryption */
-bark("Set state to ST_UN");
+	case ST_EN:	/* End encryption */
+bark("ending crypto session");
+	case ST_PND:	/* Cancel initiation */
 		*state = ST_UN;
-
-//		grypt_session_end(conv);
 
 		gaimconn = gaim_conversation_get_gc(conv);
 		serv_send_im(gaimconn, gaim_conversation_get_name(conv),
 		    "GRYPT:END", 0);
-		break;
-	case ST_PND:
-		/* Cancel initiation */
-bark("Cancel, set state to ST_UN");
-		*state = ST_UN;
 		break;
 	}
 }
