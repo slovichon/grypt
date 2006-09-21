@@ -128,6 +128,7 @@ grypt_evt_new_conversation(GaimConversation *conv)
 
 	if (!grypt_possible(conv))
 		return;
+bark("EVENT NEW CONV");
 
 	if ((state = malloc(sizeof(*state))) == NULL)
 		croak("couldn't malloc");
@@ -143,8 +144,9 @@ grypt_evt_del_conversation(GaimConversation *conv)
 	int *state;
 
 	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) != NULL)
-		free(state);
+	    "/grypt/state")) != NULL && *state != ST_UN)
+		grypt_crypto_toggle(conv);
+	free(state);
 	if ((key = gaim_conversation_get_data(conv,
 	    "/grypt/key")) != NULL)
 		gpgme_key_release(key);
@@ -170,41 +172,82 @@ grypt_session_start(GaimConversation *conv, char *fpr)
 	return (TRUE);
 }
 
-int
+void
 grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
     GaimConversation *conv, int *flags, void *data)
 {
-	char *plaintext, msg[6 + FPRSIZ + 1] = "GRYPT:";
-	int ret, *state;
+	char *p, *plaintext, *bufp, msg[BUFSIZ];
+	int *state;
+
+	bufp = *buf;
+	if (strncmp(*buf, "GRYPT:", 6) == 0)
+		*buf = NULL;
+
+	if (conv == NULL) {
+		/*
+		 * A grypt message was sent but we can't
+		 * do anything since we can't store, so
+		 * let the "new IM" event handle that part
+		 * and let this part be rehandled later.
+		 */
+		return;
+	}
 
 	if ((state = gaim_conversation_get_data(conv,
 	    "/grypt/state")) == NULL)
-		return (FALSE);
+		/* XXX send reject msg back */
+		return;
 
-	ret = FALSE;
+	if (fingerprint == NULL)
+		/* XXX send reject msg back */
+		return;
+
 	switch (*state) {
 	case ST_PND:
-		/* Session pending, message received, must be the response */
-bark("[RECV] Session should be started: received %s from %s", *buf, *sender);
-		if (strncmp(*buf, "GRYPT:", 6) == 0 && (*buf)[6] != '\0') {
-bark("[RECV] Started with fingerprint %s", *buf + 6);
-			if (grypt_session_start(conv, *buf + 6)) {
+		/*
+		 * Session pending, active establishment,
+		 * response may have been received.
+		 */
+bark("[RECV] Session should be started: received %s from %s", bufp, *sender);
+		if (strcmp(bufp, "GRYPT:END") == 0) {
+bark("request to prematurely end crypto session satisfied successfully");
+			*state = ST_UN;
+			*buf = NULL;
+			return;
+		} else if (strncmp(bufp, "GRYPT:", 6) == 0) {
+			if ((p = strrchr(bufp, ':')) == NULL) {
+				bark("internal error: can't find colon (%s)", bufp);
+				*state = ST_UN;
+				*buf = NULL;
+				return;
+			}
+			p++;
+			if (grypt_session_start(conv, p)) {
 				*state = ST_EN;
-bark("[RECV] encryption enabled");
+				if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
+					/*
+					 * Our request wasn't seen;
+					 * send it again.
+					 */
+					snprintf(msg, sizeof(msg),
+					    "GRYPT:RES:%s", fingerprint);
 
-				// print encryption enabled to window/log
-				ret = TRUE;
+bark("our request was neglected, reSEND (%s)", msg);
+					serv_send_im(gaim_conversation_get_gc(conv),
+					    gaim_conversation_get_name(conv), msg, 0);
+				}
+			} else {
+				bark("can't start session");
 			}
 		} else {
-			/* Remote user must not have grypt... */
-bark("[RECV] Could not be started");
-			*state = ST_UN;
+			/* Remote user may not have grypt... */
+bark("[RECV] expected GRYPT message");
 		}
 		break;
 	case ST_EN:
 		/* Decrypt message */
 bark("[RECV] Received encrypted message from %s", *sender);
-		if (strcmp(*buf, "GRYPT:END") == 0) {
+		if (strcmp(bufp, "GRYPT:END") == 0) {
 bark("[RECV] Ending encryption");
 			/* Request to end encryption */
 			*state = ST_UN;
@@ -213,37 +256,40 @@ bark("[RECV] Ending encryption");
 			// print encryption disabled to window/log
 		} else {
 			/* Encrypt, free *text, change buf */
-			plaintext = grypt_decrypt(conv, *buf);
-bark("[RECV] ciphertext: %s, plaintext: %s", *buf, plaintext);
+			plaintext = grypt_decrypt(conv, bufp);
+bark("[RECV] ciphertext: %s, plaintext: %s", bufp, plaintext);
 			if (plaintext)
 				*buf = plaintext;
 		}
 		break;
-	default:
-bark("[RECV] State must be ST_UN (%s)", *buf);
-		if (strncmp(*buf, "GRYPT:", 6) == 0 && (*buf)[6] != '\0') {
-bark("[RECV] Received request to start session: %s", *buf);
-
-			if (fingerprint == NULL) {
-bark("no fingerprint available");
-				break;
+	case ST_UN:
+		/* XXX if we receive an encrypted msg, send GRYPT:END */
+		if (strncmp(bufp, "GRYPT:REQ:", 6) == 0) {
+			*buf = NULL;
+bark("[RECV] Received request to start session: %s", bufp);
+			p = strrchr(bufp, ':');
+			if (p == NULL) {
+				bark("internal error: can't find colon (%s)", bufp);
+				*state = ST_UN;
+				return;
 			}
-
+			p++;
 			/* Request to initiate crypto */
-			if (!grypt_session_start(conv, *buf + 6))
+			if (!grypt_session_start(conv, p))
 				break;
 			*state = ST_EN;
-			*buf = NULL;
 
-			strncat(msg, fingerprint, FPRSIZ);
-			msg[6 + FPRSIZ] = '\0';
+			snprintf(msg, sizeof(msg), "GRYPT:RES:%s", fingerprint);
 
-bark("[RECV] encryption enabled, responding (%s)", msg);
+bark("[RECV] encryption enabled, respond, SEND (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);
+		} else if (strncmp(bufp, "----- BEGIN PGP MESSAGE -----", 29) == 0) {
+			*state = ST_EN;
+			grypt_crypto_toggle(conv);
+			*state = ST_UN;
 		}
 		break;
 	}
-	return (ret);
 }
 
 void
