@@ -37,7 +37,7 @@ int	 grypt_session_start(GaimConversation *, char *);
 void	 grypt_evt_new_conversation(GaimConversation *);
 void	 grypt_evt_del_conversation(GaimConversation *);
 void	 grypt_evt_im_send(GaimAccount *, char *, char **, void *);
-int	 grypt_evt_im_recv(GaimAccount *, char **, char **,
+void	 grypt_evt_im_recv(GaimAccount *, char **, char **,
     GaimConversation *, int *, void *);
 
 /* crypto.c */
