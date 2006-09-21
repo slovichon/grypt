@@ -107,7 +107,6 @@ grypt_choose(GValue *id)
 void
 grypt_crypto_toggle(GaimConversation *conv)
 {
-	GaimConnection *gaimconn;
 	char msg[BUFSIZ];
 	int *state;
 
@@ -131,18 +130,16 @@ bark("Set state to ST_PND");
 		*state = ST_PND;
 
 bark("initiate crypto, SEND %s", msg);
-		gaimconn = gaim_conversation_get_gc(conv);
-		serv_send_im(gaimconn, gaim_conversation_get_name(conv),
-		    msg, 0);
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), msg, 0);
 		break;
 	case ST_EN:	/* End encryption */
 bark("ending crypto session");
 	case ST_PND:	/* Cancel initiation */
 		*state = ST_UN;
 
-		gaimconn = gaim_conversation_get_gc(conv);
-		serv_send_im(gaimconn, gaim_conversation_get_name(conv),
-		    "GRYPT:END", 0);
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
 		break;
 	}
 }
