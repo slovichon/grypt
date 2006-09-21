@@ -251,15 +251,17 @@ bark("[RECV] Received encrypted message from %s", *sender);
 bark("[RECV] Ending encryption");
 			/* Request to end encryption */
 			*state = ST_UN;
-//			grypt_session_end(conv);
 
 			// print encryption disabled to window/log
 		} else {
 			/* Encrypt, free *text, change buf */
 			plaintext = grypt_decrypt(conv, bufp);
 bark("[RECV] ciphertext: %s, plaintext: %s", bufp, plaintext);
-			if (plaintext)
+			if (plaintext) {
+				free(bufp);
 				*buf = plaintext;
+				bufp = *buf;
+			}
 		}
 		break;
 	case ST_UN:
@@ -283,20 +285,32 @@ bark("[RECV] Received request to start session: %s", bufp);
 
 bark("[RECV] encryption enabled, respond, SEND (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);
-		} else if (strncmp(bufp, "----- BEGIN PGP MESSAGE -----", 29) == 0) {
-			*state = ST_EN;
-			grypt_crypto_toggle(conv);
-			*state = ST_UN;
 		}
 		break;
 	}
+#if 0
+	p = "----- BEGIN PGP MESSAGE -----";
+	if (strncmp(bufp, p, strlen(p)) == 0) {
+bark("[RECV] received an encrypted message unexpectantly, trying to decrypt...");
+		plaintext = grypt_decrypt(conv, bufp);
+bark("[RECV] ciphertext: %s, plaintext: %s", bufp, plaintext);
+		if (plaintext) {
+			free(bufp);
+			*buf = plaintext;
+			bufp = *buf;
+		}
+		*state = ST_UN;
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
+	}
+#endif
 }
 
 void
 grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
 {
+	char *ciphertext, *bufp;
 	GaimConversation *conv;
-	char *ciphertext;
 	int *state;
 
 	if ((conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
@@ -306,13 +320,22 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
 	    "/grypt/state")) == NULL)
 		return;
 
+	bufp = *buf;
+
 bark("sending, state=%d", *state);
 	switch (*state) {
 	case ST_EN:
 		ciphertext = grypt_encrypt(conv, *buf);
 bark("send: plaintext: %s, ciphertext: <%s>", *buf, ciphertext);
-		if (ciphertext)
+		if (ciphertext) {
+			free(bufp);
 			*buf = ciphertext;
+		}
+		break;
+	case ST_PND:
+		*state = ST_UN;
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
 		break;
 	}
 }
