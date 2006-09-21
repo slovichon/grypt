@@ -11,3 +11,10 @@ Then proceed to run Gaim usual installation process:
 
 	./configure
 	make && make install
+
+Usage Notes
+===========
+
+Exchange keys with buddies using gpg --import/export
+and --edit-key with the "trust" command to level 3 or
+higher.
