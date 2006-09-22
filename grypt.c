@@ -179,9 +179,13 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 	char *p, *plaintext, *bufp, msg[BUFSIZ];
 	int *state;
 
+bark("[RECV] %s: %s", *sender, *buf);
+
 	bufp = *buf;
-	if (strncmp(*buf, "GRYPT:", 6) == 0)
+	if (strncmp(*buf, "GRYPT:", 6) == 0) {
+		bark("[RECV] clearing grypt message %s", *buf);
 		*buf = NULL;
+	}
 
 	if (conv == NULL) {
 		/*
@@ -190,17 +194,22 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 		 * let the "new IM" event handle that part
 		 * and let this part be rehandled later.
 		 */
+		bark("[RECV] conv uncreated, returning", *buf);
 		return;
 	}
 
 	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) == NULL)
+	    "/grypt/state")) == NULL) {
 		/* XXX send reject msg back */
+		bark("[RECV] no grypt state, returning", *buf);
 		return;
+	}
 
-	if (fingerprint == NULL)
+	if (fingerprint == NULL) {
 		/* XXX send reject msg back */
+		bark("[RECV] no fingerprint, returning", *buf);
 		return;
+	}
 
 	switch (*state) {
 	case ST_PND:
@@ -287,6 +296,8 @@ bark("[RECV] encryption enabled, respond, SEND (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);
 		}
 		break;
+	default:
+		bark("UNKNOWN STATE %d", *state);
 	}
 #if 0
 	p = "----- BEGIN PGP MESSAGE -----";
@@ -333,6 +344,7 @@ bark("send: plaintext: %s, ciphertext: <%s>", *buf, ciphertext);
 		}
 		break;
 	case ST_PND:
+bark("disabling encryption on premature session establishment");
 		*state = ST_UN;
 		serv_send_im(gaim_conversation_get_gc(conv),
 		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
