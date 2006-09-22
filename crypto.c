@@ -211,13 +211,11 @@ bark("gpgme_data_new: %s", gpgme_strerror(error));
 		return (NULL);
 	}
 
-bark("decrypting...");
 	error = gpgme_op_decrypt(ctx, cipherdata, plaindata);
 	if (error) {
 bark("gpgme_op_decrypt: %s", gpgme_strerror(error));
 		return (NULL);
 	}
-bark("done");
 
 	gpgme_data_release(cipherdata);
 	p = gpgme_data_release_and_get_mem(plaindata, &len);

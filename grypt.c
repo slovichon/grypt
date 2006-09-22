@@ -265,12 +265,13 @@ bark("[RECV] Ending encryption");
 		} else {
 			/* Encrypt, free *text, change buf */
 			plaintext = grypt_decrypt(conv, bufp);
-bark("[RECV] ciphertext: %s, plaintext: %s", bufp, plaintext);
 			if (plaintext) {
 				free(bufp);
-				*buf = plaintext;
-				bufp = *buf;
+				bufp = *buf = plaintext;
+bark("[RECV ENCRYPTED] %s: %s", bufp);
 			}
+else
+ bark("[RECV] %s: %s", *sender, bufp);
 		}
 		break;
 	case ST_UN:
@@ -333,15 +334,16 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
 
 	bufp = *buf;
 
-bark("sending, state=%d", *state);
 	switch (*state) {
 	case ST_EN:
 		ciphertext = grypt_encrypt(conv, *buf);
-bark("send: plaintext: %s, ciphertext: <%s>", *buf, ciphertext);
 		if (ciphertext) {
+bark("send ENCRYPTED: %s", bufp);
 			free(bufp);
-			*buf = ciphertext;
+			bufp = *buf = ciphertext;
 		}
+else
+ bark("[SEND] -> %s: %s", rep, bufp);
 		break;
 	case ST_PND:
 bark("disabling encryption on premature session establishment");
