@@ -179,7 +179,7 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 	char *p, *plaintext, *bufp, msg[BUFSIZ];
 	int *state;
 
-bark("[RECV] %s: %s", *sender, *buf);
+//bark("[RECV] %s: %s", *sender, *buf);
 
 	bufp = *buf;
 	if (strncmp(*buf, "GRYPT:", 6) == 0) {
@@ -255,9 +255,8 @@ bark("[RECV] expected GRYPT message");
 		break;
 	case ST_EN:
 		/* Decrypt message */
-bark("[RECV] Received encrypted message from %s", *sender);
 		if (strcmp(bufp, "GRYPT:END") == 0) {
-bark("[RECV] Ending encryption");
+bark("[RECV] ending encryption");
 			/* Request to end encryption */
 			*state = ST_UN;
 
@@ -268,7 +267,7 @@ bark("[RECV] Ending encryption");
 			if (plaintext) {
 				free(bufp);
 				bufp = *buf = plaintext;
-bark("[RECV ENCRYPTED] %s: %s", bufp);
+bark("[RECV ENCRYPTED] %s: %s", *sender, bufp);
 			}
 else
  bark("[RECV] %s: %s", *sender, bufp);
