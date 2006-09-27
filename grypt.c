@@ -205,9 +205,9 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 		return;
 	}
 
-	if (fingerprint == NULL) {
+	if (identity == NULL) {
 		/* XXX send reject msg back */
-		bark("[RECV] no fingerprint, returning", *buf);
+		bark("[RECV] no identity, returning", *buf);
 		return;
 	}
 
@@ -239,7 +239,8 @@ bark("request to prematurely end crypto session satisfied successfully");
 					 * send it again.
 					 */
 					snprintf(msg, sizeof(msg),
-					    "GRYPT:RES:%s", fingerprint);
+					    "GRYPT:RES:%s",
+					    g_value_get_string(&identity[FPR_COL]));
 
 bark("our request was neglected, reSEND (%s)", msg);
 					serv_send_im(gaim_conversation_get_gc(conv),
@@ -290,7 +291,8 @@ bark("[RECV] Received request to start session: %s", bufp);
 				break;
 			*state = ST_EN;
 
-			snprintf(msg, sizeof(msg), "GRYPT:RES:%s", fingerprint);
+			snprintf(msg, sizeof(msg), "GRYPT:RES:%s",
+			    g_value_get_string(&identity[FPR_COL]));
 
 bark("[RECV] encryption enabled, respond, SEND (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);

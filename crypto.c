@@ -12,9 +12,8 @@
 #include "request.h"
 #include "grypt.h"
 
-const char *fingerprint;
+GValue **identities, *identity;
 char *passphrase;
-GValue **identities;
 gpgme_ctx_t ctx;
 
 static gpgme_error_t
@@ -22,6 +21,14 @@ grypt_passphrase(void *hook, const char *uid_hint,
     const char *passphrase_info, int prev_was_bad, int fd)
 {
 	ssize_t sz;
+
+	if (identity == NULL) {
+		sz = write(fd, "\n", 1);
+		return (1);
+	}
+
+	if (prev_was_bad)
+		grypt_choose(identity);
 
 	if (passphrase == NULL) {
 		sz = write(fd, "\n", 1);
@@ -59,10 +66,10 @@ grypt_choose_cb(gpointer data, GaimRequestFields *fields)
 {
 	const char *f;
 	char *newpass;
-	GValue *id;
 	size_t len;
 
-	id = data;
+	identity = data;
+bark("chose identity %s", g_value_get_string(&identity[NAME_COL]));
 	f = gaim_request_fields_get_string(fields, "passphrase");
 	len = strlen(f);
 	if ((newpass = malloc(len + 2)) == NULL)
@@ -72,7 +79,6 @@ grypt_choose_cb(gpointer data, GaimRequestFields *fields)
 	newpass[len + 1] = '\0';
 	free(passphrase);
 	passphrase = newpass;
-	fingerprint = g_value_get_string(&id[FPR_COL]);
 }
 
 void
@@ -83,6 +89,7 @@ grypt_choose(GValue *id)
 	GaimRequestField *field;
 	char buf[BUFSIZ];
 
+	identity = NULL;
 	fields = gaim_request_fields_new();
 
 	group = gaim_request_field_group_new(NULL);
@@ -117,16 +124,21 @@ grypt_crypto_toggle(GaimConversation *conv)
 		return;
 	}
 
-	if (fingerprint == NULL) {
-		bark("no fingerprint available");
+	if (identity == NULL) {
+		bark("no identity available");
 		return;
 	}
 
 	switch (*state) {
 	case ST_UN:	/* Initiate encryption */
-		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s", fingerprint);
+		snprintf(msg, sizeof(msg), "GRYPT:POKE");
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), msg, 0);
+bark("sending poke message");
 
-bark("Set state to ST_PND");
+		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
+		    g_value_get_string(&identity[FPR_COL]));
+
 		*state = ST_PND;
 
 bark("initiate crypto, SEND %s", msg);

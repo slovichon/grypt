@@ -42,7 +42,7 @@ void	 grypt_evt_im_recv(GaimAccount *, char **, char **,
 
 /* crypto.c */
 extern GValue **identities;
-extern const char *fingerprint;
+extern GValue *identity;
 extern char *passphrase;
 extern gpgme_ctx_t ctx;
 
