@@ -1,0 +1,7 @@
+$Id$
+
+- register buddy-offline and turn grypt state off for
+  active convos
+- change buddy icon to grypt
+- add asterisks to indicate encrypted messages in backlog
+- fix passphrase reprompt
