@@ -69,7 +69,6 @@ grypt_choose_cb(gpointer data, GaimRequestFields *fields)
 	size_t len;
 
 	identity = data;
-bark("chose identity %s", g_value_get_string(&identity[NAME_COL]));
 	f = gaim_request_fields_get_string(fields, "passphrase");
 	len = strlen(f);
 	if ((newpass = malloc(len + 2)) == NULL)
@@ -135,6 +134,7 @@ grypt_crypto_toggle(GaimConversation *conv)
 		serv_send_im(gaim_conversation_get_gc(conv),
 		    gaim_conversation_get_name(conv), msg, 0);
 bark("sending poke message");
+		usleep(5000);
 
 		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
 		    g_value_get_string(&identity[FPR_COL]));
