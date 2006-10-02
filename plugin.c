@@ -34,6 +34,8 @@ plugin_load(GaimPlugin *p)
 	    GAIM_CALLBACK(grypt_evt_im_recv), NULL);
 	gaim_signal_connect(h, "sending-im-msg", p,
 	    GAIM_CALLBACK(grypt_evt_im_send), NULL);
+	gaim_signal_connect(h, "buddy-signed-off", p,
+	    GAIM_CALLBACK(grypt_evt_sign_off), NULL);
 	return (TRUE);
 }
 

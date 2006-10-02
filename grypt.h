@@ -10,9 +10,10 @@
 
 #define FPRSIZ 40
 
-#define ST_UN  1 /* Unencrypted */
-#define ST_PND 2 /* Pending */
-#define ST_EN  3 /* Encrypted */
+#define ST_UN   1 /* Unencrypted */
+#define ST_PND  2 /* Pending */
+#define ST_EN   3 /* Encrypted */
+#define ST_NSUP 4 /* Unsupported, don't even try */
 
 /* crypto.c */
 int	 grypt_crypto_init(void);
@@ -37,6 +38,7 @@ int	 grypt_session_start(GaimConversation *, char *);
 void	 grypt_evt_new_conversation(GaimConversation *);
 void	 grypt_evt_del_conversation(GaimConversation *);
 void	 grypt_evt_im_send(GaimAccount *, char *, char **, void *);
+void	 grypt_evt_sign_off(GaimBuddy *, void *);
 void	 grypt_evt_im_recv(GaimAccount *, char **, char **,
     GaimConversation *, int *, void *);
 
