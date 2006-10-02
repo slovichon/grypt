@@ -150,6 +150,7 @@ grypt_evt_del_conversation(GaimConversation *conv)
 	if ((key = gaim_conversation_get_data(conv,
 	    "/grypt/key")) != NULL)
 		gpgme_key_release(key);
+printf("\n");
 }
 
 int
@@ -223,7 +224,8 @@ bark("request to prematurely end crypto session satisfied successfully");
 			*state = ST_UN;
 			*buf = NULL;
 			return;
-		} else if (strncmp(bufp, "GRYPT:", 6) == 0) {
+		} else if (strncmp(bufp, "GRYPT:REQ:", 10) == 0 ||
+		    strncmp(bufp, "GRYPT:RES:", 10) == 0) {
 			if ((p = strrchr(bufp, ':')) == NULL) {
 				bark("internal error: can't find colon (%s)", bufp);
 				*state = ST_UN;
@@ -250,6 +252,11 @@ bark("our request was neglected, reSEND (%s)", msg);
 				bark("can't start session");
 			}
 		} else {
+			if (strncmp(bufp, "GRYPT:", 6) != 0)
+{
+				*state = ST_NSUP;
+bark("[recv] didn't received GRYPT msg, peer does not support it, quitting");
+}
 			/* Remote user may not have grypt... */
 bark("[RECV] expected GRYPT message");
 		}
@@ -260,23 +267,27 @@ bark("[RECV] expected GRYPT message");
 bark("[RECV] ending encryption");
 			/* Request to end encryption */
 			*state = ST_UN;
-
-			// print encryption disabled to window/log
 		} else {
-			/* Encrypt, free *text, change buf */
-			plaintext = grypt_decrypt(conv, bufp);
-			if (plaintext) {
-				free(bufp);
-				bufp = *buf = plaintext;
+			if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
+bark("[RECV] whoa, received crypt session request when already in session!");
+				goto reencrypt;
+			} else {
+				/* Encrypt, free *text, change buf */
+				plaintext = grypt_decrypt(conv, bufp);
+				if (plaintext) {
+					free(bufp);
+					bufp = *buf = plaintext;
 bark("[RECV ENCRYPTED] %s: %s", *sender, bufp);
-			}
+				}
 else
  bark("[RECV] %s: %s", *sender, bufp);
+			}
 		}
 		break;
 	case ST_UN:
 		/* XXX if we receive an encrypted msg, send GRYPT:END */
-		if (strncmp(bufp, "GRYPT:REQ:", 6) == 0) {
+		if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
+reencrypt:
 			*buf = NULL;
 bark("[RECV] Received request to start session: %s", bufp);
 			p = strrchr(bufp, ':');
@@ -297,6 +308,10 @@ bark("[RECV] Received request to start session: %s", bufp);
 bark("[RECV] encryption enabled, respond, SEND (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);
 		}
+		break;
+	case ST_NSUP:
+		if (strncmp(bufp, "GRYPT:", 10) == 0)
+			*state = ST_UN;
 		break;
 	default:
 		bark("UNKNOWN STATE %d", *state);
@@ -353,4 +368,17 @@ bark("disabling encryption on premature session establishment");
 		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
 		break;
 	}
+}
+
+void
+grypt_evt_sign_off(GaimBuddy *buddy, void *data)
+{
+	GaimConversation *conv;
+	int *state;
+
+	if ((conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
+	    buddy->name, buddy->account)) != NULL)
+		if ((state = gaim_conversation_get_data(conv,
+		    "/grypt/state")) != NULL)
+			*state = ST_UN;
 }
