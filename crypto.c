@@ -134,7 +134,7 @@ grypt_crypto_toggle(GaimConversation *conv)
 		serv_send_im(gaim_conversation_get_gc(conv),
 		    gaim_conversation_get_name(conv), msg, 0);
 bark("sending poke message");
-		usleep(5000);
+		usleep(1000 * 1000);
 
 		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
 		    g_value_get_string(&identity[FPR_COL]));
