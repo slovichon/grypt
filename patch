@@ -109,6 +109,35 @@ diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.mingw gaim-2.0.0beta3.1/plugins
  	$(MAKE) -C $(DOCKLET) -f Makefile.mingw clean
  	$(MAKE) -C $(SSL) -f Makefile.mingw clean
 +	$(MAKE) -C $(GRYPT) -f Makefile.mingw clean
+diff -ru gaim-2.0.0beta3.1.orig/src/conversation.c gaim-2.0.0beta3.1/src/conversation.c
+--- gaim-2.0.0beta3.1.orig/src/conversation.c	2006-08-19 16:36:07.000000000 -0400
++++ gaim-2.0.0beta3.1/src/conversation.c	2006-10-09 16:47:26.000000000 -0400
+@@ -124,7 +124,7 @@
+ 
+ 		gaim_signal_emit(gaim_conversations_get_handle(), "sending-im-msg",
+ 						 account,
+-						 gaim_conversation_get_name(conv), &sent);
++						 gaim_conversation_get_name(conv), &sent, &msgflags);
+ 
+ 		if (sent != NULL && sent[0] != '\0') {
+ 
+@@ -1993,12 +1993,13 @@
+ 						 gaim_value_new(GAIM_TYPE_UINT));
+ 
+ 	gaim_signal_register(handle, "sending-im-msg",
+-						 gaim_marshal_VOID__POINTER_POINTER_POINTER,
+-						 NULL, 3,
++						 gaim_marshal_VOID__POINTER_POINTER_POINTER_POINTER,
++						 NULL, 4,
+ 						 gaim_value_new(GAIM_TYPE_SUBTYPE,
+ 										GAIM_SUBTYPE_ACCOUNT),
+ 						 gaim_value_new(GAIM_TYPE_STRING),
+-						 gaim_value_new_outgoing(GAIM_TYPE_STRING));
++						 gaim_value_new_outgoing(GAIM_TYPE_STRING),
++						 gaim_value_new_outgoing(GAIM_TYPE_UINT));
+ 
+ 	gaim_signal_register(handle, "sent-im-msg",
+ 						 gaim_marshal_VOID__POINTER_POINTER_POINTER,
 diff -ru gaim-2.0.0beta3.1.orig/src/conversation.h gaim-2.0.0beta3.1/src/conversation.h
 --- gaim-2.0.0beta3.1.orig/src/conversation.h	2006-08-19 16:36:07.000000000 -0400
 +++ gaim-2.0.0beta3.1/src/conversation.h	2006-10-09 15:30:50.000000000 -0400
@@ -122,18 +151,40 @@ diff -ru gaim-2.0.0beta3.1.orig/src/conversation.h gaim-2.0.0beta3.1/src/convers
  
  } GaimMessageFlags;
  
+diff -ru gaim-2.0.0beta3.1.orig/src/gtkconv.c gaim-2.0.0beta3.1/src/gtkconv.c
+--- gaim-2.0.0beta3.1.orig/src/gtkconv.c	2006-08-19 16:36:07.000000000 -0400
++++ gaim-2.0.0beta3.1/src/gtkconv.c	2006-10-09 16:27:40.000000000 -0400
+@@ -4684,6 +4684,9 @@
+ 	if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
+ 		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", gtk_font_options_all);
+ 
++	if (flags & GAIM_MESSAGE_ENCRYPTED)
++		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "*", gtk_font_options_all);
++
+ 	tm = *(localtime(&mtime));
+ 	mdate = gaim_signal_emit_return_1(gaim_gtk_conversations_get_handle(),
+ 	                                  "conversation-timestamp",
 diff -ru gaim-2.0.0beta3.1.orig/src/log.c gaim-2.0.0beta3.1/src/log.c
 --- gaim-2.0.0beta3.1.orig/src/log.c	2006-08-19 16:36:07.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/log.c	2006-10-09 15:30:50.000000000 -0400
-@@ -1210,6 +1210,8 @@
++++ gaim-2.0.0beta3.1/src/log.c	2006-10-09 16:20:03.000000000 -0400
+@@ -1069,6 +1069,8 @@
+ 	if(log->type == GAIM_LOG_SYSTEM){
+ 		written += fprintf(data->file, "---- %s @ %s ----<br/>\n", msg_fixed, date);
  	} else {
++		if (type & GAIM_MESSAGE_ENCRYPTED)
++			written += fprintf(data->file, "*");
+ 		if (type & GAIM_MESSAGE_SYSTEM)
+ 			written += fprintf(data->file, "<font size=\"2\">(%s)</font><b> %s</b><br/>\n", date, msg_fixed);
+ 		else if (type & GAIM_MESSAGE_ERROR)
+@@ -1208,6 +1210,8 @@
+ 	if(log->type == GAIM_LOG_SYSTEM){
+ 		written += fprintf(data->file, "---- %s @ %s ----\n", stripped, date);
+ 	} else {
++		if (type & GAIM_MESSAGE_ENCRYPTED)
++			written += fprintf(data->file, "*");
  		if (type & GAIM_MESSAGE_SEND ||
  			type & GAIM_MESSAGE_RECV) {
-+			if (type & GAIM_MESSAGE_ENCRYPTED)
-+				written += fprintf(data->file, "*");
  			if (type & GAIM_MESSAGE_AUTO_RESP) {
- 				written += fprintf(data->file, _("(%s) %s <AUTO-REPLY>: %s\n"), date,
- 						from, stripped);
 diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/family_locate.c gaim-2.0.0beta3.1/src/protocols/oscar/family_locate.c
 --- gaim-2.0.0beta3.1.orig/src/protocols/oscar/family_locate.c	2006-08-19 16:35:58.000000000 -0400
 +++ gaim-2.0.0beta3.1/src/protocols/oscar/family_locate.c	2006-10-09 15:30:50.000000000 -0400
