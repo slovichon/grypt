@@ -10,16 +10,6 @@
 #include "gtkplugin.h"
 #include "gtkutils.h"
 
-#define GAIM_STOCK_GRYPT "gaim-grypt"
-
-static struct {
-	const char *name;
-	const char *dir;
-	const char *filename;
-} const grypt_stock_icon = {
-	GAIM_STOCK_GRYPT, "buttons", "grypt.png"
-};
-
 GtkWidget *
 grypt_gui_config(GaimPlugin *p)
 {
@@ -94,7 +84,7 @@ grypt_gui_id_select_cb(GtkTreeSelection *sel, gpointer data)
 
 	if (gtk_tree_selection_get_selected(sel, &model, &iter)) {
 		gtk_tree_model_get(model, &iter, KEYID_COL, &keyid, -1);
-		for (v = identities; (u = *v) != NULL; v++)
+		for (v = grypt_identities; (u = *v) != NULL; v++)
 			if (strcmp(keyid,
 			    g_value_get_string(&u[KEYID_COL])) == 0) {
 				grypt_choose(u);
@@ -110,7 +100,7 @@ grypt_gui_gather_ids(GtkListStore *t)
 	GtkTreeIter row;
 	GValue **v, *u;
 
-	for (v = identities; *v != NULL; v++) {
+	for (v = grypt_identities; *v != NULL; v++) {
 		u = *v;
 		/* Create row */
 		gtk_list_store_append(t, &row);

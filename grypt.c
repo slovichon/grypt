@@ -1,5 +1,6 @@
 /* $Id$ */
 
+#define _GNU_SOURCE /* asprintf */
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -10,7 +11,11 @@
 #include "gaim.h"
 #include "gtkplugin.h"
 #include "grypt.h"
+#include "conversation.h"
 #include "protocols/oscar/oscar.h"
+#include "slist.h"
+
+struct grypt_peers grypt_peers;
 
 /* copied from protocols/oscar/oscar.c */
 typedef struct _OscarData OscarData;
@@ -102,19 +107,18 @@ grypt_aim_locate_finduserinfo(OscarSession *sess, const char *sn)
 /* ******************************************************** */
 
 static int
-grypt_possible(GaimConversation *conv)
+grypt_possible(GaimAccount *ga, const char *name)
 {
 	aim_userinfo_t *userinfo;
 	GaimConnection *gc;
 	OscarData *od;
 
-	if (strcmp(gaim_account_get_protocol_id(conv->account),
-	    "prpl-oscar") != 0)
+	if (strcmp(gaim_account_get_protocol_id(ga), "prpl-oscar") != 0)
 		return (FALSE);
 
-	gc = gaim_conversation_get_gc(conv);
+	gc = gaim_account_get_connection(ga);
 	od = gc->proto_data;
-	userinfo = grypt_aim_locate_finduserinfo(od->sess, conv->name);
+	userinfo = grypt_aim_locate_finduserinfo(od->sess, name);
 	if (userinfo == NULL ||
 	    (userinfo->capabilities & AIM_CAPS_GRYPT) == 0)
 		return (FALSE);
@@ -124,261 +128,174 @@ grypt_possible(GaimConversation *conv)
 void
 grypt_evt_new_conversation(GaimConversation *conv)
 {
-	int *state;
+	struct grypt_peer_data *gpd;
+	char msg[BUFSIZ];
 
-	if (!grypt_possible(conv))
+	if (!grypt_possible(gaim_conversation_get_account(conv),
+	    gaim_conversation_get_name(conv)))
 		return;
-bark("EVENT NEW CONV");
 
-	if ((state = malloc(sizeof(*state))) == NULL)
-		croak("couldn't malloc");
-	*state = ST_UN;
-	gaim_conversation_set_data(conv, "/grypt/state", state);
-	grypt_crypto_toggle(conv);
-}
+	if (grypt_identity == NULL)
+		return;
 
-void
-grypt_evt_del_conversation(GaimConversation *conv)
-{
-	gpgme_key_t key;
-	int *state;
-
-	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) != NULL && *state != ST_UN)
-		grypt_crypto_toggle(conv);
-	free(state);
-	if ((key = gaim_conversation_get_data(conv,
-	    "/grypt/key")) != NULL)
-		gpgme_key_release(key);
-printf("\n");
+	gpd = grypt_peer_get(gaim_conversation_get_name(conv), GPF_CREAT);
+	if (gpd->gpd_key == NULL) {
+		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
+		    g_value_get_string(&grypt_identity[FPR_COL]));
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), msg, 0);
+	}
 }
 
 int
-grypt_session_start(GaimConversation *conv, char *fpr)
+grypt_session_start(struct grypt_peer_data *gpd, const char *fpr)
 {
 	gpgme_error_t error;
-	gpgme_key_t key;
 
-	if ((key = gaim_conversation_get_data(conv,
-	    "/grypt/key")) != NULL)
-		return (TRUE);
+	if (gpd->gpd_key)
+		gpgme_key_release(gpd->gpd_key);
 
-	error = gpgme_get_key(ctx, fpr, &key, 0);
-	if (error || key == NULL || key->uids->uid == NULL) {
+	error = gpgme_get_key(grypt_ctx, fpr, &gpd->gpd_key, 0);
+	if (error || gpd->gpd_key == NULL || gpd->gpd_key->uids->uid == NULL) {
+		gpd->gpd_key = NULL;
 		bark("can't get key for %s [%s]", fpr,
 		    gpgme_strerror(error));
 		return (FALSE);
 	}
-	gaim_conversation_set_data(conv, "/grypt/key", key);
 	return (TRUE);
 }
 
-void
+int
 grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
     GaimConversation *conv, int *flags, void *data)
 {
-	char *p, *plaintext, *bufp, msg[BUFSIZ];
-	int *state;
+	char *plaintext, *bufp, msg[BUFSIZ];
+	struct grypt_peer_data *gpd;
 
-//bark("[RECV] %s: %s", *sender, *buf);
+	if (!grypt_possible(account, *sender))
+		return (0);
 
 	bufp = *buf;
-	if (strncmp(*buf, "GRYPT:", 6) == 0) {
-		bark("[RECV] clearing grypt message %s", *buf);
+	if (strncmp(bufp, "GRYPT:", 6) == 0) {
+		bark("[RECV] clearing grypt message %.15s...", *buf);
 		*buf = NULL;
 	}
 
-	if (conv == NULL) {
-		/*
-		 * A grypt message was sent but we can't
-		 * do anything since we can't store, so
-		 * let the "new IM" event handle that part
-		 * and let this part be rehandled later.
-		 */
-		bark("[RECV] conv uncreated, returning", *buf);
-		return;
+	if (grypt_identity == NULL) {
+		snprintf(msg, sizeof(msg), "GRYPT:DENY");
+bark("no identity, telling peer to give up (%s)", msg);
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), msg, 0);
+		return (0);
 	}
 
-	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) == NULL) {
-		/* XXX send reject msg back */
-		bark("[RECV] no grypt state, returning", *buf);
-		return;
-	}
-
-	if (identity == NULL) {
-		/* XXX send reject msg back */
-		bark("[RECV] no identity, returning", *buf);
-		return;
-	}
-
-	switch (*state) {
-	case ST_PND:
-		/*
-		 * Session pending, active establishment,
-		 * response may have been received.
-		 */
-bark("[RECV] Session should be started: received %s from %s", bufp, *sender);
-		if (strcmp(bufp, "GRYPT:END") == 0) {
-bark("request to prematurely end crypto session satisfied successfully");
-			*state = ST_UN;
-			*buf = NULL;
-			return;
-		} else if (strncmp(bufp, "GRYPT:REQ:", 10) == 0 ||
-		    strncmp(bufp, "GRYPT:RES:", 10) == 0) {
-			if ((p = strrchr(bufp, ':')) == NULL) {
-				bark("internal error: can't find colon (%s)", bufp);
-				*state = ST_UN;
-				*buf = NULL;
-				return;
-			}
-			p++;
-			if (grypt_session_start(conv, p)) {
-				*state = ST_EN;
-				if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
-					/*
-					 * Our request wasn't seen;
-					 * send it again.
-					 */
-					snprintf(msg, sizeof(msg),
-					    "GRYPT:RES:%s",
-					    g_value_get_string(&identity[FPR_COL]));
-
-bark("our request was neglected, reSEND (%s)", msg);
-					serv_send_im(gaim_conversation_get_gc(conv),
-					    gaim_conversation_get_name(conv), msg, 0);
-				}
-			} else {
-				bark("can't start session");
-			}
-		} else {
-			if (strncmp(bufp, "GRYPT:", 6) != 0)
-{
-				*state = ST_NSUP;
-bark("[recv] didn't received GRYPT msg, peer does not support it, quitting");
-}
-			/* Remote user may not have grypt... */
-bark("[RECV] expected GRYPT message");
-		}
-		break;
-	case ST_EN:
-		/* Decrypt message */
-		if (strcmp(bufp, "GRYPT:END") == 0) {
-bark("[RECV] ending encryption");
-			/* Request to end encryption */
-			*state = ST_UN;
-		} else {
-			if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
-bark("[RECV] whoa, received crypt session request when already in session!");
-				goto reencrypt;
-			} else {
-				/* Encrypt, free *text, change buf */
-				plaintext = grypt_decrypt(conv, bufp);
-				if (plaintext) {
-					free(bufp);
-					bufp = *buf = plaintext;
+	gpd = grypt_peer_get(*sender, GPF_CREAT);
+	if (strncmp(bufp, "GRYPT:", 6) == 0 &&
+	    strncmp(bufp, "GRYPT:DENY", 10) != 0)
+		gpd->gpd_deny = 0;
+	else
+		gpd->gpd_deny = 1;
+	if (strncmp(bufp, "GRYPT:ENC:", 10) == 0) {
+		plaintext = grypt_decrypt(&bufp[10]);
+		if (plaintext) {
+			*flags |= GAIM_MESSAGE_ENCRYPTED;
+			free(bufp);
+			bufp = *buf = plaintext;
 bark("[RECV ENCRYPTED] %s: %s", *sender, bufp);
-				}
-else
- bark("[RECV] %s: %s", *sender, bufp);
+			if (gpd->gpd_key == NULL) {
+				snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
+				    g_value_get_string(&grypt_identity[FPR_COL]));
+				serv_send_im(gaim_account_get_connection(account),
+				    *sender, msg, 0);
 			}
 		}
-		break;
-	case ST_UN:
-		/* XXX if we receive an encrypted msg, send GRYPT:END */
-		if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
-reencrypt:
-			*buf = NULL;
-bark("[RECV] Received request to start session: %s", bufp);
-			p = strrchr(bufp, ':');
-			if (p == NULL) {
-				bark("internal error: can't find colon (%s)", bufp);
-				*state = ST_UN;
-				return;
-			}
-			p++;
-			/* Request to initiate crypto */
-			if (!grypt_session_start(conv, p))
-				break;
-			*state = ST_EN;
-
+	} else if (strncmp(bufp, "GRYPT:REQ:", 10) == 0) {
+		if (grypt_session_start(gpd, &bufp[10])) {
 			snprintf(msg, sizeof(msg), "GRYPT:RES:%s",
-			    g_value_get_string(&identity[FPR_COL]));
-
-bark("[RECV] encryption enabled, respond, SEND (%s)", msg);
+			    g_value_get_string(&grypt_identity[FPR_COL]));
+bark("[RECV] request received, responding (%s)", msg);
 			serv_send_im(account->gc, *sender, msg, 0);
 		}
-		break;
-	case ST_NSUP:
-		if (strncmp(bufp, "GRYPT:", 10) == 0)
-			*state = ST_UN;
-		break;
-	default:
-		bark("UNKNOWN STATE %d", *state);
+	} else if (strncmp(bufp, "GRYPT:RES:", 10) == 0) {
+		grypt_session_start(gpd, &bufp[10]);
 	}
-#if 0
-	p = "----- BEGIN PGP MESSAGE -----";
-	if (strncmp(bufp, p, strlen(p)) == 0) {
-bark("[RECV] received an encrypted message unexpectantly, trying to decrypt...");
-		plaintext = grypt_decrypt(conv, bufp);
-bark("[RECV] ciphertext: %s, plaintext: %s", bufp, plaintext);
-		if (plaintext) {
-			free(bufp);
-			*buf = plaintext;
-			bufp = *buf;
-		}
-		*state = ST_UN;
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
-	}
-#endif
+	return (0);
 }
 
-void
+int
 grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
 {
-	char *ciphertext, *bufp;
-	GaimConversation *conv;
-	int *state;
+	struct grypt_peer_data *gpd;
+	char msg[BUFSIZ];
+	char *ciphertext;
 
-	if ((conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
-	    rep, account)) == NULL)
-		return;
-	if ((state = gaim_conversation_get_data(conv,
-	    "/grypt/state")) == NULL)
-		return;
+	if (!grypt_possible(account, rep))
+		return (0);
 
-	bufp = *buf;
-
-	switch (*state) {
-	case ST_EN:
-		ciphertext = grypt_encrypt(conv, *buf);
+	gpd = grypt_peer_get(rep, GPF_CREAT);
+	if (gpd->gpd_key) {
+		ciphertext = grypt_encrypt(gpd->gpd_key, *buf);
 		if (ciphertext) {
-bark("send ENCRYPTED: %s", bufp);
-			free(bufp);
-			bufp = *buf = ciphertext;
+bark("send ENCRYPTED: %s", *buf);
+			free(*buf);
+			if (asprintf(buf, "GRYPT:ENC:%s",
+			    ciphertext) == -1)
+				croak("asprintf");
+			free(ciphertext);
 		}
-else
- bark("[SEND] -> %s: %s", rep, bufp);
-		break;
-	case ST_PND:
-bark("disabling encryption on premature session establishment");
-		*state = ST_UN;
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
-		break;
+	} else {
+		if (!gpd->gpd_deny && grypt_identity) {
+			snprintf(msg, sizeof(msg), "GRYPT:RES:%s",
+			    g_value_get_string(&grypt_identity[FPR_COL]));
+bark("[RECV] request received, responding (%s)", msg);
+			serv_send_im(account->gc, rep, msg, 0);
+		}
 	}
+	return (0);
 }
 
 void
 grypt_evt_sign_off(GaimBuddy *buddy, void *data)
 {
-	GaimConversation *conv;
-	int *state;
+	struct grypt_peer_data *gpd;
 
-	if ((conv = gaim_find_conversation_with_account(GAIM_CONV_TYPE_IM,
-	    buddy->name, buddy->account)) != NULL)
-		if ((state = gaim_conversation_get_data(conv,
-		    "/grypt/state")) != NULL)
-			*state = ST_UN;
+	gpd = grypt_peer_get(buddy->name, 0);
+	if (gpd) {
+		gpgme_key_release(gpd->gpd_key);
+		gpd->gpd_key = NULL;
+	}
+}
+
+struct grypt_peer_data *
+grypt_peer_get(const char *name, int flags)
+{
+	struct grypt_peer_data *gpd;
+
+	SLIST_FOREACH(gpd, &grypt_peers, gpd_link)
+		if (strcmp(gpd->gpd_screenname, name) == 0)
+			return (gpd);
+	if ((flags & GPF_CREAT) == 0)
+		return (NULL);
+	if ((gpd = malloc(sizeof(*gpd))) == NULL)
+		croak("malloc");
+	memset(gpd, 0, sizeof(*gpd));
+	if ((gpd->gpd_screenname = strdup(name)) == NULL)
+		croak("strdup");
+	SLIST_INSERT_HEAD(&grypt_peers, gpd, gpd_link);
+	return (gpd);
+}
+
+void
+grypt_peers_free(void)
+{
+	struct grypt_peer_data *gpd, *next;
+
+	for (gpd = SLIST_FIRST(&grypt_peers); gpd; gpd = next) {
+		next = SLIST_NEXT(gpd, gpd_link);
+		free(gpd->gpd_screenname);
+		if (gpd->gpd_key)
+			gpgme_key_release(gpd->gpd_key);
+		free(gpd);
+	}
+	SLIST_INIT(&grypt_peers);
 }

@@ -12,31 +12,32 @@
 #include "request.h"
 #include "grypt.h"
 
-GValue **identities, *identity;
-char *passphrase;
-gpgme_ctx_t ctx;
+GValue		**grypt_identities;
+GValue		 *grypt_identity;
+char		 *grypt_passphrase;
+gpgme_ctx_t	  grypt_ctx;
 
 static gpgme_error_t
-grypt_passphrase(void *hook, const char *uid_hint,
+grypt_passphrase_cb(void *hook, const char *uid_hint,
     const char *passphrase_info, int prev_was_bad, int fd)
 {
 	ssize_t sz;
 
-	if (identity == NULL) {
+	if (grypt_identity == NULL) {
 		sz = write(fd, "\n", 1);
 		return (1);
 	}
 
 	if (prev_was_bad)
-		grypt_choose(identity);
+		grypt_choose(grypt_identity);
 
-	if (passphrase == NULL) {
+	if (grypt_passphrase == NULL) {
 		sz = write(fd, "\n", 1);
 		return (1);
 	}
 
-	sz = strlen(passphrase);
-	if (write(fd, passphrase, sz) != sz) {
+	sz = strlen(grypt_passphrase);
+	if (write(fd, grypt_passphrase, sz) != sz) {
 		bark("write");
 		// while (write != 1);
 		sz = write(fd, "\n", 1);
@@ -49,15 +50,15 @@ grypt_crypto_init(void)
 {
 	gpgme_error_t error;
 
-	error = gpgme_new(&ctx);
+	error = gpgme_new(&grypt_ctx);
 	if (error) {
 		bark("unable to initalize gpgme: %s",
 		    gpgme_strerror(error));
 		return (FALSE);
 	}
 
-	gpgme_set_armor(ctx, 1);
-	gpgme_set_passphrase_cb(ctx, grypt_passphrase, NULL);
+	gpgme_set_armor(grypt_ctx, 1);
+	gpgme_set_passphrase_cb(grypt_ctx, grypt_passphrase_cb, NULL);
 	return (TRUE);
 }
 
@@ -68,7 +69,7 @@ grypt_choose_cb(gpointer data, GaimRequestFields *fields)
 	char *newpass;
 	size_t len;
 
-	identity = data;
+	grypt_identity = data;
 	f = gaim_request_fields_get_string(fields, "passphrase");
 	len = strlen(f);
 	if ((newpass = malloc(len + 2)) == NULL)
@@ -76,8 +77,8 @@ grypt_choose_cb(gpointer data, GaimRequestFields *fields)
 	strncpy(newpass, f, len);
 	newpass[len] = '\n';
 	newpass[len + 1] = '\0';
-	free(passphrase);
-	passphrase = newpass;
+	free(grypt_passphrase);
+	grypt_passphrase = newpass;
 }
 
 void
@@ -88,7 +89,7 @@ grypt_choose(GValue *id)
 	GaimRequestField *field;
 	char buf[BUFSIZ];
 
-	identity = NULL;
+	grypt_identity = NULL;
 	fields = gaim_request_fields_new();
 
 	group = gaim_request_field_group_new(NULL);
@@ -110,66 +111,14 @@ grypt_choose(GValue *id)
 	    _("Cancel"), NULL, id);
 }
 
-void
-grypt_crypto_toggle(GaimConversation *conv)
-{
-	char msg[BUFSIZ];
-	int *state;
-
-	state = gaim_conversation_get_data(conv, "/grypt/state");
-	if (state == NULL) {
-		/* This shouldn't happen */
-		bark("couldn't retrieve encryption state from conv");
-		return;
-	}
-
-	if (identity == NULL) {
-		bark("no identity available");
-		return;
-	}
-
-	switch (*state) {
-	case ST_UN:	/* Initiate encryption */
-		snprintf(msg, sizeof(msg), "GRYPT:POKE");
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), msg, 0);
-bark("sending poke message");
-		usleep(1000 * 1000);
-
-		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
-		    g_value_get_string(&identity[FPR_COL]));
-
-		*state = ST_PND;
-
-bark("initiate crypto, SEND %s", msg);
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), msg, 0);
-		break;
-	case ST_EN:	/* End encryption */
-bark("ending crypto session");
-	case ST_PND:	/* Cancel initiation */
-		*state = ST_UN;
-
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), "GRYPT:END", 0);
-		break;
-	}
-}
-
 char *
-grypt_encrypt(GaimConversation *conv, char *plaintext)
+grypt_encrypt(gpgme_key_t key, const char *plaintext)
 {
 	gpgme_data_t plaindata, cipherdata;
-	gpgme_key_t key, keys[2];
+	gpgme_key_t keys[2];
 	gpgme_error_t error;
 	char *ciphertext, *p;
 	size_t len;
-
-	if ((key = gaim_conversation_get_data(conv,
-	    "/grypt/key")) == NULL) {
-bark("grypt_encrypt: can't find key");
-		return (NULL);
-	}
 
 	error = gpgme_data_new_from_mem(&plaindata, plaintext,
 	    strlen(plaintext), 0);
@@ -186,7 +135,7 @@ bark("gpgme_data_new: %s", gpgme_strerror(error));
 
 	keys[0] = key;
 	keys[1] = NULL;
-	error = gpgme_op_encrypt(ctx, keys, 0, plaindata, cipherdata);
+	error = gpgme_op_encrypt(grypt_ctx, keys, 0, plaindata, cipherdata);
 	if (error) {
 bark("gpgme_op_encrypt: %s", gpgme_strerror(error));
 		return (NULL);
@@ -203,7 +152,7 @@ bark("gpgme_op_encrypt: %s", gpgme_strerror(error));
 }
 
 char *
-grypt_decrypt(GaimConversation *conv, char *ciphertext)
+grypt_decrypt(const char *ciphertext)
 {
 	gpgme_data_t plaindata, cipherdata;
 	gpgme_error_t error;
@@ -223,7 +172,7 @@ bark("gpgme_data_new: %s", gpgme_strerror(error));
 		return (NULL);
 	}
 
-	error = gpgme_op_decrypt(ctx, cipherdata, plaindata);
+	error = gpgme_op_decrypt(grypt_ctx, cipherdata, plaindata);
 	if (error) {
 bark("gpgme_op_decrypt: %s", gpgme_strerror(error));
 		return (NULL);
@@ -247,12 +196,12 @@ grypt_gather_identities(void)
 	gpgme_key_t k;
 	size_t nkeys;
 
-	if (identities) {
+	if (grypt_identities) {
 		bark("identities already loaded");
 		return;
 	}
 
-	error = gpgme_op_keylist_start(ctx, NULL, 1);
+	error = gpgme_op_keylist_start(grypt_ctx, NULL, 1);
 	if (error) {
 		bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
 		return;
@@ -260,7 +209,7 @@ grypt_gather_identities(void)
 
 	nkeys = 0;
 	for (;;) {
-		error = gpgme_op_keylist_next(ctx, &k);
+		error = gpgme_op_keylist_next(grypt_ctx, &k);
 		if (error || k == NULL)
 			break;
 		nkeys++;
@@ -269,18 +218,18 @@ grypt_gather_identities(void)
 	if (gpg_err_code(error) != GPG_ERR_EOF)
 		bark("gpgme_op_keylist_next: %s", gpgme_strerror(error));
 
-	if ((v = identities = calloc(nkeys, sizeof(GValue *))) == NULL)
+	if ((v = grypt_identities = calloc(nkeys, sizeof(GValue *))) == NULL)
 		croak("calloc");
-	error = gpgme_op_keylist_end(ctx);
+	error = gpgme_op_keylist_end(grypt_ctx);
 
-	error = gpgme_op_keylist_start(ctx, NULL, 1);
+	error = gpgme_op_keylist_start(grypt_ctx, NULL, 1);
 	if (error) {
 		bark("gpgme_op_keylist_start: %s", gpgme_strerror(error));
 		return;
 	}
 
 	for (;;) {
-		error = gpgme_op_keylist_next(ctx, &k);
+		error = gpgme_op_keylist_next(grypt_ctx, &k);
 		if (error || k == NULL)
 			break;
 
@@ -312,7 +261,7 @@ grypt_gather_identities(void)
 	}
 	if (gpg_err_code(error) != GPG_ERR_EOF)
 		bark("gpgme_op_keylist_next: %s", gpgme_strerror(error));
-	error = gpgme_op_keylist_end(ctx);
+	error = gpgme_op_keylist_end(grypt_ctx);
 }
 
 void
@@ -320,12 +269,12 @@ grypt_free_identities(void)
 {
 	GValue **v;
 
-	if (identities == NULL)
+	if (grypt_identities == NULL)
 		return;
 
-	for (v = identities; *v != NULL; v++)
+	for (v = grypt_identities; *v != NULL; v++)
 		if (*v != NULL)
 			free(*v);
-	free(identities);
-	identities = NULL;
+	free(grypt_identities);
+	grypt_identities = NULL;
 }

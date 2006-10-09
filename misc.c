@@ -10,7 +10,7 @@
 #include "grypt.h"
 
 void
-bark(char *fmt, ...)
+bark(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);
@@ -22,7 +22,7 @@ bark(char *fmt, ...)
 }
 
 void
-croak(char *fmt, ...)
+croak(const char *fmt, ...)
 {
 	va_list ap;
 	va_start(ap, fmt);

@@ -21,15 +21,13 @@ plugin_load(GaimPlugin *p)
 	grypt_gather_identities();
 
 	/* XXX: read last identity */
-	if (identities[0])
-		grypt_choose(identities[0]);
+	if (grypt_identities[0])
+		grypt_choose(grypt_identities[0]);
 //	grypt_identity_load();
 
 	/* Attach callbacks */
 	gaim_signal_connect(h, "conversation-created", p,
 	    GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
-	gaim_signal_connect(h, "deleting-conversation", p,
-	    GAIM_CALLBACK(grypt_evt_del_conversation), NULL);
 	gaim_signal_connect(h, "receiving-im-msg", p,
 	    GAIM_CALLBACK(grypt_evt_im_recv), NULL);
 	gaim_signal_connect(h, "sending-im-msg", p,
@@ -42,24 +40,9 @@ plugin_load(GaimPlugin *p)
 static gboolean
 plugin_unload(GaimPlugin *p)
 {
-	GaimConversation *conv;
-	gpgme_key_t key;
-	GList *iter;
-	int *state;
-
 	/* Free encryption-session data */
-	for (iter = gaim_get_conversations(); iter != NULL; iter = iter->next) {
-		conv = (GaimConversation *)iter->data;
-		if ((state = gaim_conversation_get_data(conv,
-		    "/grypt/state")) != NULL)
-			free(state);
-		gaim_conversation_set_data(conv, "/grypt/state", NULL);
-		if ((key = gaim_conversation_get_data(conv,
-		    "/grypt/key")) != NULL)
-			gpgme_key_release(key);
-		gaim_conversation_set_data(conv, "/grypt/key", NULL);
-	}
-	gpgme_release(ctx);
+	grypt_peers_free();
+	gpgme_release(grypt_ctx);
 	grypt_free_identities();
 	return (TRUE);
 }
