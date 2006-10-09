@@ -1,14 +1,2 @@
 $Id$
 
-- The gaim_conversation_get/set_data() routines
-  provide storage for the fields needed for encryption
-  Any such field is prefixed with `/grypt/'.
-
-  These fields include:
-
-+-----------------------+---------------+-----------------------+
-| Underlying Type	| Field Name	| Description		|
-+-----------------------+---------------+-----------------------+
-| int *			| state		| Session crypto state	|
-| gpgme_recipients_t	| key		| GPGME recipient	|
-+-----------------------+---------------+-----------------------+
