@@ -201,7 +201,6 @@ bark("no identity, telling peer to give up (%s)", msg);
 			*flags |= GAIM_MESSAGE_ENCRYPTED;
 			free(bufp);
 			bufp = *buf = plaintext;
-bark("[RECV ENCRYPTED] %s: %s", *sender, bufp);
 			if (gpd->gpd_key == NULL) {
 				snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
 				    g_value_get_string(&grypt_identity[FPR_COL]));
@@ -223,7 +222,7 @@ bark("[RECV] request received, responding (%s)", msg);
 }
 
 int
-grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
+grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, int *flags, void *data)
 {
 	struct grypt_peer_data *gpd;
 	char msg[BUFSIZ];
@@ -236,7 +235,7 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, void *data)
 	if (gpd->gpd_key) {
 		ciphertext = grypt_encrypt(gpd->gpd_key, *buf);
 		if (ciphertext) {
-bark("send ENCRYPTED: %s", *buf);
+			*flags |= GAIM_MESSAGE_ENCRYPTED;
 			free(*buf);
 			if (asprintf(buf, "GRYPT:ENC:%s",
 			    ciphertext) == -1)
