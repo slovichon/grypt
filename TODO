@@ -1,7 +1,8 @@
 $Id$
 
-- register buddy-offline and turn grypt state off for
-  active convos
 - change buddy icon to grypt
 - add asterisks to indicate encrypted messages in backlog
 - fix passphrase reprompt
+- prefix encrypted messages witih GRYPT:ENC:
+- when a msg is not prefixed with GRYPT:, kill the session
+- test/encrypt pounces and auto-away msgs
