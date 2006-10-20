@@ -5,7 +5,7 @@ Install Notes For Grypt
 
 Apply the file named `patch' outside the main Gaim source root:
 
-	$ patch < gaim-2.0.0beta3/plugins/grypt/patch
+	$ patch < gaim-2.0.0beta4/plugins/grypt/patch
 
 Then proceed to run Gaim usual installation process:
 
@@ -16,5 +16,4 @@ Usage Notes
 ===========
 
 Exchange keys with buddies using gpg --import/export
-and --edit-key with the "trust" command to level 3 or
-higher.
+and --edit-key with the "trust" command to level 5.

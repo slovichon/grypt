@@ -18,55 +18,6 @@
 struct grypt_peers grypt_peers;
 
 /* copied from protocols/oscar/oscar.c */
-typedef struct _OscarData OscarData;
-struct _OscarData {
-	OscarSession *sess;
-	OscarConnection *conn;
-
-	guint cnpa;
-	guint paspa;
-	guint emlpa;
-	guint icopa;
-
-	gboolean iconconnecting;
-	gboolean set_icon;
-
-	GSList *create_rooms;
-
-	gboolean conf;
-	gboolean reqemail;
-	gboolean setemail;
-	char *email;
-	gboolean setnick;
-	char *newsn;
-	gboolean chpass;
-	char *oldp;
-	char *newp;
-
-	GSList *oscar_chats;
-	GSList *direct_ims;
-	GSList *file_transfers;
-	GHashTable *buddyinfo;
-	GSList *requesticon;
-
-	gboolean killme;
-	gboolean icq;
-	guint icontimer;
-	guint getblisttimer;
-	guint getinfotimer;
-	gint timeoffset;
-
-	struct {
-		guint maxwatchers; /* max users who can watch you */
-		guint maxbuddies; /* max users you can watch */
-		guint maxgroups; /* max groups in server list */
-		guint maxpermits; /* max users on permit list */
-		guint maxdenies; /* max users on deny list */
-		guint maxsiglen; /* max size (bytes) of profile */
-		guint maxawaymsglen; /* max size (bytes) of posted away message */
-	} rights;
-};
-
 static int
 grypt_aim_sncmp(const char *sn1, const char *sn2)
 {
@@ -86,14 +37,14 @@ grypt_aim_sncmp(const char *sn1, const char *sn2)
 }
 
 static aim_userinfo_t *
-grypt_aim_locate_finduserinfo(OscarSession *sess, const char *sn)
+grypt_aim_locate_finduserinfo(OscarData *od, const char *sn)
 {
 	aim_userinfo_t *cur = NULL;
 
 	if (sn == NULL)
 		return NULL;
 
-	cur = sess->locate.userinfo;
+	cur = od->locate.userinfo;
 
 	while (cur != NULL) {
 		if (grypt_aim_sncmp(cur->sn, sn) == 0)
@@ -118,9 +69,9 @@ grypt_possible(GaimAccount *ga, const char *name)
 
 	gc = gaim_account_get_connection(ga);
 	od = gc->proto_data;
-	userinfo = grypt_aim_locate_finduserinfo(od->sess, name);
+	userinfo = grypt_aim_locate_finduserinfo(od, name);
 	if (userinfo == NULL ||
-	    (userinfo->capabilities & AIM_CAPS_GRYPT) == 0)
+	    (userinfo->capabilities & OSCAR_CAPABILITY_GRYPT) == 0)
 		return (FALSE);
 	return (TRUE);
 }

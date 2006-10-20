@@ -7,7 +7,7 @@
 #include "gtkplugin.h"
 #include "slist.h"
 
-#define GRYPT_VERSION "2.0.0beta3.1"
+#define GRYPT_VERSION "2.0.0beta4"
 
 #define FPRSIZ 40
 

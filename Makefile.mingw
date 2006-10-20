@@ -4,37 +4,14 @@
 # Description: Makefile for grypt plugin.
 #
 
-#
-# PATHS
-#
-
-GTK_TOP :=		../../../win32-dev/gtk_2_0
-GAIM_TOP :=		../..
-GAIM_INSTALL_DIR :=	$(GAIM_TOP)/win32-install-dir
-DLL_INSTALL_DIR :=	$(GAIM_INSTALL_DIR)/plugins
-
-##
-## VARIABLE DEFINITIONS
-##
+GAIM_TOP := ../../..
+include $(GAIM_TOP)/libgaim/win32/global.mak
 
 TARGET = grypt
-
-# Compiler Options
-
-CFLAGS = `gpgme-config --cflags`
-
-DEFINES =
-
-##
-## INCLUDE  MAKEFILES
-##
-
-include $(GAIM_TOP)/src/win32/global.mak
 
 ##
 ## INCLUDE PATHS
 ##
-
 INCLUDE_PATHS +=	-I. \
 			-I$(GTK_TOP)/include \
 			-I$(GTK_TOP)/include/gtk-2.0 \
@@ -43,79 +20,59 @@ INCLUDE_PATHS +=	-I. \
 			-I$(GTK_TOP)/include/atk-1.0 \
 			-I$(GTK_TOP)/lib/glib-2.0/include \
 			-I$(GTK_TOP)/lib/gtk-2.0/include \
-			-I$(GAIM_TOP)/src \
-			-I$(GAIM_TOP)/src/win32 \
+			-I$(GAIM_LIB_TOP) \
+			-I$(GAIM_LIB_TOP)/win32 \
+			-I$(GAIM_GTK_TOP) \
+			-I$(GAIM_GTK_TOP)/win32 \
+			`gpgme-config --cflags` \
 			-I$(GAIM_TOP)
 
-
 LIB_PATHS =		-L$(GTK_TOP)/lib \
-			-L$(GAIM_TOP)/src
-
+			-L$(GAIM_LIB_TOP) \
+			-L$(GAIM_GTK_TOP)
 
 ##
 ##  SOURCES, OBJECTS
 ##
-
 C_SRC =			crypto.c grypt.c gui.c misc.c plugin.c
 
-
 OBJECTS = $(C_SRC:%.c=%.o)
-
 
 ##
 ## LIBRARIES
 ##
-
 LIBS =			-lgtk-win32-2.0 \
 			-lglib-2.0 \
 			-lgdk-win32-2.0 \
 			-lgmodule-2.0 \
 			-lgobject-2.0 \
-			-lws2_32 \
 			-lintl \
+			-lgaim \
 			`gpgme-config --libs` \
-			-lgaim
+			-lgtkgaim
 
-
-##
-## RULES
-##
-
-# How to make a C file
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDE_PATHS) -o $@ -c $<
+include $(GAIM_COMMON_RULES)
 
 ##
 ## TARGET DEFINITIONS
 ##
-
-.PHONY: all clean
+.PHONY: all install clean
 
 all: $(TARGET).dll
 
-install: all
-	cp $(TARGET).dll $(DLL_INSTALL_DIR)
+install: $(GAIM_INSTALL_PLUGINS_DIR)
+	cp $(TARGET).dll $(GAIM_INSTALL_PLUGINS_DIR)
 
+$(OBJECTS): $(GAIM_CONFIG_H)
 
-##
-## BUILD Dependencies
-##
-
-$(GAIM_TOP)/src/gaim.lib:
-	$(MAKE) -C $(GAIM_TOP)/src -f Makefile.mingw gaim.lib
-
-##
-## BUILD DLL
-##
-
-$(TARGET).dll: $(OBJECTS) $(GAIM_TOP)/src/gaim.lib
+$(TARGET).dll: $(GAIM_LIBGAIM_DLL).a $(GAIM_GTKGAIM_DLL).a $(OBJECTS)
 	$(CC) -shared $(OBJECTS) $(LIB_PATHS) $(LIBS) $(DLL_LD_FLAGS) -o $(TARGET).dll
 
 ##
 ## CLEAN RULES
 ##
-
 clean:
-	rm -rf *.o
+	rm -rf $(OBJECTS)
 	rm -rf $(TARGET).dll
+
+include $(GAIM_COMMON_TARGETS)

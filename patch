@@ -1,27 +1,40 @@
-diff -ru gaim-2.0.0beta3.1.orig/configure gaim-2.0.0beta3.1/configure
---- gaim-2.0.0beta3.1.orig/configure	2006-08-19 16:38:03.000000000 -0400
-+++ gaim-2.0.0beta3.1/configure	2006-10-09 15:40:33.000000000 -0400
-@@ -34991,7 +34991,7 @@
+diff -rup gaim-2.0.0beta4.orig/configure gaim-2.0.0beta4/configure
+--- gaim-2.0.0beta4.orig/configure	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/configure	2006-10-20 13:30:25.000000000 -0400
+@@ -35363,7 +35363,7 @@ _ACEOF
  
+ fi
  
- 
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ac_config_files="$ac_config_files Makefile Doxyfile gaim.apspec gaim.service doc/Makefile doc/gaim.1 m4macros/Makefile pixmaps/Makefile pixmaps/smileys/Makefile pixmaps/smileys/default/Makefile pixmaps/smileys/none/Makefile pixmaps/status/Makefile pixmaps/status/default/Makefile plugins/Makefile plugins/docklet/Makefile plugins/gevolution/Makefile plugins/gestures/Makefile plugins/mono/Makefile plugins/mono/api/Makefile plugins/mono/loader/Makefile plugins/musicmessaging/Makefile plugins/perl/Makefile plugins/perl/common/Makefile.PL plugins/ssl/Makefile plugins/tcl/Makefile plugins/ticker/Makefile po/Makefile.in sounds/Makefile src/Makefile src/protocols/Makefile src/protocols/bonjour/Makefile src/protocols/gg/Makefile src/protocols/irc/Makefile src/protocols/jabber/Makefile src/protocols/msn/Makefile src/protocols/napster/Makefile src/protocols/novell/Makefile src/protocols/oscar/Makefile src/protocols/sametime/Makefile src/protocols/silc/Makefile src/protocols/simple/Makefile src/protocols/toc/Makefile src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.pc gaim.spec"
-+                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ac_config_files="$ac_config_files Makefile Doxyfile gaim.apspec gaim.service doc/Makefile doc/gaim.1 m4macros/Makefile pixmaps/Makefile pixmaps/smileys/Makefile pixmaps/smileys/default/Makefile pixmaps/smileys/none/Makefile pixmaps/status/Makefile pixmaps/status/default/Makefile plugins/Makefile plugins/docklet/Makefile plugins/gevolution/Makefile plugins/gestures/Makefile plugins/grypt/Makefile plugins/mono/Makefile plugins/mono/api/Makefile plugins/mono/loader/Makefile plugins/musicmessaging/Makefile plugins/perl/Makefile plugins/perl/common/Makefile.PL plugins/ssl/Makefile plugins/tcl/Makefile plugins/ticker/Makefile po/Makefile.in sounds/Makefile src/Makefile src/protocols/Makefile src/protocols/bonjour/Makefile src/protocols/gg/Makefile src/protocols/irc/Makefile src/protocols/jabber/Makefile src/protocols/msn/Makefile src/protocols/napster/Makefile src/protocols/novell/Makefile src/protocols/oscar/Makefile src/protocols/sametime/Makefile src/protocols/silc/Makefile src/protocols/simple/Makefile src/protocols/toc/Makefile src/protocols/yahoo/Makefile src/protocols/zephyr/Makefile gaim.pc gaim.spec"
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makefile Doxyfile gaim.apspec gaim.service doc/Makefile doc/gaim.1 doc/gaim-text.1 m4macros/Makefile gtk/Makefile gtk/pixmaps/Makefile gtk/pixmaps/smileys/Makefile gtk/pixmaps/smileys/default/Makefile gtk/pixmaps/smileys/none/Makefile gtk/pixmaps/status/Makefile gtk/pixmaps/status/default/Makefile gtk/plugins/Makefile gtk/plugins/cap/Makefile gtk/plugins/docklet/Makefile gtk/plugins/gestures/Makefile gtk/plugins/gevolution/Makefile gtk/plugins/musicmessaging/Makefile gtk/plugins/perl/Makefile gtk/plugins/perl/common/Makefile.PL gtk/plugins/ticker/Makefile gtk/sounds/Makefile libgaim/gconf/Makefile libgaim/plugins/Makefile libgaim/plugins/mono/Makefile libgaim/plugins/mono/api/Makefile libgaim/plugins/mono/loader/Makefile libgaim/plugins/perl/Makefile libgaim/plugins/perl/common/Makefile.PL libgaim/plugins/ssl/Makefile libgaim/plugins/tcl/Makefile libgaim/Makefile libgaim/protocols/Makefile libgaim/protocols/bonjour/Makefile libgaim/protocols/gg/Makefile libgaim/protocols/irc/Makefile libgaim/protocols/jabber/Makefile libgaim/protocols/msn/Makefile libgaim/protocols/novell/Makefile libgaim/protocols/oscar/Makefile libgaim/protocols/qq/Makefile libgaim/protocols/sametime/Makefile libgaim/protocols/silc/Makefile libgaim/protocols/simple/Makefile libgaim/protocols/toc/Makefile libgaim/protocols/yahoo/Makefile libgaim/protocols/zephyr/Makefile console/Makefile console/libgnt/Makefile console/libgnt/gnt.pc console/libgnt/wms/Makefile console/plugins/Makefile po/Makefile.in gaim.pc gaim.spec"
++                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    ac_config_files="$ac_config_files Makefile Doxyfile gaim.apspec gaim.service doc/Makefile doc/gaim.1 doc/gaim-text.1 m4macros/Makefile gtk/Makefile gtk/pixmaps/Makefile gtk/pixmaps/smileys/Makefile gtk/pixmaps/smileys/default/Makefile gtk/pixmaps/smileys/none/Makefile gtk/pixmaps/status/Makefile gtk/pixmaps/status/default/Makefile gtk/plugins/Makefile gtk/plugins/cap/Makefile gtk/plugins/docklet/Makefile gtk/plugins/gestures/Makefile gtk/plugins/gevolution/Makefile gtk/plugins/grypt/Makefile gtk/plugins/musicmessaging/Makefile gtk/plugins/perl/Makefile gtk/plugins/perl/common/Makefile.PL gtk/plugins/ticker/Makefile gtk/sounds/Makefile libgaim/gconf/Makefile libgaim/plugins/Makefile libgaim/plugins/mono/Makefile libgaim/plugins/mono/api/Makefile libgaim/plugins/mono/loader/Makefile libgaim/plugins/perl/Makefile libgaim/plugins/perl/common/Makefile.PL libgaim/plugins/ssl/Makefile libgaim/plugins/tcl/Makefile libgaim/Makefile libgaim/protocols/Makefile libgaim/protocols/bonjour/Makefile libgaim/protocols/gg/Makefile libgaim/protocols/irc/Makefile libgaim/protocols/jabber/Makefile libgaim/protocols/msn/Makefile libgaim/protocols/novell/Makefile libgaim/protocols/oscar/Makefile libgaim/protocols/qq/Makefile libgaim/protocols/sametime/Makefile libgaim/protocols/silc/Makefile libgaim/protocols/simple/Makefile libgaim/protocols/toc/Makefile libgaim/protocols/yahoo/Makefile libgaim/protocols/zephyr/Makefile console/Makefile console/libgnt/Makefile console/libgnt/gnt.pc console/libgnt/wms/Makefile console/plugins/Makefile po/Makefile.in gaim.pc gaim.spec"
  cat >confcache <<\_ACEOF
  # This file is a shell script that caches the results of configure
  # tests run on this system so they can be shared between configure
-@@ -35909,6 +35909,7 @@
-   "plugins/docklet/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/docklet/Makefile" ;;
-   "plugins/gevolution/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gevolution/Makefile" ;;
-   "plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/gestures/Makefile" ;;
-+  "plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/grypt/Makefile" ;;
-   "plugins/mono/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/mono/Makefile" ;;
-   "plugins/mono/api/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/mono/api/Makefile" ;;
-   "plugins/mono/loader/Makefile" ) CONFIG_FILES="$CONFIG_FILES plugins/mono/loader/Makefile" ;;
-diff -ru gaim-2.0.0beta3.1.orig/pixmaps/status/default/Makefile.am gaim-2.0.0beta3.1/pixmaps/status/default/Makefile.am
---- gaim-2.0.0beta3.1.orig/pixmaps/status/default/Makefile.am	2006-08-19 16:35:42.000000000 -0400
-+++ gaim-2.0.0beta3.1/pixmaps/status/default/Makefile.am	2006-10-09 15:30:50.000000000 -0400
-@@ -14,6 +14,7 @@
+@@ -36314,6 +36314,7 @@ do
+   "gtk/plugins/docklet/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/docklet/Makefile" ;;
+   "gtk/plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/gestures/Makefile" ;;
+   "gtk/plugins/gevolution/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/gevolution/Makefile" ;;
++  "gtk/plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/grypt/Makefile" ;;
+   "gtk/plugins/musicmessaging/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/musicmessaging/Makefile" ;;
+   "gtk/plugins/perl/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/perl/Makefile" ;;
+   "gtk/plugins/perl/common/Makefile.PL" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/perl/common/Makefile.PL" ;;
+diff -rup gaim-2.0.0beta4.orig/gtk/gtkconv.c gaim-2.0.0beta4/gtk/gtkconv.c
+--- gaim-2.0.0beta4.orig/gtk/gtkconv.c	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/gtk/gtkconv.c	2006-10-20 13:38:31.000000000 -0400
+@@ -4756,6 +4756,9 @@ gaim_gtkconv_write_conv(GaimConversation
+ 	if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
+ 		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", gtk_font_options_all);
+ 
++	if (flags & GAIM_MESSAGE_ENCRYPTED)
++		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "*", gtk_font_options_all);
++
+ 	mdate = gaim_signal_emit_return_1(gaim_gtk_conversations_get_handle(),
+ 	                                  "conversation-timestamp",
+ 	                                  conv, mtime);
+diff -rup gaim-2.0.0beta4.orig/gtk/pixmaps/status/default/Makefile.am gaim-2.0.0beta4/gtk/pixmaps/status/default/Makefile.am
+--- gaim-2.0.0beta4.orig/gtk/pixmaps/status/default/Makefile.am	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/gtk/pixmaps/status/default/Makefile.am	2006-10-20 13:31:42.000000000 -0400
+@@ -14,6 +14,7 @@ EXTRA_DIST = \
  	freeforchat.png \
  	gadu-gadu.png \
  	game.png \
@@ -29,10 +42,10 @@ diff -ru gaim-2.0.0beta3.1.orig/pixmaps/status/default/Makefile.am gaim-2.0.0bet
  	halfop.png \
  	hiptop.png \
  	icq.png \
-diff -ru gaim-2.0.0beta3.1.orig/pixmaps/status/default/Makefile.in gaim-2.0.0beta3.1/pixmaps/status/default/Makefile.in
---- gaim-2.0.0beta3.1.orig/pixmaps/status/default/Makefile.in	2006-08-19 16:46:51.000000000 -0400
-+++ gaim-2.0.0beta3.1/pixmaps/status/default/Makefile.in	2006-10-09 15:30:50.000000000 -0400
-@@ -372,6 +372,7 @@
+diff -rup gaim-2.0.0beta4.orig/gtk/pixmaps/status/default/Makefile.in gaim-2.0.0beta4/gtk/pixmaps/status/default/Makefile.in
+--- gaim-2.0.0beta4.orig/gtk/pixmaps/status/default/Makefile.in	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/gtk/pixmaps/status/default/Makefile.in	2006-10-20 13:32:11.000000000 -0400
+@@ -394,6 +394,7 @@ EXTRA_DIST = \
  	freeforchat.png \
  	gadu-gadu.png \
  	game.png \
@@ -40,79 +53,81 @@ diff -ru gaim-2.0.0beta3.1.orig/pixmaps/status/default/Makefile.in gaim-2.0.0bet
  	halfop.png \
  	hiptop.png \
  	icq.png \
-diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.am gaim-2.0.0beta3.1/plugins/Makefile.am
---- gaim-2.0.0beta3.1.orig/plugins/Makefile.am	2006-08-19 16:36:32.000000000 -0400
-+++ gaim-2.0.0beta3.1/plugins/Makefile.am	2006-10-09 15:30:50.000000000 -0400
+diff -rup gaim-2.0.0beta4.orig/gtk/plugins/Makefile.am gaim-2.0.0beta4/gtk/plugins/Makefile.am
+--- gaim-2.0.0beta4.orig/gtk/plugins/Makefile.am	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/gtk/plugins/Makefile.am	2006-10-20 13:33:09.000000000 -0400
 @@ -1,4 +1,4 @@
--DIST_SUBDIRS = docklet gevolution gestures mono musicmessaging perl ssl tcl ticker
-+DIST_SUBDIRS = docklet gevolution gestures grypt mono musicmessaging perl ssl tcl ticker
+-DIST_SUBDIRS = cap docklet gestures gevolution musicmessaging perl ticker
++DIST_SUBDIRS = cap docklet gestures gevolution musicmessaging perl ticker grypt
  
  if BUILD_GEVOLUTION
  GEVOLUTION_DIR = gevolution
-@@ -27,6 +27,7 @@
+@@ -21,6 +21,7 @@ SUBDIRS = \
  	docklet \
- 	$(GEVOLUTION_DIR) \
  	gestures \
+ 	$(GEVOLUTION_DIR) \
 +	grypt \
- 	$(MONO_DIR) \
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
-diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.in gaim-2.0.0beta3.1/plugins/Makefile.in
---- gaim-2.0.0beta3.1.orig/plugins/Makefile.in	2006-08-19 16:46:51.000000000 -0400
-+++ gaim-2.0.0beta3.1/plugins/Makefile.in	2006-10-09 15:30:50.000000000 -0400
-@@ -455,7 +455,7 @@
+ 	ticker
+diff -rup gaim-2.0.0beta4.orig/gtk/plugins/Makefile.in gaim-2.0.0beta4/gtk/plugins/Makefile.in
+--- gaim-2.0.0beta4.orig/gtk/plugins/Makefile.in	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/gtk/plugins/Makefile.in	2006-10-20 13:33:25.000000000 -0400
+@@ -453,7 +453,7 @@ target_alias = @target_alias@
  target_cpu = @target_cpu@
  target_os = @target_os@
  target_vendor = @target_vendor@
--DIST_SUBDIRS = docklet gevolution gestures mono musicmessaging perl ssl tcl ticker
-+DIST_SUBDIRS = docklet gevolution gestures grypt mono musicmessaging perl ssl tcl ticker
+-DIST_SUBDIRS = cap docklet gestures gevolution musicmessaging perl ticker
++DIST_SUBDIRS = cap docklet gestures gevolution musicmessaging perl ticker grypt
  @BUILD_GEVOLUTION_TRUE@GEVOLUTION_DIR = gevolution
- @USE_PERL_TRUE@PERL_DIR = perl
- @USE_TCL_TRUE@TCL_DIR = tcl
-@@ -468,6 +468,7 @@
+ @ENABLE_DBUS_TRUE@MUSICMESSAGING_DIR = musicmessaging
+ @ENABLE_CAP_TRUE@CAP_DIR = cap
+@@ -463,6 +463,7 @@ SUBDIRS = \
  	docklet \
- 	$(GEVOLUTION_DIR) \
  	gestures \
+ 	$(GEVOLUTION_DIR) \
 +	grypt \
- 	$(MONO_DIR) \
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
-diff -ru gaim-2.0.0beta3.1.orig/plugins/Makefile.mingw gaim-2.0.0beta3.1/plugins/Makefile.mingw
---- gaim-2.0.0beta3.1.orig/plugins/Makefile.mingw	2006-08-19 16:36:32.000000000 -0400
-+++ gaim-2.0.0beta3.1/plugins/Makefile.mingw	2006-10-09 15:30:50.000000000 -0400
-@@ -20,6 +20,7 @@
- TCL_PLUGIN_LOADER :=    ./tcl
- DOCKLET :=		./docklet
- SSL :=			./ssl
-+GRYPT :=		./grypt
+ 	ticker
+diff -rup gaim-2.0.0beta4.orig/gtk/plugins/Makefile.mingw gaim-2.0.0beta4/gtk/plugins/Makefile.mingw
+--- gaim-2.0.0beta4.orig/gtk/plugins/Makefile.mingw	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/gtk/plugins/Makefile.mingw	2006-10-20 13:34:20.000000000 -0400
+@@ -9,6 +9,7 @@ include $(GAIM_TOP)/libgaim/win32/global
  
- ##
- ## VARIABLE DEFINITIONS
-@@ -94,6 +95,7 @@
- 	$(MAKE) -C $(TCL_PLUGIN_LOADER) -f Makefile.mingw
- 	$(MAKE) -C $(DOCKLET) -f Makefile.mingw
- 	$(MAKE) -C $(SSL) -f Makefile.mingw
-+	$(MAKE) -C $(GRYPT) -f Makefile.mingw
+ GTKPERL_PLUGIN := ./perl
+ TICKER_PLUGIN := ./ticker
++GRYPT_PLUGIN := ./grypt
+ TRANSPARENCY_PLUGIN := ./win32/transparency
+ WINPREFS_PLUGIN := ./win32/winprefs
  
- install:
- 	cp $(GAIM_PLUGINS)/*.dll $(GAIM_INSTALL_DIR)/plugins
-@@ -104,6 +106,7 @@
- 	$(MAKE) -C $(TCL_PLUGIN_LOADER) -f Makefile.mingw install
- 	$(MAKE) -C $(DOCKLET) -f Makefile.mingw install
- 	$(MAKE) -C $(SSL) -f Makefile.mingw install
-+	$(MAKE) -C $(GRYPT) -f Makefile.mingw install
+@@ -58,12 +59,14 @@ LIBS =			-lgtk-win32-2.0 \
  
- #
- # BUILD Plugin
-@@ -142,3 +145,4 @@
- 	$(MAKE) -C $(TCL_PLUGIN_LOADER) -f Makefile.mingw clean
- 	$(MAKE) -C $(DOCKLET) -f Makefile.mingw clean
- 	$(MAKE) -C $(SSL) -f Makefile.mingw clean
-+	$(MAKE) -C $(GRYPT) -f Makefile.mingw clean
-diff -ru gaim-2.0.0beta3.1.orig/src/conversation.c gaim-2.0.0beta3.1/src/conversation.c
---- gaim-2.0.0beta3.1.orig/src/conversation.c	2006-08-19 16:36:07.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/conversation.c	2006-10-09 16:47:26.000000000 -0400
-@@ -124,7 +124,7 @@
+ all: plugins
+ 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
++	$(MAKE) -C $(GRYPT_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
+ 	$(MAKE) -C $(TICKER_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
+ 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
+ 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
+ 
+ install: all $(GAIM_INSTALL_PLUGINS_DIR)
+ 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
++	$(MAKE) -C $(GRYPT_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
+ 	$(MAKE) -C $(TICKER_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
+ 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
+ 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
+@@ -90,6 +93,7 @@ plugins: \
+ clean:
+ 	rm -f *.o *.dll
+ 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
++	$(MAKE) -C $(GRYPT_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
+ 	$(MAKE) -C $(TICKER_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
+ 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
+ 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
+diff -rup gaim-2.0.0beta4.orig/libgaim/conversation.c gaim-2.0.0beta4/libgaim/conversation.c
+--- gaim-2.0.0beta4.orig/libgaim/conversation.c	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/libgaim/conversation.c	2006-10-20 13:35:53.000000000 -0400
+@@ -126,7 +126,7 @@ common_send(GaimConversation *conv, cons
  
  		gaim_signal_emit(gaim_conversations_get_handle(), "sending-im-msg",
  						 account,
@@ -121,7 +136,7 @@ diff -ru gaim-2.0.0beta3.1.orig/src/conversation.c gaim-2.0.0beta3.1/src/convers
  
  		if (sent != NULL && sent[0] != '\0') {
  
-@@ -1993,12 +1993,13 @@
+@@ -2040,12 +2040,13 @@ gaim_conversations_init(void)
  						 gaim_value_new(GAIM_TYPE_UINT));
  
  	gaim_signal_register(handle, "sending-im-msg",
@@ -138,10 +153,10 @@ diff -ru gaim-2.0.0beta3.1.orig/src/conversation.c gaim-2.0.0beta3.1/src/convers
  
  	gaim_signal_register(handle, "sent-im-msg",
  						 gaim_marshal_VOID__POINTER_POINTER_POINTER,
-diff -ru gaim-2.0.0beta3.1.orig/src/conversation.h gaim-2.0.0beta3.1/src/conversation.h
---- gaim-2.0.0beta3.1.orig/src/conversation.h	2006-08-19 16:36:07.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/conversation.h	2006-10-09 15:30:50.000000000 -0400
-@@ -115,7 +115,8 @@
+diff -rup gaim-2.0.0beta4.orig/libgaim/conversation.h gaim-2.0.0beta4/libgaim/conversation.h
+--- gaim-2.0.0beta4.orig/libgaim/conversation.h	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/libgaim/conversation.h	2006-10-20 13:51:28.000000000 -0400
+@@ -115,7 +115,8 @@ typedef enum
  	GAIM_MESSAGE_DELAYED     = 0x0400, /**< Delayed message.         */
  	GAIM_MESSAGE_RAW         = 0x0800, /**< "Raw" message - don't
  	                                        apply formatting         */
@@ -151,23 +166,10 @@ diff -ru gaim-2.0.0beta3.1.orig/src/conversation.h gaim-2.0.0beta3.1/src/convers
  
  } GaimMessageFlags;
  
-diff -ru gaim-2.0.0beta3.1.orig/src/gtkconv.c gaim-2.0.0beta3.1/src/gtkconv.c
---- gaim-2.0.0beta3.1.orig/src/gtkconv.c	2006-08-19 16:36:07.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/gtkconv.c	2006-10-09 16:27:40.000000000 -0400
-@@ -4684,6 +4684,9 @@
- 	if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
- 		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", gtk_font_options_all);
- 
-+	if (flags & GAIM_MESSAGE_ENCRYPTED)
-+		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "*", gtk_font_options_all);
-+
- 	tm = *(localtime(&mtime));
- 	mdate = gaim_signal_emit_return_1(gaim_gtk_conversations_get_handle(),
- 	                                  "conversation-timestamp",
-diff -ru gaim-2.0.0beta3.1.orig/src/log.c gaim-2.0.0beta3.1/src/log.c
---- gaim-2.0.0beta3.1.orig/src/log.c	2006-08-19 16:36:07.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/log.c	2006-10-09 16:20:03.000000000 -0400
-@@ -1069,6 +1069,8 @@
+diff -rup gaim-2.0.0beta4.orig/libgaim/log.c gaim-2.0.0beta4/libgaim/log.c
+--- gaim-2.0.0beta4.orig/libgaim/log.c	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/libgaim/log.c	2006-10-20 13:44:33.000000000 -0400
+@@ -1103,6 +1103,8 @@ static gsize html_logger_write(GaimLog *
  	if(log->type == GAIM_LOG_SYSTEM){
  		written += fprintf(data->file, "---- %s @ %s ----<br/>\n", msg_fixed, date);
  	} else {
@@ -176,7 +178,7 @@ diff -ru gaim-2.0.0beta3.1.orig/src/log.c gaim-2.0.0beta3.1/src/log.c
  		if (type & GAIM_MESSAGE_SYSTEM)
  			written += fprintf(data->file, "<font size=\"2\">(%s)</font><b> %s</b><br/>\n", date, msg_fixed);
  		else if (type & GAIM_MESSAGE_ERROR)
-@@ -1208,6 +1210,8 @@
+@@ -1243,6 +1245,8 @@ static gsize txt_logger_write(GaimLog *l
  	if(log->type == GAIM_LOG_SYSTEM){
  		written += fprintf(data->file, "---- %s @ %s ----\n", stripped, date);
  	} else {
@@ -185,61 +187,62 @@ diff -ru gaim-2.0.0beta3.1.orig/src/log.c gaim-2.0.0beta3.1/src/log.c
  		if (type & GAIM_MESSAGE_SEND ||
  			type & GAIM_MESSAGE_RECV) {
  			if (type & GAIM_MESSAGE_AUTO_RESP) {
-diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/family_locate.c gaim-2.0.0beta3.1/src/protocols/oscar/family_locate.c
---- gaim-2.0.0beta3.1.orig/src/protocols/oscar/family_locate.c	2006-08-19 16:35:58.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/protocols/oscar/family_locate.c	2006-10-09 15:30:50.000000000 -0400
-@@ -142,6 +142,10 @@
+diff -rup gaim-2.0.0beta4.orig/libgaim/protocols/oscar/family_locate.c gaim-2.0.0beta4/libgaim/protocols/oscar/family_locate.c
+--- gaim-2.0.0beta4.orig/libgaim/protocols/oscar/family_locate.c	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/libgaim/protocols/oscar/family_locate.c	2006-10-20 13:55:33.000000000 -0400
+@@ -142,6 +142,10 @@ static const struct {
  	 {0x09, 0x46, 0x13, 0x49, 0x4c, 0x7f, 0x11, 0xd1,
  	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
  
-+	{AIM_CAPS_GRYPT,
++	{OSCAR_CAPABILITY_GRYPT,
 +	 {0x09, 0x46, 0x13, 0x50, 0x4c, 0x7f, 0x11, 0xd1,
 +	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
 +
  	/*
  	 * Indeed, there are two of these.  The former appears to be correct,
  	 * but in some versions of winaim, the second one is set.  Either they
-diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.c gaim-2.0.0beta3.1/src/protocols/oscar/oscar.c
---- gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.c	2006-08-19 16:35:58.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/protocols/oscar/oscar.c	2006-10-09 17:00:16.000000000 -0400
-@@ -75,7 +75,7 @@
- #define FT_REDIR_TIMEOUT	10000	/* 20000 */	/* Time to wait for redirected transfer */
- #define FT_PROXYIP_TIMEOUT	300000	/* 120000 */	/* Time to create a checksum for VERY large files */
+diff -rup gaim-2.0.0beta4.orig/libgaim/protocols/oscar/oscar.c gaim-2.0.0beta4/libgaim/protocols/oscar/oscar.c
+--- gaim-2.0.0beta4.orig/libgaim/protocols/oscar/oscar.c	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/libgaim/protocols/oscar/oscar.c	2006-10-20 13:47:34.000000000 -0400
+@@ -68,7 +68,7 @@
+ #define OSCAR_DEFAULT_WEB_AWARE FALSE
+ #define OSCAR_DEFAULT_ALWAYS_USE_RV_PROXY FALSE
  
--static int caps_aim = AIM_CAPS_CHAT | AIM_CAPS_BUDDYICON | AIM_CAPS_DIRECTIM | AIM_CAPS_SENDFILE | AIM_CAPS_INTEROPERATE | AIM_CAPS_ICHAT;
-+static int caps_aim = AIM_CAPS_CHAT | AIM_CAPS_BUDDYICON | AIM_CAPS_DIRECTIM | AIM_CAPS_SENDFILE | AIM_CAPS_INTEROPERATE | AIM_CAPS_ICHAT | AIM_CAPS_GRYPT;
- static int caps_icq = AIM_CAPS_BUDDYICON | AIM_CAPS_DIRECTIM | AIM_CAPS_SENDFILE | AIM_CAPS_ICQUTF8 | AIM_CAPS_INTEROPERATE | AIM_CAPS_ICHAT;
+-static OscarCapability gaim_caps = OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM | OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE | OSCAR_CAPABILITY_ICHAT;
++static OscarCapability gaim_caps = OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM | OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE | OSCAR_CAPABILITY_ICHAT | OSCAR_CAPABILITY_GRYPT;
  
  static guint8 features_aim[] = {0x01, 0x01, 0x01, 0x02};
-@@ -766,6 +766,9 @@
- 			case AIM_CAPS_CAMERA:
+ static guint8 features_icq[] = {0x01, 0x06};
+@@ -667,6 +667,9 @@ static gchar *oscar_caps_to_string(Oscar
+ 			case OSCAR_CAPABILITY_CAMERA:
  				tmp = _("Camera");
  				break;
-+			case AIM_CAPS_GRYPT:
-+				tmp = _("Grypt Encryption");
++			case OSCAR_CAPABILITY_GRYPT:
++				tmp = _("Engryption");
 +				break;
  			default:
  				tmp = NULL;
  				break;
-@@ -7767,6 +7770,8 @@
+@@ -5360,6 +5363,9 @@ static void oscar_list_emblems(GaimBuddy
  
- 		if ((i < 4) && (userinfo->capabilities & AIM_CAPS_SECUREIM))
+ 		if ((i < 4) && (userinfo->capabilities & OSCAR_CAPABILITY_SECUREIM))
  			emblems[i++] = "secure";
-+		if ((i < 4) && (userinfo->capabilities & AIM_CAPS_GRYPT))
++
++		if ((i < 4) && (userinfo->capabilities & OSCAR_CAPABILITY_GRYPT))
 +			emblems[i++] = "grypt";
  	}
  
  	*se = emblems[0];
-diff -ru gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.h gaim-2.0.0beta3.1/src/protocols/oscar/oscar.h
---- gaim-2.0.0beta3.1.orig/src/protocols/oscar/oscar.h	2006-08-19 16:35:58.000000000 -0400
-+++ gaim-2.0.0beta3.1/src/protocols/oscar/oscar.h	2006-10-09 15:30:50.000000000 -0400
-@@ -1054,7 +1054,8 @@
- #define AIM_CAPS_ICHATAV		0x02000000
- #define AIM_CAPS_LIVEVIDEO		0x04000000
- #define AIM_CAPS_CAMERA			0x08000000
--#define AIM_CAPS_LAST			0x10000000
-+#define AIM_CAPS_GRYPT			0x10000000
-+#define AIM_CAPS_LAST			0x20000000
+diff -rup gaim-2.0.0beta4.orig/libgaim/protocols/oscar/oscar.h gaim-2.0.0beta4/libgaim/protocols/oscar/oscar.h
+--- gaim-2.0.0beta4.orig/libgaim/protocols/oscar/oscar.h	2006-10-19 19:38:19.000000000 -0400
++++ gaim-2.0.0beta4/libgaim/protocols/oscar/oscar.h	2006-10-20 13:48:05.000000000 -0400
+@@ -328,7 +328,8 @@ typedef enum
+ 	OSCAR_CAPABILITY_ICHATAV              = 0x02000000,
+ 	OSCAR_CAPABILITY_LIVEVIDEO            = 0x04000000,
+ 	OSCAR_CAPABILITY_CAMERA               = 0x08000000,
+-	OSCAR_CAPABILITY_LAST                 = 0x10000000
++	OSCAR_CAPABILITY_GRYPT                = 0x10000000,
++	OSCAR_CAPABILITY_LAST                 = 0x20000000
+ } OscarCapability;
  
- #define AIM_SENDMEMBLOCK_FLAG_ISREQUEST  0
- #define AIM_SENDMEMBLOCK_FLAG_ISHASH     1
+ /*
