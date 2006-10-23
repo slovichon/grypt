@@ -3,11 +3,15 @@ $Id$
 Install Notes For Grypt
 =======================
 
+Unpack the source to the directory:
+
+	gaim-$VERSION/gtk/plugins/grypt
+
 Apply the file named `patch' outside the main Gaim source root:
 
-	$ patch < gaim-2.0.0beta4/plugins/grypt/patch
+	$ patch < gaim-$VERSION/gtk/plugins/grypt/patch
 
-Then proceed to run Gaim usual installation process:
+Then proceed to run the Gaim usual installation process:
 
 	./configure
 	make && make install
@@ -15,5 +19,6 @@ Then proceed to run Gaim usual installation process:
 Usage Notes
 ===========
 
-Exchange keys with buddies using gpg --import/export
-and --edit-key with the "trust" command to level 5.
+Exchange keys with buddies using "gpg --import/export"
+and use "gpg --edit-key" with the "trust" command to
+set the trust levels on the keys to level 5.
