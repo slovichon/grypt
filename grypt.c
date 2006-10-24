@@ -127,25 +127,27 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 		return (0);
 
 	bufp = *buf;
-	if (strncmp(bufp, "GRYPT:", 6) == 0) {
-		bark("[RECV] clearing grypt message %.15s...", *buf);
+	if (strncmp(bufp, "GRYPT:", 6) == 0)
 		*buf = NULL;
-	}
 
 	if (grypt_identity == NULL) {
-		snprintf(msg, sizeof(msg), "GRYPT:DENY");
+		if (strncmp(bufp, "GRYPT:", 6) == 0 &&
+		    strcmp(bufp, "GRYPT:DENY") != 0) {
+			snprintf(msg, sizeof(msg), "GRYPT:DENY");
 bark("no identity, telling peer to give up (%s)", msg);
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), msg, 0);
+			serv_send_im(gaim_conversation_get_gc(conv),
+			    gaim_conversation_get_name(conv), msg, 0);
+		}
 		return (0);
 	}
 
 	gpd = grypt_peer_get(*sender, GPF_CREAT);
 	if (strncmp(bufp, "GRYPT:", 6) == 0 &&
-	    strncmp(bufp, "GRYPT:DENY", 10) != 0)
+	    strcmp(bufp, "GRYPT:DENY") != 0)
 		gpd->gpd_deny = 0;
 	else
 		gpd->gpd_deny = 1;
+
 	if (strncmp(bufp, "GRYPT:ENC:", 10) == 0) {
 		plaintext = grypt_decrypt(&bufp[10]);
 		if (plaintext) {
