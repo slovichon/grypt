@@ -59,7 +59,7 @@ struct grypt_peer_data	*grypt_peer_get(const char *, int);
 void			 grypt_peers_free(void);
 int			 grypt_session_start(struct grypt_peer_data *, const char *);
 void			 grypt_evt_new_conversation(GaimConversation *);
-void			 grypt_evt_sign_off(GaimBuddy *, void *);
+int			 grypt_evt_sign_off(GaimBuddy *, void *);
 int			 grypt_evt_im_send(GaimAccount *, char *, char **, int *, void *);
 int			 grypt_evt_im_recv(GaimAccount *, char **, char **,
 				GaimConversation *, int *, void *);

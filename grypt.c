@@ -90,7 +90,7 @@ grypt_evt_new_conversation(GaimConversation *conv)
 		return;
 
 	gpd = grypt_peer_get(gaim_conversation_get_name(conv), GPF_CREAT);
-	if (gpd->gpd_key == NULL) {
+	if (gpd->gpd_key == NULL && !gpd->gpd_deny) {
 		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
 		    g_value_get_string(&grypt_identity[FPR_COL]));
 		serv_send_im(gaim_conversation_get_gc(conv),
@@ -204,7 +204,7 @@ bark("[RECV] request received, responding (%s)", msg);
 	return (0);
 }
 
-void
+int
 grypt_evt_sign_off(GaimBuddy *buddy, void *data)
 {
 	struct grypt_peer_data *gpd;
@@ -214,6 +214,7 @@ grypt_evt_sign_off(GaimBuddy *buddy, void *data)
 		gpgme_key_release(gpd->gpd_key);
 		gpd->gpd_key = NULL;
 	}
+	return (0);
 }
 
 struct grypt_peer_data *
