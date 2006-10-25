@@ -185,6 +185,8 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, int *flags, void 
 		return (0);
 
 	gpd = grypt_peer_get(rep, GPF_CREAT);
+	if (gpd->gpd_deny)
+		return (0);
 	if (gpd->gpd_key) {
 		ciphertext = grypt_encrypt(gpd->gpd_key, *buf);
 		if (ciphertext) {
@@ -196,7 +198,7 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, int *flags, void 
 			free(ciphertext);
 		}
 	} else {
-		if (!gpd->gpd_deny && grypt_identity) {
+		if (grypt_identity) {
 			snprintf(msg, sizeof(msg), "GRYPT:RES:%s",
 			    g_value_get_string(&grypt_identity[FPR_COL]));
 bark("[RECV] request received, responding (%s)", msg);
