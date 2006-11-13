@@ -96,6 +96,11 @@ grypt_evt_new_conversation(GaimConversation *conv)
 		serv_send_im(gaim_conversation_get_gc(conv),
 		    gaim_conversation_get_name(conv), msg, 0);
 	}
+	if (gpd->gpd_deny == 1) {
+		snprintf(msg, sizeof(msg), "GRYPT:PING:REQ");
+		serv_send_im(gaim_conversation_get_gc(conv),
+		    gaim_conversation_get_name(conv), msg, 0);
+	}
 }
 
 int
@@ -142,8 +147,9 @@ bark("no identity, telling peer to give up (%s)", msg);
 	}
 
 	gpd = grypt_peer_get(*sender, GPF_CREAT);
-	if (strncmp(bufp, "GRYPT:", 6) == 0 &&
-	    strcmp(bufp, "GRYPT:DENY") != 0)
+	if (strcmp(bufp, "GRYPT:DENY") == 0)
+		gpd->gpd_deny = 2;
+	else if (strncmp(bufp, "GRYPT:", 6) == 0)
 		gpd->gpd_deny = 0;
 	else
 		gpd->gpd_deny = 1;
@@ -170,6 +176,9 @@ bark("[RECV] request received, responding (%s)", msg);
 		}
 	} else if (strncmp(bufp, "GRYPT:RES:", 10) == 0) {
 		grypt_session_start(gpd, &bufp[10]);
+	} else if (strcmp(bufp, "GRYPT:PING:REQ") == 0) {
+		snprintf(msg, sizeof(msg), "GRYPT:PING:RES");
+		serv_send_im(account->gc, *sender, msg, 0);
 	}
 	return (0);
 }
@@ -217,6 +226,7 @@ grypt_evt_sign_off(GaimBuddy *buddy, void *data)
 	if (gpd) {
 		gpgme_key_release(gpd->gpd_key);
 		gpd->gpd_key = NULL;
+		gpd->gpd_deny = 0;
 	}
 	return (0);
 }
