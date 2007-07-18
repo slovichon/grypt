@@ -37,7 +37,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-subdir = gtk/plugins/grypt
+subdir = pidgin/plugins/grypt
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -88,8 +88,6 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
-BINRELOC_CFLAGS = @BINRELOC_CFLAGS@
-BINRELOC_LIBS = @BINRELOC_LIBS@
 BUILD_GEVOLUTION_FALSE = @BUILD_GEVOLUTION_FALSE@
 BUILD_GEVOLUTION_TRUE = @BUILD_GEVOLUTION_TRUE@
 CATALOGS = @CATALOGS@
@@ -97,6 +95,8 @@ CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+CHECK_CFLAGS = @CHECK_CFLAGS@
+CHECK_LIBS = @CHECK_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -179,6 +179,11 @@ GMOFILES = @GMOFILES@
 GMSGFMT = @GMSGFMT@
 GNT_CFLAGS = @GNT_CFLAGS@
 GNT_LIBS = @GNT_LIBS@
+GNT_LT_VERSION_INFO = @GNT_LT_VERSION_INFO@
+GNT_MAJOR_VERSION = @GNT_MAJOR_VERSION@
+GNT_MICRO_VERSION = @GNT_MICRO_VERSION@
+GNT_MINOR_VERSION = @GNT_MINOR_VERSION@
+GNT_VERSION = @GNT_VERSION@
 GNUTLS_CFLAGS = @GNUTLS_CFLAGS@
 GNUTLS_LIBS = @GNUTLS_LIBS@
 GSTREAMER_CFLAGS = @GSTREAMER_CFLAGS@
@@ -187,6 +192,8 @@ GTKSPELL_CFLAGS = @GTKSPELL_CFLAGS@
 GTKSPELL_LIBS = @GTKSPELL_LIBS@
 GTK_CFLAGS = @GTK_CFLAGS@
 GTK_LIBS = @GTK_LIBS@
+HAVE_CHECK_FALSE = @HAVE_CHECK_FALSE@
+HAVE_CHECK_TRUE = @HAVE_CHECK_TRUE@
 HAVE_DOXYGEN_FALSE = @HAVE_DOXYGEN_FALSE@
 HAVE_DOXYGEN_TRUE = @HAVE_DOXYGEN_TRUE@
 HOWL_CFLAGS = @HOWL_CFLAGS@
@@ -228,8 +235,6 @@ KRB4_LDFLAGS = @KRB4_LDFLAGS@
 KRB4_LIBS = @KRB4_LIBS@
 LDADD = @LDADD@
 LDFLAGS = @LDFLAGS@
-LIBGADU_CFLAGS = @LIBGADU_CFLAGS@
-LIBGADU_LIBS = @LIBGADU_LIBS@
 LIBNM_CFLAGS = @LIBNM_CFLAGS@
 LIBNM_LIBS = @LIBNM_LIBS@
 LIBOBJS = @LIBOBJS@
@@ -268,9 +273,15 @@ POFILES = @POFILES@
 POSUB = @POSUB@
 PO_IN_DATADIR_FALSE = @PO_IN_DATADIR_FALSE@
 PO_IN_DATADIR_TRUE = @PO_IN_DATADIR_TRUE@
+PURPLE_LT_VERSION_INFO = @PURPLE_LT_VERSION_INFO@
+PURPLE_MAJOR_VERSION = @PURPLE_MAJOR_VERSION@
+PURPLE_MICRO_VERSION = @PURPLE_MICRO_VERSION@
+PURPLE_MINOR_VERSION = @PURPLE_MINOR_VERSION@
+PURPLE_VERSION = @PURPLE_VERSION@
 PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SASL_LIBS = @SASL_LIBS@
+SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 SILC_CFLAGS = @SILC_CFLAGS@
@@ -370,7 +381,6 @@ enable_dbus = @enable_dbus@
 enable_dot = @enable_dot@
 enable_doxygen = @enable_doxygen@
 exec_prefix = @exec_prefix@
-gaimpath = @gaimpath@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -385,7 +395,10 @@ localstatedir = @localstatedir@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
+pango_CFLAGS = @pango_CFLAGS@
+pango_LIBS = @pango_LIBS@
 perlpath = @perlpath@
+pidginpath = @pidginpath@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 sbindir = @sbindir@
@@ -400,7 +413,7 @@ target_vendor = @target_vendor@
 EXTRA_DIST = \
 		Makefile.mingw
 
-plugindir = $(libdir)/gaim
+plugindir = $(libdir)/pidgin
 grypt_la_LDFLAGS = -module -avoid-version
 @PLUGINS_TRUE@plugin_LTLIBRARIES = grypt.la
 @PLUGINS_TRUE@grypt_la_SOURCES = crypto.c grypt.c gui.c misc.c plugin.c
@@ -409,8 +422,9 @@ grypt_la_LDFLAGS = -module -avoid-version
 AM_CPPFLAGS = \
 	-DDATADIR=\"$(datadir)\" \
 	-DVERSION=\"$(VERSION)\" \
-	-I$(top_srcdir)/libgaim \
-	-I$(top_srcdir)/gtk \
+	-I$(top_srcdir)/libpurple \
+	-I$(top_builddir)/libpurple \
+	-I$(top_srcdir)/pidgin \
 	$(DEBUG_CFLAGS) \
 	`gpgme-config --cflags` \
 	$(GTK_CFLAGS)
@@ -428,9 +442,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  gtk/plugins/grypt/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  pidgin/plugins/grypt/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  gtk/plugins/grypt/Makefile
+	  $(AUTOMAKE) --gnu  pidgin/plugins/grypt/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

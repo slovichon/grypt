@@ -1,61 +1,182 @@
-diff -ru gaim-2.0.0beta6.orig/configure gaim-2.0.0beta6/configure
---- gaim-2.0.0beta6.orig/configure	2007-01-18 23:28:49.000000000 -0500
-+++ gaim-2.0.0beta6/configure	2007-02-22 12:37:53.000000000 -0500
-@@ -35626,7 +35626,7 @@
+diff -ru pidgin-2.0.2.orig/configure pidgin-2.0.2/configure
+--- pidgin-2.0.2.orig/configure	2007-06-14 23:13:19.000000000 -0400
++++ pidgin-2.0.2/configure	2007-07-18 15:04:00.000000000 -0400
+@@ -36744,7 +36744,7 @@
  
  fi
  
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile Doxyfile gaim.apspec gaim.service doc/Makefile doc/gaim.1 doc/gaim-text.1 m4macros/Makefile gtk/Makefile gtk/pixmaps/Makefile gtk/pixmaps/buddy_icons/Makefile gtk/pixmaps/buddy_icons/qq/Makefile gtk/pixmaps/smileys/Makefile gtk/pixmaps/smileys/default/Makefile gtk/pixmaps/smileys/none/Makefile gtk/pixmaps/status/Makefile gtk/pixmaps/status/default/Makefile gtk/plugins/Makefile gtk/plugins/cap/Makefile gtk/plugins/gestures/Makefile gtk/plugins/gevolution/Makefile gtk/plugins/musicmessaging/Makefile gtk/plugins/perl/Makefile gtk/plugins/perl/common/Makefile.PL gtk/plugins/ticker/Makefile gtk/sounds/Makefile libgaim/gconf/Makefile libgaim/plugins/Makefile libgaim/plugins/mono/Makefile libgaim/plugins/mono/api/Makefile libgaim/plugins/mono/loader/Makefile libgaim/plugins/perl/Makefile libgaim/plugins/perl/common/Makefile.PL libgaim/plugins/ssl/Makefile libgaim/plugins/tcl/Makefile libgaim/Makefile libgaim/protocols/Makefile libgaim/protocols/bonjour/Makefile libgaim/protocols/gg/Makefile libgaim/protocols/irc/Makefile libgaim/protocols/jabber/Makefile libgaim/protocols/msn/Makefile libgaim/protocols/novell/Makefile libgaim/protocols/oscar/Makefile libgaim/protocols/qq/Makefile libgaim/protocols/sametime/Makefile libgaim/protocols/silc/Makefile libgaim/protocols/simple/Makefile libgaim/protocols/toc/Makefile libgaim/protocols/yahoo/Makefile libgaim/protocols/zephyr/Makefile libgaim/tests/Makefile console/Makefile console/libgnt/Makefile console/libgnt/gnt.pc console/libgnt/wms/Makefile console/plugins/Makefile po/Makefile.in gaim.pc gaim.spec"
-+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile Doxyfile gaim.apspec gaim.service doc/Makefile doc/gaim.1 doc/gaim-text.1 m4macros/Makefile gtk/Makefile gtk/pixmaps/Makefile gtk/pixmaps/buddy_icons/Makefile gtk/pixmaps/buddy_icons/qq/Makefile gtk/pixmaps/smileys/Makefile gtk/pixmaps/smileys/default/Makefile gtk/pixmaps/smileys/none/Makefile gtk/pixmaps/status/Makefile gtk/pixmaps/status/default/Makefile gtk/plugins/Makefile gtk/plugins/cap/Makefile gtk/plugins/gestures/Makefile gtk/plugins/gevolution/Makefile gtk/plugins/grypt/Makefile gtk/plugins/musicmessaging/Makefile gtk/plugins/perl/Makefile gtk/plugins/perl/common/Makefile.PL gtk/plugins/ticker/Makefile gtk/sounds/Makefile libgaim/gconf/Makefile libgaim/plugins/Makefile libgaim/plugins/mono/Makefile libgaim/plugins/mono/api/Makefile libgaim/plugins/mono/loader/Makefile libgaim/plugins/perl/Makefile libgaim/plugins/perl/common/Makefile.PL libgaim/plugins/ssl/Makefile libgaim/plugins/tcl/Makefile libgaim/Makefile libgaim/protocols/Makefile libgaim/protocols/bonjour/Makefile libgaim/protocols/gg/Makefile libgaim/protocols/irc/Makefile libgaim/protocols/jabber/Makefile libgaim/protocols/msn/Makefile libgaim/protocols/novell/Makefile libgaim/protocols/oscar/Makefile libgaim/protocols/qq/Makefile libgaim/protocols/sametime/Makefile libgaim/protocols/silc/Makefile libgaim/protocols/simple/Makefile libgaim/protocols/toc/Makefile libgaim/protocols/yahoo/Makefile libgaim/protocols/zephyr/Makefile libgaim/tests/Makefile console/Makefile console/libgnt/Makefile console/libgnt/gnt.pc console/libgnt/wms/Makefile console/plugins/Makefile po/Makefile.in gaim.pc gaim.spec"
+-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile doc/pidgin.1 doc/finch.1 m4macros/Makefile pidgin.apspec pidgin/Makefile pidgin/pidgin.pc pidgin/pidgin-uninstalled.pc pidgin/pixmaps/Makefile pidgin/pixmaps/animations/Makefile pidgin/pixmaps/animations/16/Makefile pidgin/pixmaps/buddy_icons/Makefile pidgin/pixmaps/buddy_icons/qq/Makefile pidgin/pixmaps/dialogs/Makefile pidgin/pixmaps/dialogs/16/Makefile pidgin/pixmaps/dialogs/16/scalable/Makefile pidgin/pixmaps/dialogs/64/Makefile pidgin/pixmaps/dialogs/64/scalable/Makefile pidgin/pixmaps/emblems/Makefile pidgin/pixmaps/emblems/16/Makefile pidgin/pixmaps/emblems/16/scalable/Makefile pidgin/pixmaps/emotes/Makefile pidgin/pixmaps/emotes/default/Makefile pidgin/pixmaps/emotes/default/22/Makefile pidgin/pixmaps/emotes/default/22/scalable/Makefile pidgin/pixmaps/emotes/none/Makefile pidgin/pixmaps/icons/Makefile pidgin/pixmaps/icons/16/Makefile pidgin/pixmaps/icons/16/scalable/Makefile pidgin/pixmaps/icons/24/Makefile pidgin/pixmaps/icons/24/scalable/Makefile pidgin/pixmaps/icons/32/Makefile pidgin/pixmaps/icons/32/scalable/Makefile pidgin/pixmaps/icons/48/Makefile pidgin/pixmaps/icons/48/scalable/Makefile pidgin/pixmaps/protocols/Makefile pidgin/pixmaps/protocols/16/Makefile pidgin/pixmaps/protocols/16/scalable/Makefile pidgin/pixmaps/protocols/22/Makefile pidgin/pixmaps/protocols/22/scalable/Makefile pidgin/pixmaps/protocols/48/Makefile pidgin/pixmaps/protocols/48/scalable/Makefile pidgin/pixmaps/status/Makefile pidgin/pixmaps/status/16/Makefile pidgin/pixmaps/status/16/rtl/Makefile pidgin/pixmaps/status/16/scalable/Makefile pidgin/pixmaps/status/22/Makefile pidgin/pixmaps/status/22/rtl/Makefile pidgin/pixmaps/status/22/scalable/Makefile pidgin/pixmaps/status/32/Makefile pidgin/pixmaps/status/32/rtl/Makefile pidgin/pixmaps/status/32/scalable/Makefile pidgin/pixmaps/status/48/Makefile pidgin/pixmaps/status/48/rtl/Makefile pidgin/pixmaps/toolbar/Makefile pidgin/pixmaps/toolbar/16/Makefile pidgin/pixmaps/toolbar/16/scalable/Makefile pidgin/pixmaps/toolbar/22/Makefile pidgin/pixmaps/toolbar/22/scalable/Makefile pidgin/pixmaps/tray/Makefile pidgin/pixmaps/tray/16/Makefile pidgin/pixmaps/tray/16/scalable/Makefile pidgin/pixmaps/tray/22/Makefile pidgin/pixmaps/tray/22/scalable/Makefile pidgin/pixmaps/tray/32/Makefile pidgin/pixmaps/tray/48/Makefile pidgin/plugins/Makefile pidgin/plugins/cap/Makefile pidgin/plugins/gestures/Makefile pidgin/plugins/gevolution/Makefile pidgin/plugins/musicmessaging/Makefile pidgin/plugins/perl/Makefile pidgin/plugins/perl/common/Makefile.PL pidgin/plugins/ticker/Makefile pidgin/sounds/Makefile libpurple/example/Makefile libpurple/gconf/Makefile libpurple/purple.pc libpurple/purple-uninstalled.pc libpurple/plugins/Makefile libpurple/plugins/mono/Makefile libpurple/plugins/mono/api/Makefile libpurple/plugins/mono/loader/Makefile libpurple/plugins/perl/Makefile libpurple/plugins/perl/common/Makefile.PL libpurple/plugins/ssl/Makefile libpurple/plugins/tcl/Makefile libpurple/Makefile libpurple/protocols/Makefile libpurple/protocols/bonjour/Makefile libpurple/protocols/gg/Makefile libpurple/protocols/irc/Makefile libpurple/protocols/jabber/Makefile libpurple/protocols/msn/Makefile libpurple/protocols/novell/Makefile libpurple/protocols/null/Makefile libpurple/protocols/oscar/Makefile libpurple/protocols/qq/Makefile libpurple/protocols/sametime/Makefile libpurple/protocols/silc/Makefile libpurple/protocols/silc10/Makefile libpurple/protocols/simple/Makefile libpurple/protocols/toc/Makefile libpurple/protocols/yahoo/Makefile libpurple/protocols/zephyr/Makefile libpurple/tests/Makefile libpurple/version.h finch/Makefile finch/libgnt/Makefile finch/libgnt/gnt.pc finch/libgnt/wms/Makefile finch/plugins/Makefile po/Makefile.in pidgin.spec"
++                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile doc/pidgin.1 doc/finch.1 m4macros/Makefile pidgin.apspec pidgin/Makefile pidgin/pidgin.pc pidgin/pidgin-uninstalled.pc pidgin/pixmaps/Makefile pidgin/pixmaps/animations/Makefile pidgin/pixmaps/animations/16/Makefile pidgin/pixmaps/buddy_icons/Makefile pidgin/pixmaps/buddy_icons/qq/Makefile pidgin/pixmaps/dialogs/Makefile pidgin/pixmaps/dialogs/16/Makefile pidgin/pixmaps/dialogs/16/scalable/Makefile pidgin/pixmaps/dialogs/64/Makefile pidgin/pixmaps/dialogs/64/scalable/Makefile pidgin/pixmaps/emblems/Makefile pidgin/pixmaps/emblems/16/Makefile pidgin/pixmaps/emblems/16/scalable/Makefile pidgin/pixmaps/emotes/Makefile pidgin/pixmaps/emotes/default/Makefile pidgin/pixmaps/emotes/default/22/Makefile pidgin/pixmaps/emotes/default/22/scalable/Makefile pidgin/pixmaps/emotes/none/Makefile pidgin/pixmaps/icons/Makefile pidgin/pixmaps/icons/16/Makefile pidgin/pixmaps/icons/16/scalable/Makefile pidgin/pixmaps/icons/24/Makefile pidgin/pixmaps/icons/24/scalable/Makefile pidgin/pixmaps/icons/32/Makefile pidgin/pixmaps/icons/32/scalable/Makefile pidgin/pixmaps/icons/48/Makefile pidgin/pixmaps/icons/48/scalable/Makefile pidgin/pixmaps/protocols/Makefile pidgin/pixmaps/protocols/16/Makefile pidgin/pixmaps/protocols/16/scalable/Makefile pidgin/pixmaps/protocols/22/Makefile pidgin/pixmaps/protocols/22/scalable/Makefile pidgin/pixmaps/protocols/48/Makefile pidgin/pixmaps/protocols/48/scalable/Makefile pidgin/pixmaps/status/Makefile pidgin/pixmaps/status/16/Makefile pidgin/pixmaps/status/16/rtl/Makefile pidgin/pixmaps/status/16/scalable/Makefile pidgin/pixmaps/status/22/Makefile pidgin/pixmaps/status/22/rtl/Makefile pidgin/pixmaps/status/22/scalable/Makefile pidgin/pixmaps/status/32/Makefile pidgin/pixmaps/status/32/rtl/Makefile pidgin/pixmaps/status/32/scalable/Makefile pidgin/pixmaps/status/48/Makefile pidgin/pixmaps/status/48/rtl/Makefile pidgin/pixmaps/toolbar/Makefile pidgin/pixmaps/toolbar/16/Makefile pidgin/pixmaps/toolbar/16/scalable/Makefile pidgin/pixmaps/toolbar/22/Makefile pidgin/pixmaps/toolbar/22/scalable/Makefile pidgin/pixmaps/tray/Makefile pidgin/pixmaps/tray/16/Makefile pidgin/pixmaps/tray/16/scalable/Makefile pidgin/pixmaps/tray/22/Makefile pidgin/pixmaps/tray/22/scalable/Makefile pidgin/pixmaps/tray/32/Makefile pidgin/pixmaps/tray/48/Makefile pidgin/plugins/Makefile pidgin/plugins/cap/Makefile pidgin/plugins/gestures/Makefile pidgin/plugins/gevolution/Makefile pidgin/plugins/grypt/Makefile pidgin/plugins/musicmessaging/Makefile pidgin/plugins/perl/Makefile pidgin/plugins/perl/common/Makefile.PL pidgin/plugins/ticker/Makefile pidgin/sounds/Makefile libpurple/example/Makefile libpurple/gconf/Makefile libpurple/purple.pc libpurple/purple-uninstalled.pc libpurple/plugins/Makefile libpurple/plugins/mono/Makefile libpurple/plugins/mono/api/Makefile libpurple/plugins/mono/loader/Makefile libpurple/plugins/perl/Makefile libpurple/plugins/perl/common/Makefile.PL libpurple/plugins/ssl/Makefile libpurple/plugins/tcl/Makefile libpurple/Makefile libpurple/protocols/Makefile libpurple/protocols/bonjour/Makefile libpurple/protocols/gg/Makefile libpurple/protocols/irc/Makefile libpurple/protocols/jabber/Makefile libpurple/protocols/msn/Makefile libpurple/protocols/novell/Makefile libpurple/protocols/null/Makefile libpurple/protocols/oscar/Makefile libpurple/protocols/qq/Makefile libpurple/protocols/sametime/Makefile libpurple/protocols/silc/Makefile libpurple/protocols/silc10/Makefile libpurple/protocols/simple/Makefile libpurple/protocols/toc/Makefile libpurple/protocols/yahoo/Makefile libpurple/protocols/zephyr/Makefile libpurple/tests/Makefile libpurple/version.h finch/Makefile finch/libgnt/Makefile finch/libgnt/gnt.pc finch/libgnt/wms/Makefile finch/plugins/Makefile po/Makefile.in pidgin.spec"
  cat >confcache <<\_ACEOF
  # This file is a shell script that caches the results of configure
  # tests run on this system so they can be shared between configure
-@@ -36585,6 +36585,7 @@
-   "gtk/plugins/cap/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/cap/Makefile" ;;
-   "gtk/plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/gestures/Makefile" ;;
-   "gtk/plugins/gevolution/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/gevolution/Makefile" ;;
-+  "gtk/plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/grypt/Makefile" ;;
-   "gtk/plugins/musicmessaging/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/musicmessaging/Makefile" ;;
-   "gtk/plugins/perl/Makefile" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/perl/Makefile" ;;
-   "gtk/plugins/perl/common/Makefile.PL" ) CONFIG_FILES="$CONFIG_FILES gtk/plugins/perl/common/Makefile.PL" ;;
-diff -ru gaim-2.0.0beta6.orig/gtk/gtkconv.c gaim-2.0.0beta6/gtk/gtkconv.c
---- gaim-2.0.0beta6.orig/gtk/gtkconv.c	2007-01-18 23:28:04.000000000 -0500
-+++ gaim-2.0.0beta6/gtk/gtkconv.c	2007-02-22 12:36:46.000000000 -0500
-@@ -4909,6 +4909,9 @@
+@@ -37754,6 +37754,7 @@
+   "pidgin/plugins/cap/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/cap/Makefile" ;;
+   "pidgin/plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/gestures/Makefile" ;;
+   "pidgin/plugins/gevolution/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/gevolution/Makefile" ;;
++  "pidgin/plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/grypt/Makefile" ;;
+   "pidgin/plugins/musicmessaging/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/musicmessaging/Makefile" ;;
+   "pidgin/plugins/perl/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/perl/Makefile" ;;
+   "pidgin/plugins/perl/common/Makefile.PL" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/perl/common/Makefile.PL" ;;
+diff -ru pidgin-2.0.2.orig/libpurple/conversation.c pidgin-2.0.2/libpurple/conversation.c
+--- pidgin-2.0.2.orig/libpurple/conversation.c	2007-06-14 23:11:51.000000000 -0400
++++ pidgin-2.0.2/libpurple/conversation.c	2007-07-18 15:13:10.000000000 -0400
+@@ -126,7 +126,7 @@
+ 
+ 		purple_signal_emit(purple_conversations_get_handle(), "sending-im-msg",
+ 						 account,
+-						 purple_conversation_get_name(conv), &sent);
++						 purple_conversation_get_name(conv), &sent, &msgflags);
+ 
+ 		if (sent != NULL && sent[0] != '\0') {
+ 
+@@ -2048,12 +2048,13 @@
+ 						 purple_value_new(PURPLE_TYPE_UINT));
+ 
+ 	purple_signal_register(handle, "sending-im-msg",
+-						 purple_marshal_VOID__POINTER_POINTER_POINTER,
+-						 NULL, 3,
++						 purple_marshal_VOID__POINTER_POINTER_POINTER_POINTER,
++						 NULL, 4,
+ 						 purple_value_new(PURPLE_TYPE_SUBTYPE,
+ 										PURPLE_SUBTYPE_ACCOUNT),
+ 						 purple_value_new(PURPLE_TYPE_STRING),
+-						 purple_value_new_outgoing(PURPLE_TYPE_STRING));
++						 purple_value_new_outgoing(PURPLE_TYPE_STRING),
++						 purple_value_new(PURPLE_TYPE_UINT));
+ 
+ 	purple_signal_register(handle, "sent-im-msg",
+ 						 purple_marshal_VOID__POINTER_POINTER_POINTER,
+diff -ru pidgin-2.0.2.orig/libpurple/conversation.h pidgin-2.0.2/libpurple/conversation.h
+--- pidgin-2.0.2.orig/libpurple/conversation.h	2007-06-14 23:11:51.000000000 -0400
++++ pidgin-2.0.2/libpurple/conversation.h	2007-07-18 15:23:08.000000000 -0400
+@@ -116,7 +116,8 @@
+ 	PURPLE_MESSAGE_RAW         = 0x0800, /**< "Raw" message - don't
+ 	                                        apply formatting         */
+ 	PURPLE_MESSAGE_IMAGES      = 0x1000, /**< Message contains images  */
+-	PURPLE_MESSAGE_NOTIFY      = 0x2000  /**< Message is a notification */
++	PURPLE_MESSAGE_NOTIFY      = 0x2000, /**< Message is a notification */
++	PURPLE_MESSAGE_ENCRYPTED   = 0x4000  /**< Message sent encrypted */
+ 
+ } PurpleMessageFlags;
+ 
+diff -ru pidgin-2.0.2.orig/libpurple/log.c pidgin-2.0.2/libpurple/log.c
+--- pidgin-2.0.2.orig/libpurple/log.c	2007-06-14 23:11:52.000000000 -0400
++++ pidgin-2.0.2/libpurple/log.c	2007-07-18 15:15:38.000000000 -0400
+@@ -1237,6 +1237,8 @@
+ 	if(log->type == PURPLE_LOG_SYSTEM){
+ 		written += fprintf(data->file, "---- %s @ %s ----<br/>\n", msg_fixed, date);
+ 	} else {
++		if (type & PURPLE_MESSAGE_ENCRYPTED)
++			written += fprintf(data->file, "*");
+ 		if (type & PURPLE_MESSAGE_SYSTEM)
+ 			written += fprintf(data->file, "<font size=\"2\">(%s)</font><b> %s</b><br/>\n", date, msg_fixed);
+ 		else if (type & PURPLE_MESSAGE_RAW)
+@@ -1379,6 +1381,8 @@
+ 	if(log->type == PURPLE_LOG_SYSTEM){
+ 		written += fprintf(data->file, "---- %s @ %s ----\n", stripped, date);
+ 	} else {
++		if (type & PURPLE_MESSAGE_ENCRYPTED)
++			written += fprintf(data->file, "*");
+ 		if (type & PURPLE_MESSAGE_SEND ||
+ 			type & PURPLE_MESSAGE_RECV) {
+ 			if (type & PURPLE_MESSAGE_AUTO_RESP) {
+diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/family_locate.c pidgin-2.0.2/libpurple/protocols/oscar/family_locate.c
+--- pidgin-2.0.2.orig/libpurple/protocols/oscar/family_locate.c	2007-06-14 23:11:59.000000000 -0400
++++ pidgin-2.0.2/libpurple/protocols/oscar/family_locate.c	2007-07-18 15:16:09.000000000 -0400
+@@ -133,6 +133,10 @@
+ 	 {0x09, 0x46, 0x13, 0x49, 0x4c, 0x7f, 0x11, 0xd1,
+ 	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
+ 
++	{OSCAR_CAPABILITY_GRYPT,
++	 {0x09, 0x46, 0x13, 0x50, 0x4c, 0x7f, 0x11, 0xd1,
++	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
++
+ 	/*
+ 	 * Indeed, there are two of these.  The former appears to be correct,
+ 	 * but in some versions of winaim, the second one is set.  Either they
+diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c pidgin-2.0.2/libpurple/protocols/oscar/oscar.c
+--- pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c	2007-06-14 23:11:59.000000000 -0400
++++ pidgin-2.0.2/libpurple/protocols/oscar/oscar.c	2007-07-18 15:17:19.000000000 -0400
+@@ -64,7 +64,7 @@
+ 
+ #define OSCAR_CONNECT_STEPS 6
+ 
+-static OscarCapability purple_caps = OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM | OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE | OSCAR_CAPABILITY_ICHAT;
++static OscarCapability purple_caps = OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM | OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE | OSCAR_CAPABILITY_ICHAT | OSCAR_CAPABILITY_GRYPT;
+ 
+ static guint8 features_aim[] = {0x01, 0x01, 0x01, 0x02};
+ static guint8 features_icq[] = {0x01, 0x06};
+@@ -706,6 +706,9 @@
+ 			case OSCAR_CAPABILITY_CAMERA:
+ 				tmp = _("Camera");
+ 				break;
++			case OSCAR_CAPABILITY_GRYPT:
++				tmp = _("Engryption");
++				break;
+ 			default:
+ 				tmp = NULL;
+ 				break;
+@@ -5500,6 +5503,8 @@
+ 			return "hiptop";
+ 		if (userinfo->capabilities & OSCAR_CAPABILITY_SECUREIM)
+ 			return "secure";
++		if (userinfo->capabilities & OSCAR_CAPABILITY_GRYPT)
++			return "grypt";
+ 	}
+ 	return NULL;
+ }
+diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.h pidgin-2.0.2/libpurple/protocols/oscar/oscar.h
+--- pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.h	2007-06-14 23:11:59.000000000 -0400
++++ pidgin-2.0.2/libpurple/protocols/oscar/oscar.h	2007-07-18 15:18:53.000000000 -0400
+@@ -332,7 +332,8 @@
+ 	OSCAR_CAPABILITY_ICHATAV              = 0x02000000,
+ 	OSCAR_CAPABILITY_LIVEVIDEO            = 0x04000000,
+ 	OSCAR_CAPABILITY_CAMERA               = 0x08000000,
+-	OSCAR_CAPABILITY_LAST                 = 0x10000000
++	OSCAR_CAPABILITY_GRYPT                = 0x10000000,
++	OSCAR_CAPABILITY_LAST                 = 0x20000000
+ } OscarCapability;
+ 
+ /*
+diff -ru pidgin-2.0.2.orig/pidgin/gtkconv.c pidgin-2.0.2/pidgin/gtkconv.c
+--- pidgin-2.0.2.orig/pidgin/gtkconv.c	2007-06-14 23:12:03.000000000 -0400
++++ pidgin-2.0.2/pidgin/gtkconv.c	2007-07-18 15:05:27.000000000 -0400
+@@ -5243,6 +5243,9 @@
  	if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
  		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", gtk_font_options_all);
  
-+	if (flags & GAIM_MESSAGE_ENCRYPTED)
++	if (flags & PIDGIN_MESSAGE_ENCRYPTED)
 +		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "*", gtk_font_options_all);
 +
- 	mdate = gaim_signal_emit_return_1(gaim_gtk_conversations_get_handle(),
- 	                                  "conversation-timestamp",
- 	                                  conv, mtime);
-diff -ru gaim-2.0.0beta6.orig/gtk/pixmaps/status/default/Makefile.am gaim-2.0.0beta6/gtk/pixmaps/status/default/Makefile.am
---- gaim-2.0.0beta6.orig/gtk/pixmaps/status/default/Makefile.am	2007-01-18 23:27:58.000000000 -0500
-+++ gaim-2.0.0beta6/gtk/pixmaps/status/default/Makefile.am	2007-02-22 12:36:46.000000000 -0500
-@@ -14,6 +14,7 @@
- 	freeforchat.png \
- 	gadu-gadu.png \
- 	game.png \
-+	../../../plugins/grypt/grypt.png \
- 	halfop.png \
- 	hiptop.png \
- 	icq.png \
-diff -ru gaim-2.0.0beta6.orig/gtk/pixmaps/status/default/Makefile.in gaim-2.0.0beta6/gtk/pixmaps/status/default/Makefile.in
---- gaim-2.0.0beta6.orig/gtk/pixmaps/status/default/Makefile.in	2007-01-18 23:28:52.000000000 -0500
-+++ gaim-2.0.0beta6/gtk/pixmaps/status/default/Makefile.in	2007-02-22 12:36:46.000000000 -0500
-@@ -395,6 +395,7 @@
- 	freeforchat.png \
- 	gadu-gadu.png \
- 	game.png \
-+	../../../plugins/grypt/grypt.png \
- 	halfop.png \
- 	hiptop.png \
- 	icq.png \
-diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.am gaim-2.0.0beta6/gtk/plugins/Makefile.am
---- gaim-2.0.0beta6.orig/gtk/plugins/Makefile.am	2007-01-18 23:27:57.000000000 -0500
-+++ gaim-2.0.0beta6/gtk/plugins/Makefile.am	2007-02-22 12:36:46.000000000 -0500
+ 	/* First message in a conversation. */
+ 	if (gtkconv->newday == 0)
+ 		pidgin_conv_calculate_newday(gtkconv, mtime);
+diff -ru pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.am pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.am
+--- pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.am	2007-06-14 23:12:05.000000000 -0400
++++ pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.am	2007-07-18 15:08:34.000000000 -0400
+@@ -7,6 +7,7 @@
+ 		female.png \
+ 		founder.png \
+ 		free-for-chat.png \
++		../../../plugins/grypt/grypt.png \
+ 		game.png \
+ 		half-operator.png \
+ 		hiptop.png \
+diff -ru pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.in pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.in
+--- pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.in	2007-06-14 23:13:31.000000000 -0400
++++ pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.in	2007-07-18 15:08:52.000000000 -0400
+@@ -408,6 +408,7 @@
+ 		female.png \
+ 		founder.png \
+ 		free-for-chat.png \
++		../../../plugins/grypt/grypt.png \
+ 		game.png \
+ 		half-operator.png \
+ 		hiptop.png \
+diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.am pidgin-2.0.2/pidgin/plugins/Makefile.am
+--- pidgin-2.0.2.orig/pidgin/plugins/Makefile.am	2007-06-14 23:12:08.000000000 -0400
++++ pidgin-2.0.2/pidgin/plugins/Makefile.am	2007-07-18 15:09:44.000000000 -0400
 @@ -1,4 +1,4 @@
 -DIST_SUBDIRS = cap gestures gevolution musicmessaging perl ticker
 +DIST_SUBDIRS = cap gestures gevolution grypt musicmessaging perl ticker
@@ -70,10 +191,10 @@ diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.am gaim-2.0.0beta6/gtk/plugin
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
  	ticker
-diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.in gaim-2.0.0beta6/gtk/plugins/Makefile.in
---- gaim-2.0.0beta6.orig/gtk/plugins/Makefile.in	2007-01-18 23:28:52.000000000 -0500
-+++ gaim-2.0.0beta6/gtk/plugins/Makefile.in	2007-02-22 12:36:46.000000000 -0500
-@@ -474,7 +474,7 @@
+diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.in pidgin-2.0.2/pidgin/plugins/Makefile.in
+--- pidgin-2.0.2.orig/pidgin/plugins/Makefile.in	2007-06-14 23:13:40.000000000 -0400
++++ pidgin-2.0.2/pidgin/plugins/Makefile.in	2007-07-18 15:10:18.000000000 -0400
+@@ -507,7 +507,7 @@
  target_cpu = @target_cpu@
  target_os = @target_os@
  target_vendor = @target_vendor@
@@ -82,7 +203,7 @@ diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.in gaim-2.0.0beta6/gtk/plugin
  @BUILD_GEVOLUTION_TRUE@GEVOLUTION_DIR = gevolution
  @ENABLE_DBUS_TRUE@MUSICMESSAGING_DIR = musicmessaging
  @ENABLE_CAP_TRUE@CAP_DIR = cap
-@@ -483,6 +483,7 @@
+@@ -516,6 +516,7 @@
  	$(CAP_DIR) \
  	gestures \
  	$(GEVOLUTION_DIR) \
@@ -90,9 +211,9 @@ diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.in gaim-2.0.0beta6/gtk/plugin
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
  	ticker
-diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.mingw gaim-2.0.0beta6/gtk/plugins/Makefile.mingw
---- gaim-2.0.0beta6.orig/gtk/plugins/Makefile.mingw	2007-01-18 23:27:57.000000000 -0500
-+++ gaim-2.0.0beta6/gtk/plugins/Makefile.mingw	2007-02-22 12:36:46.000000000 -0500
+diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.mingw pidgin-2.0.2/pidgin/plugins/Makefile.mingw
+--- pidgin-2.0.2.orig/pidgin/plugins/Makefile.mingw	2007-06-14 23:12:08.000000000 -0400
++++ pidgin-2.0.2/pidgin/plugins/Makefile.mingw	2007-07-18 15:11:51.000000000 -0400
 @@ -9,6 +9,7 @@
  
  GTKPERL_PLUGIN := ./perl
@@ -101,148 +222,26 @@ diff -ru gaim-2.0.0beta6.orig/gtk/plugins/Makefile.mingw gaim-2.0.0beta6/gtk/plu
  TRANSPARENCY_PLUGIN := ./win32/transparency
  WINPREFS_PLUGIN := ./win32/winprefs
  
-@@ -58,12 +59,14 @@
- 
+@@ -60,12 +61,14 @@
  all: plugins
- 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
-+	$(MAKE) -C $(GRYPT_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
- 	$(MAKE) -C $(TICKER_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
- 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
- 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(GAIM_WIN32_MAKEFILE)
+ 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(MINGW_MAKEFILE)
+ 	$(MAKE) -C $(TICKER_PLUGIN) -f $(MINGW_MAKEFILE)
++	$(MAKE) -C $(GRYPT_PLUGIN) -f $(MINGW_MAKEFILE)
+ 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(MINGW_MAKEFILE)
+ 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(MINGW_MAKEFILE)
  
- install: all $(GAIM_INSTALL_PLUGINS_DIR)
- 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
-+	$(MAKE) -C $(GRYPT_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
- 	$(MAKE) -C $(TICKER_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
- 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
- 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) install
-@@ -92,6 +95,7 @@
- clean:
+ install: all $(PIDGIN_INSTALL_PLUGINS_DIR)
+ 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(MINGW_MAKEFILE) install
+ 	$(MAKE) -C $(TICKER_PLUGIN) -f $(MINGW_MAKEFILE) install
++	$(MAKE) -C $(GRYPT_PLUGIN) -f $(MINGW_MAKEFILE) install
+ 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(MINGW_MAKEFILE) install
+ 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(MINGW_MAKEFILE) install
+ 	cp *.dll $(PIDGIN_INSTALL_PLUGINS_DIR)
+@@ -95,6 +98,7 @@
  	rm -f *.o *.dll
- 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
-+	$(MAKE) -C $(GRYPT_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
- 	$(MAKE) -C $(TICKER_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
- 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
- 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(GAIM_WIN32_MAKEFILE) clean
-diff -ru gaim-2.0.0beta6.orig/libgaim/conversation.c gaim-2.0.0beta6/libgaim/conversation.c
---- gaim-2.0.0beta6.orig/libgaim/conversation.c	2007-01-18 23:28:24.000000000 -0500
-+++ gaim-2.0.0beta6/libgaim/conversation.c	2007-02-22 12:36:46.000000000 -0500
-@@ -126,7 +126,7 @@
+ 	$(MAKE) -C $(GTKPERL_PLUGIN) -f $(MINGW_MAKEFILE) clean
+ 	$(MAKE) -C $(TICKER_PLUGIN) -f $(MINGW_MAKEFILE) clean
++	$(MAKE) -C $(GRYPT_PLUGIN) -f $(MINGW_MAKEFILE) clean
+ 	$(MAKE) -C $(TRANSPARENCY_PLUGIN) -f $(MINGW_MAKEFILE) clean
+ 	$(MAKE) -C $(WINPREFS_PLUGIN) -f $(MINGW_MAKEFILE) clean
  
- 		gaim_signal_emit(gaim_conversations_get_handle(), "sending-im-msg",
- 						 account,
--						 gaim_conversation_get_name(conv), &sent);
-+						 gaim_conversation_get_name(conv), &sent, &msgflags);
- 
- 		if (sent != NULL && sent[0] != '\0') {
- 
-@@ -2040,12 +2040,13 @@
- 						 gaim_value_new(GAIM_TYPE_UINT));
- 
- 	gaim_signal_register(handle, "sending-im-msg",
--						 gaim_marshal_VOID__POINTER_POINTER_POINTER,
--						 NULL, 3,
-+						 gaim_marshal_VOID__POINTER_POINTER_POINTER_POINTER,
-+						 NULL, 4,
- 						 gaim_value_new(GAIM_TYPE_SUBTYPE,
- 										GAIM_SUBTYPE_ACCOUNT),
- 						 gaim_value_new(GAIM_TYPE_STRING),
--						 gaim_value_new_outgoing(GAIM_TYPE_STRING));
-+						 gaim_value_new_outgoing(GAIM_TYPE_STRING),
-+						 gaim_value_new_outgoing(GAIM_TYPE_UINT));
- 
- 	gaim_signal_register(handle, "sent-im-msg",
- 						 gaim_marshal_VOID__POINTER_POINTER_POINTER,
-diff -ru gaim-2.0.0beta6.orig/libgaim/conversation.h gaim-2.0.0beta6/libgaim/conversation.h
---- gaim-2.0.0beta6.orig/libgaim/conversation.h	2007-01-18 23:28:24.000000000 -0500
-+++ gaim-2.0.0beta6/libgaim/conversation.h	2007-02-22 12:36:46.000000000 -0500
-@@ -115,7 +115,8 @@
- 	GAIM_MESSAGE_DELAYED     = 0x0400, /**< Delayed message.         */
- 	GAIM_MESSAGE_RAW         = 0x0800, /**< "Raw" message - don't
- 	                                        apply formatting         */
--	GAIM_MESSAGE_IMAGES      = 0x1000  /**< Message contains images  */
-+	GAIM_MESSAGE_IMAGES      = 0x1000, /**< Message contains images  */
-+	GAIM_MESSAGE_ENCRYPTED   = 0x2000  /**< Message sent encrypted   */
- 
- } GaimMessageFlags;
- 
-diff -ru gaim-2.0.0beta6.orig/libgaim/log.c gaim-2.0.0beta6/libgaim/log.c
---- gaim-2.0.0beta6.orig/libgaim/log.c	2007-01-18 23:28:24.000000000 -0500
-+++ gaim-2.0.0beta6/libgaim/log.c	2007-02-22 12:36:46.000000000 -0500
-@@ -1103,6 +1103,8 @@
- 	if(log->type == GAIM_LOG_SYSTEM){
- 		written += fprintf(data->file, "---- %s @ %s ----<br/>\n", msg_fixed, date);
- 	} else {
-+		if (type & GAIM_MESSAGE_ENCRYPTED)
-+			written += fprintf(data->file, "*");
- 		if (type & GAIM_MESSAGE_SYSTEM)
- 			written += fprintf(data->file, "<font size=\"2\">(%s)</font><b> %s</b><br/>\n", date, msg_fixed);
- 		else if (type & GAIM_MESSAGE_ERROR)
-@@ -1243,6 +1245,8 @@
- 	if(log->type == GAIM_LOG_SYSTEM){
- 		written += fprintf(data->file, "---- %s @ %s ----\n", stripped, date);
- 	} else {
-+		if (type & GAIM_MESSAGE_ENCRYPTED)
-+			written += fprintf(data->file, "*");
- 		if (type & GAIM_MESSAGE_SEND ||
- 			type & GAIM_MESSAGE_RECV) {
- 			if (type & GAIM_MESSAGE_AUTO_RESP) {
-diff -ru gaim-2.0.0beta6.orig/libgaim/protocols/oscar/family_locate.c gaim-2.0.0beta6/libgaim/protocols/oscar/family_locate.c
---- gaim-2.0.0beta6.orig/libgaim/protocols/oscar/family_locate.c	2007-01-18 23:28:23.000000000 -0500
-+++ gaim-2.0.0beta6/libgaim/protocols/oscar/family_locate.c	2007-02-22 12:36:46.000000000 -0500
-@@ -133,6 +133,10 @@
- 	 {0x09, 0x46, 0x13, 0x49, 0x4c, 0x7f, 0x11, 0xd1,
- 	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
- 
-+	{OSCAR_CAPABILITY_GRYPT,
-+	 {0x09, 0x46, 0x13, 0x50, 0x4c, 0x7f, 0x11, 0xd1,
-+	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
-+
- 	/*
- 	 * Indeed, there are two of these.  The former appears to be correct,
- 	 * but in some versions of winaim, the second one is set.  Either they
-diff -ru gaim-2.0.0beta6.orig/libgaim/protocols/oscar/oscar.c gaim-2.0.0beta6/libgaim/protocols/oscar/oscar.c
---- gaim-2.0.0beta6.orig/libgaim/protocols/oscar/oscar.c	2007-01-18 23:28:23.000000000 -0500
-+++ gaim-2.0.0beta6/libgaim/protocols/oscar/oscar.c	2007-02-22 12:36:46.000000000 -0500
-@@ -63,7 +63,7 @@
- 
- #define OSCAR_CONNECT_STEPS 6
- 
--static OscarCapability gaim_caps = OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM | OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE | OSCAR_CAPABILITY_ICHAT;
-+static OscarCapability gaim_caps = OSCAR_CAPABILITY_CHAT | OSCAR_CAPABILITY_BUDDYICON | OSCAR_CAPABILITY_DIRECTIM | OSCAR_CAPABILITY_SENDFILE | OSCAR_CAPABILITY_UNICODE | OSCAR_CAPABILITY_INTEROPERATE | OSCAR_CAPABILITY_ICHAT | OSCAR_CAPABILITY_GRYPT;
- 
- static guint8 features_aim[] = {0x01, 0x01, 0x01, 0x02};
- static guint8 features_icq[] = {0x01, 0x06};
-@@ -685,6 +685,9 @@
- 			case OSCAR_CAPABILITY_CAMERA:
- 				tmp = _("Camera");
- 				break;
-+			case OSCAR_CAPABILITY_GRYPT:
-+				tmp = _("Engryption");
-+				break;
- 			default:
- 				tmp = NULL;
- 				break;
-@@ -5466,6 +5469,9 @@
- 
- 		if ((i < 4) && (userinfo->capabilities & OSCAR_CAPABILITY_SECUREIM))
- 			emblems[i++] = "secure";
-+
-+		if ((i < 4) && (userinfo->capabilities & OSCAR_CAPABILITY_GRYPT))
-+			emblems[i++] = "grypt";
- 	}
- 
- 	*se = emblems[0];
-diff -ru gaim-2.0.0beta6.orig/libgaim/protocols/oscar/oscar.h gaim-2.0.0beta6/libgaim/protocols/oscar/oscar.h
---- gaim-2.0.0beta6.orig/libgaim/protocols/oscar/oscar.h	2007-01-18 23:28:23.000000000 -0500
-+++ gaim-2.0.0beta6/libgaim/protocols/oscar/oscar.h	2007-02-22 12:36:46.000000000 -0500
-@@ -328,7 +328,8 @@
- 	OSCAR_CAPABILITY_ICHATAV              = 0x02000000,
- 	OSCAR_CAPABILITY_LIVEVIDEO            = 0x04000000,
- 	OSCAR_CAPABILITY_CAMERA               = 0x08000000,
--	OSCAR_CAPABILITY_LAST                 = 0x10000000
-+	OSCAR_CAPABILITY_GRYPT                = 0x10000000,
-+	OSCAR_CAPABILITY_LAST                 = 0x20000000
- } OscarCapability;
- 
- /*
