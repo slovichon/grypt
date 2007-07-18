@@ -5,13 +5,13 @@ Install Notes For Grypt
 
 Unpack the source to the directory:
 
-	gaim-$VERSION/gtk/plugins/grypt
+	purple-$VERSION/gtk/plugins/grypt
 
-Apply the file named `patch' outside the main Gaim source root:
+Apply the file named `patch' outside the main Purple source root:
 
-	$ patch < gaim-$VERSION/gtk/plugins/grypt/patch
+	$ patch < purple-$VERSION/gtk/plugins/grypt/patch
 
-Then proceed to run the Gaim usual installation process:
+Then proceed to run the Purple usual installation process:
 
 	./configure
 	make && make install

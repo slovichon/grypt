@@ -2,9 +2,7 @@
 
 #include <gtk/gtk.h>
 #include <gpgme.h>
-#include "gaim.h"
 #include "conversation.h"
-#include "gtkplugin.h"
 #include "slist.h"
 
 #define GRYPT_VERSION "2.0.0beta4"
@@ -47,7 +45,7 @@ void	 		 bark(const char *fmt, ...);
 void	 		 croak(const char *fmt, ...);
 
 /* gui.c */
-GtkWidget		*grypt_gui_config(GaimPlugin *p);
+GtkWidget		*grypt_gui_config(PurplePlugin *p);
 void			 grypt_gui_gather_ids(GtkListStore *);
 void			 grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
 
@@ -58,11 +56,11 @@ void			 grypt_gui_id_select_cb(GtkTreeSelection *, gpointer);
 struct grypt_peer_data	*grypt_peer_get(const char *, int);
 void			 grypt_peers_free(void);
 int			 grypt_session_start(struct grypt_peer_data *, const char *);
-void			 grypt_evt_new_conversation(GaimConversation *);
-int			 grypt_evt_sign_off(GaimBuddy *, void *);
-int			 grypt_evt_im_send(GaimAccount *, char *, char **, int *, void *);
-int			 grypt_evt_im_recv(GaimAccount *, char **, char **,
-				GaimConversation *, int *, void *);
+void			 grypt_evt_new_conversation(PurpleConversation *);
+int			 grypt_evt_sign_off(PurpleBuddy *, void *);
+int			 grypt_evt_im_send(PurpleAccount *, char *, char **, int *, void *);
+int			 grypt_evt_im_recv(PurpleAccount *, char **, char **,
+				PurpleConversation *, int *, void *);
 
 extern struct grypt_peers  grypt_peers;
 extern GValue		 **grypt_identities;

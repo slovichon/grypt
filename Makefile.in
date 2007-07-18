@@ -37,7 +37,7 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 target_triplet = @target@
-subdir = pidgin/plugins/grypt
+subdir = purple/plugins/grypt
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/acinclude.m4 \
@@ -398,7 +398,7 @@ oldincludedir = @oldincludedir@
 pango_CFLAGS = @pango_CFLAGS@
 pango_LIBS = @pango_LIBS@
 perlpath = @perlpath@
-pidginpath = @pidginpath@
+purplepath = @purplepath@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 sbindir = @sbindir@
@@ -413,7 +413,7 @@ target_vendor = @target_vendor@
 EXTRA_DIST = \
 		Makefile.mingw
 
-plugindir = $(libdir)/pidgin
+plugindir = $(libdir)/purple
 grypt_la_LDFLAGS = -module -avoid-version
 @PLUGINS_TRUE@plugin_LTLIBRARIES = grypt.la
 @PLUGINS_TRUE@grypt_la_SOURCES = crypto.c grypt.c gui.c misc.c plugin.c
@@ -424,7 +424,7 @@ AM_CPPFLAGS = \
 	-DVERSION=\"$(VERSION)\" \
 	-I$(top_srcdir)/libpurple \
 	-I$(top_builddir)/libpurple \
-	-I$(top_srcdir)/pidgin \
+	-I$(top_srcdir)/purple \
 	$(DEBUG_CFLAGS) \
 	`gpgme-config --cflags` \
 	$(GTK_CFLAGS)
@@ -442,9 +442,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  pidgin/plugins/grypt/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  purple/plugins/grypt/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  pidgin/plugins/grypt/Makefile
+	  $(AUTOMAKE) --gnu  purple/plugins/grypt/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \

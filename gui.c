@@ -7,11 +7,10 @@
 #include "internal.h"
 #include "conversation.h"
 #include "grypt.h"
-#include "gtkplugin.h"
-#include "gtkutils.h"
+#include "pidgin/gtkutils.h"
 
 GtkWidget *
-grypt_gui_config(GaimPlugin *p)
+grypt_gui_config(PurplePlugin *p)
 {
 	GtkWidget *ret, *vbox, *frame;
 	GtkListStore *store;
@@ -23,7 +22,7 @@ grypt_gui_config(GaimPlugin *p)
 	ret = gtk_vbox_new(FALSE, 18);
 	gtk_container_set_border_width(GTK_CONTAINER(ret), 12);
 
-	frame = gaim_gtk_make_frame(ret, _("Select a GPG Identity"));
+	frame = pidgin_make_frame(ret, _("Select a GPG Identity"));
 	vbox = gtk_vbox_new(FALSE, 5);
 	gtk_container_add(GTK_CONTAINER(frame), vbox);
 

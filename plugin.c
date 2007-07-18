@@ -3,16 +3,14 @@
 #include <gpgme.h>
 #include "internal.h"
 #include "conversation.h"
-#include "gaim.h"
-#include "gtkplugin.h"
 #include "grypt.h"
-#include "gtkplugin.h"
 #include "version.h"
+#include "pidgin/gtkplugin.h"
 
 static gboolean
-plugin_load(GaimPlugin *p)
+plugin_load(PurplePlugin *p)
 {
-	void *h = gaim_conversations_get_handle();
+	void *h = purple_conversations_get_handle();
 
 	/* Initialize GPGME */
 	if (!grypt_crypto_init())
@@ -26,19 +24,19 @@ plugin_load(GaimPlugin *p)
 //	grypt_identity_load();
 
 	/* Attach callbacks */
-	gaim_signal_connect(h, "conversation-created", p,
-	    GAIM_CALLBACK(grypt_evt_new_conversation), NULL);
-	gaim_signal_connect(h, "receiving-im-msg", p,
-	    GAIM_CALLBACK(grypt_evt_im_recv), NULL);
-	gaim_signal_connect(h, "sending-im-msg", p,
-	    GAIM_CALLBACK(grypt_evt_im_send), NULL);
-	gaim_signal_connect(h, "buddy-signed-off", p,
-	    GAIM_CALLBACK(grypt_evt_sign_off), NULL);
+	purple_signal_connect(h, "conversation-created", p,
+	    PURPLE_CALLBACK(grypt_evt_new_conversation), NULL);
+	purple_signal_connect(h, "receiving-im-msg", p,
+	    PURPLE_CALLBACK(grypt_evt_im_recv), NULL);
+	purple_signal_connect(h, "sending-im-msg", p,
+	    PURPLE_CALLBACK(grypt_evt_im_send), NULL);
+	purple_signal_connect(h, "buddy-signed-off", p,
+	    PURPLE_CALLBACK(grypt_evt_sign_off), NULL);
 	return (TRUE);
 }
 
 static gboolean
-plugin_unload(GaimPlugin *p)
+plugin_unload(PurplePlugin *p)
 {
 	/* Free encryption-session data */
 	grypt_peers_free();
@@ -47,17 +45,17 @@ plugin_unload(GaimPlugin *p)
 	return (TRUE);
 }
 
-static GaimGtkPluginUiInfo ui_info = { grypt_gui_config, 0 };
+static PidginPluginUiInfo ui_info = { grypt_gui_config, 0 };
 
-static GaimPluginInfo info = {
-	GAIM_PLUGIN_MAGIC,				/* api_version */
-	GAIM_MAJOR_VERSION,				/* major */
-	GAIM_MINOR_VERSION,				/* minor */
-	GAIM_PLUGIN_STANDARD,				/* type */
-	GAIM_GTK_PLUGIN_TYPE,				/* ui_requirement */
+static PurplePluginInfo info = {
+	PURPLE_PLUGIN_MAGIC,				/* api_version */
+	PURPLE_MAJOR_VERSION,				/* major */
+	PURPLE_MINOR_VERSION,				/* minor */
+	PURPLE_PLUGIN_STANDARD,				/* type */
+	PIDGIN_PLUGIN_TYPE,				/* ui_requirement */
 	0,						/* flags */
 	NULL,						/* dependencies */
-	GAIM_PRIORITY_DEFAULT,				/* priority */
+	PURPLE_PRIORITY_DEFAULT,				/* priority */
 	"grypt",					/* id */
 	N_("Grypt"),		 			/* name */
 	GRYPT_VERSION,					/* version */
@@ -74,12 +72,17 @@ static GaimPluginInfo info = {
 	&ui_info,					/* ui_info */
 	NULL,						/* extra_info */
 	NULL,						/* prefs info */
-	NULL						/* actions */
+	NULL,						/* actions */
+
+	NULL,
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
-init_plugin(GaimPlugin *p)
+init_plugin(PurplePlugin *p)
 {
 }
 
-GAIM_INIT_PLUGIN(grypt, init_plugin, info);
+PURPLE_INIT_PLUGIN(grypt, init_plugin, info);

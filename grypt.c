@@ -8,8 +8,6 @@
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gpgme.h>
-#include "gaim.h"
-#include "gtkplugin.h"
 #include "grypt.h"
 #include "conversation.h"
 #include "protocols/oscar/oscar.h"
@@ -58,16 +56,16 @@ grypt_aim_locate_finduserinfo(OscarData *od, const char *sn)
 /* ******************************************************** */
 
 static int
-grypt_possible(GaimAccount *ga, const char *name)
+grypt_possible(PurpleAccount *ga, const char *name)
 {
 	aim_userinfo_t *userinfo;
-	GaimConnection *gc;
+	PurpleConnection *gc;
 	OscarData *od;
 
-	if (strcmp(gaim_account_get_protocol_id(ga), "prpl-oscar") != 0)
+	if (strcmp(purple_account_get_protocol_id(ga), "prpl-oscar") != 0)
 		return (FALSE);
 
-	gc = gaim_account_get_connection(ga);
+	gc = purple_account_get_connection(ga);
 	od = gc->proto_data;
 	userinfo = grypt_aim_locate_finduserinfo(od, name);
 	if (userinfo == NULL ||
@@ -77,29 +75,29 @@ grypt_possible(GaimAccount *ga, const char *name)
 }
 
 void
-grypt_evt_new_conversation(GaimConversation *conv)
+grypt_evt_new_conversation(PurpleConversation *conv)
 {
 	struct grypt_peer_data *gpd;
 	char msg[BUFSIZ];
 
-	if (!grypt_possible(gaim_conversation_get_account(conv),
-	    gaim_conversation_get_name(conv)))
+	if (!grypt_possible(purple_conversation_get_account(conv),
+	    purple_conversation_get_name(conv)))
 		return;
 
 	if (grypt_identity == NULL)
 		return;
 
-	gpd = grypt_peer_get(gaim_conversation_get_name(conv), GPF_CREAT);
+	gpd = grypt_peer_get(purple_conversation_get_name(conv), GPF_CREAT);
 	if (gpd->gpd_key == NULL && !gpd->gpd_deny) {
 		snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
 		    g_value_get_string(&grypt_identity[FPR_COL]));
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), msg, 0);
+		serv_send_im(purple_conversation_get_gc(conv),
+		    purple_conversation_get_name(conv), msg, 0);
 	}
 	if (gpd->gpd_deny == 1) {
 		snprintf(msg, sizeof(msg), "GRYPT:PING:REQ");
-		serv_send_im(gaim_conversation_get_gc(conv),
-		    gaim_conversation_get_name(conv), msg, 0);
+		serv_send_im(purple_conversation_get_gc(conv),
+		    purple_conversation_get_name(conv), msg, 0);
 	}
 }
 
@@ -122,8 +120,8 @@ grypt_session_start(struct grypt_peer_data *gpd, const char *fpr)
 }
 
 int
-grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
-    GaimConversation *conv, int *flags, void *data)
+grypt_evt_im_recv(PurpleAccount *account, char **sender, char **buf,
+    PurpleConversation *conv, int *flags, void *data)
 {
 	char *plaintext, *bufp, msg[BUFSIZ];
 	struct grypt_peer_data *gpd;
@@ -140,8 +138,8 @@ grypt_evt_im_recv(GaimAccount *account, char **sender, char **buf,
 		    strcmp(bufp, "GRYPT:DENY") != 0) {
 			snprintf(msg, sizeof(msg), "GRYPT:DENY");
 bark("no identity, telling peer to give up (%s)", msg);
-			serv_send_im(gaim_conversation_get_gc(conv),
-			    gaim_conversation_get_name(conv), msg, 0);
+			serv_send_im(purple_conversation_get_gc(conv),
+			    purple_conversation_get_name(conv), msg, 0);
 		}
 		return (0);
 	}
@@ -157,13 +155,13 @@ bark("no identity, telling peer to give up (%s)", msg);
 	if (strncmp(bufp, "GRYPT:ENC:", 10) == 0) {
 		plaintext = grypt_decrypt(&bufp[10]);
 		if (plaintext) {
-			*flags |= GAIM_MESSAGE_ENCRYPTED;
+			*flags |= PURPLE_MESSAGE_ENCRYPTED;
 			free(bufp);
 			bufp = *buf = plaintext;
 			if (gpd->gpd_key == NULL) {
 				snprintf(msg, sizeof(msg), "GRYPT:REQ:%s",
 				    g_value_get_string(&grypt_identity[FPR_COL]));
-				serv_send_im(gaim_account_get_connection(account),
+				serv_send_im(purple_account_get_connection(account),
 				    *sender, msg, 0);
 			}
 		}
@@ -184,7 +182,7 @@ bark("[RECV] request received, responding (%s)", msg);
 }
 
 int
-grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, int *flags, void *data)
+grypt_evt_im_send(PurpleAccount *account, char *rep, char **buf, int *flags, void *data)
 {
 	struct grypt_peer_data *gpd;
 	char msg[BUFSIZ];
@@ -199,7 +197,7 @@ grypt_evt_im_send(GaimAccount *account, char *rep, char **buf, int *flags, void 
 	if (gpd->gpd_key) {
 		ciphertext = grypt_encrypt(gpd->gpd_key, *buf);
 		if (ciphertext) {
-			*flags |= GAIM_MESSAGE_ENCRYPTED;
+			*flags |= PURPLE_MESSAGE_ENCRYPTED;
 			free(*buf);
 			if (asprintf(buf, "GRYPT:ENC:%s",
 			    ciphertext) == -1)
@@ -218,7 +216,7 @@ bark("[RECV] request received, responding (%s)", msg);
 }
 
 int
-grypt_evt_sign_off(GaimBuddy *buddy, void *data)
+grypt_evt_sign_off(PurpleBuddy *buddy, void *data)
 {
 	struct grypt_peer_data *gpd;
 

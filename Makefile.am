@@ -1,7 +1,7 @@
 EXTRA_DIST = \
 		Makefile.mingw
 
-plugindir = $(libdir)/pidgin
+plugindir = $(libdir)/purple
 
 grypt_la_LDFLAGS = -module -avoid-version
 
@@ -20,7 +20,7 @@ AM_CPPFLAGS = \
 	-DVERSION=\"$(VERSION)\" \
 	-I$(top_srcdir)/libpurple \
 	-I$(top_builddir)/libpurple \
-	-I$(top_srcdir)/pidgin \
+	-I$(top_srcdir)/purple \
 	$(DEBUG_CFLAGS) \
 	`gpgme-config --cflags` \
 	$(GTK_CFLAGS)

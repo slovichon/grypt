@@ -7,7 +7,6 @@
 #include <gpgme.h>
 #include <glib.h>
 #include <gtk/gtk.h>
-#include "gaim.h"
 #include "internal.h"
 #include "request.h"
 #include "grypt.h"
@@ -63,14 +62,14 @@ grypt_crypto_init(void)
 }
 
 static void
-grypt_choose_cb(gpointer data, GaimRequestFields *fields)
+grypt_choose_cb(gpointer data, PurpleRequestFields *fields)
 {
 	const char *f;
 	char *newpass;
 	size_t len;
 
 	grypt_identity = data;
-	f = gaim_request_fields_get_string(fields, "passphrase");
+	f = purple_request_fields_get_string(fields, "passphrase");
 	len = strlen(f);
 	if ((newpass = malloc(len + 2)) == NULL)
 		croak("malloc");
@@ -84,31 +83,31 @@ grypt_choose_cb(gpointer data, GaimRequestFields *fields)
 void
 grypt_choose(GValue *id)
 {
-	GaimRequestFieldGroup *group;
-	GaimRequestFields *fields;
-	GaimRequestField *field;
+	PurpleRequestFieldGroup *group;
+	PurpleRequestFields *fields;
+	PurpleRequestField *field;
 	char buf[BUFSIZ];
 
 	grypt_identity = NULL;
-	fields = gaim_request_fields_new();
+	fields = purple_request_fields_new();
 
-	group = gaim_request_field_group_new(NULL);
-	gaim_request_fields_add_group(fields, group);
+	group = purple_request_field_group_new(NULL);
+	purple_request_fields_add_group(fields, group);
 
-	field = gaim_request_field_string_new("passphrase",
+	field = purple_request_field_string_new("passphrase",
 	    _("_Passphrase"), NULL, FALSE);
-	gaim_request_field_set_type_hint(field, "passphrase");
-	gaim_request_field_set_required(field, TRUE);
-	gaim_request_field_string_set_masked(field, TRUE);
-	gaim_request_field_group_add_field(group, field);
+	purple_request_field_set_type_hint(field, "passphrase");
+	purple_request_field_set_required(field, TRUE);
+	purple_request_field_string_set_masked(field, TRUE);
+	purple_request_field_group_add_field(group, field);
 
 	snprintf(buf, sizeof(buf), "%s '%s' (%s) %s",
 	    _("Please enter the secret GPG passphrase for the"),
 	    g_value_get_string(&id[NAME_COL]),
 	    g_value_get_string(&id[KEYID_COL]), _("identity."));
-	gaim_request_fields(gaim_get_blist(), _("Enter GPG Passphrase"),
+	purple_request_fields(purple_get_blist(), _("Enter GPG Passphrase"),
 	    NULL, buf, fields, _("OK"), G_CALLBACK(grypt_choose_cb),
-	    _("Cancel"), NULL, id);
+	    _("Cancel"), NULL, NULL, NULL, NULL, id);
 }
 
 char *
