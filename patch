@@ -1,27 +1,27 @@
-diff -ru pidgin-2.0.2.orig/configure pidgin-2.0.2/configure
---- pidgin-2.0.2.orig/configure	2007-06-14 23:13:19.000000000 -0400
-+++ pidgin-2.0.2/configure	2007-07-18 15:04:00.000000000 -0400
-@@ -36744,7 +36744,7 @@
- 
+diff -ru pidgin-2.2.0.orig/configure pidgin-2.2.0/configure
+--- pidgin-2.2.0.orig/configure	2007-09-14 03:31:39.000000000 -0400
++++ pidgin-2.2.0/configure	2007-09-26 14:07:14.000000000 -0400
+@@ -37341,7 +37341,7 @@
  fi
  
--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile doc/pidgin.1 doc/finch.1 m4macros/Makefile pidgin.apspec pidgin/Makefile pidgin/pidgin.pc pidgin/pidgin-uninstalled.pc pidgin/pixmaps/Makefile pidgin/pixmaps/animations/Makefile pidgin/pixmaps/animations/16/Makefile pidgin/pixmaps/buddy_icons/Makefile pidgin/pixmaps/buddy_icons/qq/Makefile pidgin/pixmaps/dialogs/Makefile pidgin/pixmaps/dialogs/16/Makefile pidgin/pixmaps/dialogs/16/scalable/Makefile pidgin/pixmaps/dialogs/64/Makefile pidgin/pixmaps/dialogs/64/scalable/Makefile pidgin/pixmaps/emblems/Makefile pidgin/pixmaps/emblems/16/Makefile pidgin/pixmaps/emblems/16/scalable/Makefile pidgin/pixmaps/emotes/Makefile pidgin/pixmaps/emotes/default/Makefile pidgin/pixmaps/emotes/default/22/Makefile pidgin/pixmaps/emotes/default/22/scalable/Makefile pidgin/pixmaps/emotes/none/Makefile pidgin/pixmaps/icons/Makefile pidgin/pixmaps/icons/16/Makefile pidgin/pixmaps/icons/16/scalable/Makefile pidgin/pixmaps/icons/24/Makefile pidgin/pixmaps/icons/24/scalable/Makefile pidgin/pixmaps/icons/32/Makefile pidgin/pixmaps/icons/32/scalable/Makefile pidgin/pixmaps/icons/48/Makefile pidgin/pixmaps/icons/48/scalable/Makefile pidgin/pixmaps/protocols/Makefile pidgin/pixmaps/protocols/16/Makefile pidgin/pixmaps/protocols/16/scalable/Makefile pidgin/pixmaps/protocols/22/Makefile pidgin/pixmaps/protocols/22/scalable/Makefile pidgin/pixmaps/protocols/48/Makefile pidgin/pixmaps/protocols/48/scalable/Makefile pidgin/pixmaps/status/Makefile pidgin/pixmaps/status/16/Makefile pidgin/pixmaps/status/16/rtl/Makefile pidgin/pixmaps/status/16/scalable/Makefile pidgin/pixmaps/status/22/Makefile pidgin/pixmaps/status/22/rtl/Makefile pidgin/pixmaps/status/22/scalable/Makefile pidgin/pixmaps/status/32/Makefile pidgin/pixmaps/status/32/rtl/Makefile pidgin/pixmaps/status/32/scalable/Makefile pidgin/pixmaps/status/48/Makefile pidgin/pixmaps/status/48/rtl/Makefile pidgin/pixmaps/toolbar/Makefile pidgin/pixmaps/toolbar/16/Makefile pidgin/pixmaps/toolbar/16/scalable/Makefile pidgin/pixmaps/toolbar/22/Makefile pidgin/pixmaps/toolbar/22/scalable/Makefile pidgin/pixmaps/tray/Makefile pidgin/pixmaps/tray/16/Makefile pidgin/pixmaps/tray/16/scalable/Makefile pidgin/pixmaps/tray/22/Makefile pidgin/pixmaps/tray/22/scalable/Makefile pidgin/pixmaps/tray/32/Makefile pidgin/pixmaps/tray/48/Makefile pidgin/plugins/Makefile pidgin/plugins/cap/Makefile pidgin/plugins/gestures/Makefile pidgin/plugins/gevolution/Makefile pidgin/plugins/musicmessaging/Makefile pidgin/plugins/perl/Makefile pidgin/plugins/perl/common/Makefile.PL pidgin/plugins/ticker/Makefile pidgin/sounds/Makefile libpurple/example/Makefile libpurple/gconf/Makefile libpurple/purple.pc libpurple/purple-uninstalled.pc libpurple/plugins/Makefile libpurple/plugins/mono/Makefile libpurple/plugins/mono/api/Makefile libpurple/plugins/mono/loader/Makefile libpurple/plugins/perl/Makefile libpurple/plugins/perl/common/Makefile.PL libpurple/plugins/ssl/Makefile libpurple/plugins/tcl/Makefile libpurple/Makefile libpurple/protocols/Makefile libpurple/protocols/bonjour/Makefile libpurple/protocols/gg/Makefile libpurple/protocols/irc/Makefile libpurple/protocols/jabber/Makefile libpurple/protocols/msn/Makefile libpurple/protocols/novell/Makefile libpurple/protocols/null/Makefile libpurple/protocols/oscar/Makefile libpurple/protocols/qq/Makefile libpurple/protocols/sametime/Makefile libpurple/protocols/silc/Makefile libpurple/protocols/silc10/Makefile libpurple/protocols/simple/Makefile libpurple/protocols/toc/Makefile libpurple/protocols/yahoo/Makefile libpurple/protocols/zephyr/Makefile libpurple/tests/Makefile libpurple/version.h finch/Makefile finch/libgnt/Makefile finch/libgnt/gnt.pc finch/libgnt/wms/Makefile finch/plugins/Makefile po/Makefile.in pidgin.spec"
-+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile doc/pidgin.1 doc/finch.1 m4macros/Makefile pidgin.apspec pidgin/Makefile pidgin/pidgin.pc pidgin/pidgin-uninstalled.pc pidgin/pixmaps/Makefile pidgin/pixmaps/animations/Makefile pidgin/pixmaps/animations/16/Makefile pidgin/pixmaps/buddy_icons/Makefile pidgin/pixmaps/buddy_icons/qq/Makefile pidgin/pixmaps/dialogs/Makefile pidgin/pixmaps/dialogs/16/Makefile pidgin/pixmaps/dialogs/16/scalable/Makefile pidgin/pixmaps/dialogs/64/Makefile pidgin/pixmaps/dialogs/64/scalable/Makefile pidgin/pixmaps/emblems/Makefile pidgin/pixmaps/emblems/16/Makefile pidgin/pixmaps/emblems/16/scalable/Makefile pidgin/pixmaps/emotes/Makefile pidgin/pixmaps/emotes/default/Makefile pidgin/pixmaps/emotes/default/22/Makefile pidgin/pixmaps/emotes/default/22/scalable/Makefile pidgin/pixmaps/emotes/none/Makefile pidgin/pixmaps/icons/Makefile pidgin/pixmaps/icons/16/Makefile pidgin/pixmaps/icons/16/scalable/Makefile pidgin/pixmaps/icons/24/Makefile pidgin/pixmaps/icons/24/scalable/Makefile pidgin/pixmaps/icons/32/Makefile pidgin/pixmaps/icons/32/scalable/Makefile pidgin/pixmaps/icons/48/Makefile pidgin/pixmaps/icons/48/scalable/Makefile pidgin/pixmaps/protocols/Makefile pidgin/pixmaps/protocols/16/Makefile pidgin/pixmaps/protocols/16/scalable/Makefile pidgin/pixmaps/protocols/22/Makefile pidgin/pixmaps/protocols/22/scalable/Makefile pidgin/pixmaps/protocols/48/Makefile pidgin/pixmaps/protocols/48/scalable/Makefile pidgin/pixmaps/status/Makefile pidgin/pixmaps/status/16/Makefile pidgin/pixmaps/status/16/rtl/Makefile pidgin/pixmaps/status/16/scalable/Makefile pidgin/pixmaps/status/22/Makefile pidgin/pixmaps/status/22/rtl/Makefile pidgin/pixmaps/status/22/scalable/Makefile pidgin/pixmaps/status/32/Makefile pidgin/pixmaps/status/32/rtl/Makefile pidgin/pixmaps/status/32/scalable/Makefile pidgin/pixmaps/status/48/Makefile pidgin/pixmaps/status/48/rtl/Makefile pidgin/pixmaps/toolbar/Makefile pidgin/pixmaps/toolbar/16/Makefile pidgin/pixmaps/toolbar/16/scalable/Makefile pidgin/pixmaps/toolbar/22/Makefile pidgin/pixmaps/toolbar/22/scalable/Makefile pidgin/pixmaps/tray/Makefile pidgin/pixmaps/tray/16/Makefile pidgin/pixmaps/tray/16/scalable/Makefile pidgin/pixmaps/tray/22/Makefile pidgin/pixmaps/tray/22/scalable/Makefile pidgin/pixmaps/tray/32/Makefile pidgin/pixmaps/tray/48/Makefile pidgin/plugins/Makefile pidgin/plugins/cap/Makefile pidgin/plugins/gestures/Makefile pidgin/plugins/gevolution/Makefile pidgin/plugins/grypt/Makefile pidgin/plugins/musicmessaging/Makefile pidgin/plugins/perl/Makefile pidgin/plugins/perl/common/Makefile.PL pidgin/plugins/ticker/Makefile pidgin/sounds/Makefile libpurple/example/Makefile libpurple/gconf/Makefile libpurple/purple.pc libpurple/purple-uninstalled.pc libpurple/plugins/Makefile libpurple/plugins/mono/Makefile libpurple/plugins/mono/api/Makefile libpurple/plugins/mono/loader/Makefile libpurple/plugins/perl/Makefile libpurple/plugins/perl/common/Makefile.PL libpurple/plugins/ssl/Makefile libpurple/plugins/tcl/Makefile libpurple/Makefile libpurple/protocols/Makefile libpurple/protocols/bonjour/Makefile libpurple/protocols/gg/Makefile libpurple/protocols/irc/Makefile libpurple/protocols/jabber/Makefile libpurple/protocols/msn/Makefile libpurple/protocols/novell/Makefile libpurple/protocols/null/Makefile libpurple/protocols/oscar/Makefile libpurple/protocols/qq/Makefile libpurple/protocols/sametime/Makefile libpurple/protocols/silc/Makefile libpurple/protocols/silc10/Makefile libpurple/protocols/simple/Makefile libpurple/protocols/toc/Makefile libpurple/protocols/yahoo/Makefile libpurple/protocols/zephyr/Makefile libpurple/tests/Makefile libpurple/version.h finch/Makefile finch/libgnt/Makefile finch/libgnt/gnt.pc finch/libgnt/wms/Makefile finch/plugins/Makefile po/Makefile.in pidgin.spec"
+ 
+-ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile doc/pidgin.1 doc/finch.1 m4macros/Makefile pidgin.apspec pidgin/Makefile pidgin/pidgin.pc pidgin/pidgin-uninstalled.pc pidgin/pixmaps/Makefile pidgin/pixmaps/animations/Makefile pidgin/pixmaps/animations/16/Makefile pidgin/pixmaps/buddy_icons/Makefile pidgin/pixmaps/buddy_icons/qq/Makefile pidgin/pixmaps/dialogs/Makefile pidgin/pixmaps/dialogs/16/Makefile pidgin/pixmaps/dialogs/16/scalable/Makefile pidgin/pixmaps/dialogs/64/Makefile pidgin/pixmaps/dialogs/64/scalable/Makefile pidgin/pixmaps/emblems/Makefile pidgin/pixmaps/emblems/16/Makefile pidgin/pixmaps/emblems/16/scalable/Makefile pidgin/pixmaps/emotes/Makefile pidgin/pixmaps/emotes/default/Makefile pidgin/pixmaps/emotes/default/24/Makefile pidgin/pixmaps/emotes/default/24/scalable/Makefile pidgin/pixmaps/emotes/none/Makefile pidgin/pixmaps/icons/Makefile pidgin/pixmaps/icons/16/Makefile pidgin/pixmaps/icons/16/scalable/Makefile pidgin/pixmaps/icons/22/Makefile pidgin/pixmaps/icons/22/scalable/Makefile pidgin/pixmaps/icons/24/Makefile pidgin/pixmaps/icons/24/scalable/Makefile pidgin/pixmaps/icons/32/Makefile pidgin/pixmaps/icons/32/scalable/Makefile pidgin/pixmaps/icons/48/Makefile pidgin/pixmaps/icons/48/scalable/Makefile pidgin/pixmaps/protocols/Makefile pidgin/pixmaps/protocols/16/Makefile pidgin/pixmaps/protocols/16/scalable/Makefile pidgin/pixmaps/protocols/22/Makefile pidgin/pixmaps/protocols/22/scalable/Makefile pidgin/pixmaps/protocols/48/Makefile pidgin/pixmaps/protocols/48/scalable/Makefile pidgin/pixmaps/status/Makefile pidgin/pixmaps/status/11/Makefile pidgin/pixmaps/status/11/scalable/Makefile pidgin/pixmaps/status/11/rtl/Makefile pidgin/pixmaps/status/16/Makefile pidgin/pixmaps/status/16/rtl/Makefile pidgin/pixmaps/status/16/scalable/Makefile pidgin/pixmaps/status/22/Makefile pidgin/pixmaps/status/22/rtl/Makefile pidgin/pixmaps/status/22/scalable/Makefile pidgin/pixmaps/status/32/Makefile pidgin/pixmaps/status/32/rtl/Makefile pidgin/pixmaps/status/32/scalable/Makefile pidgin/pixmaps/status/48/Makefile pidgin/pixmaps/status/48/rtl/Makefile pidgin/pixmaps/toolbar/Makefile pidgin/pixmaps/toolbar/16/Makefile pidgin/pixmaps/toolbar/16/scalable/Makefile pidgin/pixmaps/toolbar/22/Makefile pidgin/pixmaps/toolbar/22/scalable/Makefile pidgin/pixmaps/tray/Makefile pidgin/pixmaps/tray/16/Makefile pidgin/pixmaps/tray/16/scalable/Makefile pidgin/pixmaps/tray/22/Makefile pidgin/pixmaps/tray/22/scalable/Makefile pidgin/pixmaps/tray/32/Makefile pidgin/pixmaps/tray/48/Makefile pidgin/plugins/Makefile pidgin/plugins/cap/Makefile pidgin/plugins/gestures/Makefile pidgin/plugins/gevolution/Makefile pidgin/plugins/musicmessaging/Makefile pidgin/plugins/perl/Makefile pidgin/plugins/perl/common/Makefile.PL pidgin/plugins/ticker/Makefile libpurple/example/Makefile libpurple/gconf/Makefile libpurple/purple.pc libpurple/purple-uninstalled.pc libpurple/plugins/Makefile libpurple/plugins/mono/Makefile libpurple/plugins/mono/api/Makefile libpurple/plugins/mono/loader/Makefile libpurple/plugins/perl/Makefile libpurple/plugins/perl/common/Makefile.PL libpurple/plugins/ssl/Makefile libpurple/plugins/tcl/Makefile libpurple/Makefile libpurple/protocols/Makefile libpurple/protocols/bonjour/Makefile libpurple/protocols/gg/Makefile libpurple/protocols/irc/Makefile libpurple/protocols/jabber/Makefile libpurple/protocols/msn/Makefile libpurple/protocols/myspace/Makefile libpurple/protocols/novell/Makefile libpurple/protocols/null/Makefile libpurple/protocols/oscar/Makefile libpurple/protocols/qq/Makefile libpurple/protocols/sametime/Makefile libpurple/protocols/silc/Makefile libpurple/protocols/silc10/Makefile libpurple/protocols/simple/Makefile libpurple/protocols/toc/Makefile libpurple/protocols/yahoo/Makefile libpurple/protocols/zephyr/Makefile libpurple/tests/Makefile libpurple/version.h share/Makefile share/sounds/Makefile share/ca-certs/Makefile finch/Makefile finch/libgnt/Makefile finch/libgnt/gnt.pc finch/libgnt/wms/Makefile finch/plugins/Makefile po/Makefile.in pidgin.spec"
++ac_config_files="$ac_config_files Makefile Doxyfile doc/Makefile doc/pidgin.1 doc/finch.1 m4macros/Makefile pidgin.apspec pidgin/Makefile pidgin/pidgin.pc pidgin/pidgin-uninstalled.pc pidgin/pixmaps/Makefile pidgin/pixmaps/animations/Makefile pidgin/pixmaps/animations/16/Makefile pidgin/pixmaps/buddy_icons/Makefile pidgin/pixmaps/buddy_icons/qq/Makefile pidgin/pixmaps/dialogs/Makefile pidgin/pixmaps/dialogs/16/Makefile pidgin/pixmaps/dialogs/16/scalable/Makefile pidgin/pixmaps/dialogs/64/Makefile pidgin/pixmaps/dialogs/64/scalable/Makefile pidgin/pixmaps/emblems/Makefile pidgin/pixmaps/emblems/16/Makefile pidgin/pixmaps/emblems/16/scalable/Makefile pidgin/pixmaps/emotes/Makefile pidgin/pixmaps/emotes/default/Makefile pidgin/pixmaps/emotes/default/24/Makefile pidgin/pixmaps/emotes/default/24/scalable/Makefile pidgin/pixmaps/emotes/none/Makefile pidgin/pixmaps/icons/Makefile pidgin/pixmaps/icons/16/Makefile pidgin/pixmaps/icons/16/scalable/Makefile pidgin/pixmaps/icons/22/Makefile pidgin/pixmaps/icons/22/scalable/Makefile pidgin/pixmaps/icons/24/Makefile pidgin/pixmaps/icons/24/scalable/Makefile pidgin/pixmaps/icons/32/Makefile pidgin/pixmaps/icons/32/scalable/Makefile pidgin/pixmaps/icons/48/Makefile pidgin/pixmaps/icons/48/scalable/Makefile pidgin/pixmaps/protocols/Makefile pidgin/pixmaps/protocols/16/Makefile pidgin/pixmaps/protocols/16/scalable/Makefile pidgin/pixmaps/protocols/22/Makefile pidgin/pixmaps/protocols/22/scalable/Makefile pidgin/pixmaps/protocols/48/Makefile pidgin/pixmaps/protocols/48/scalable/Makefile pidgin/pixmaps/status/Makefile pidgin/pixmaps/status/11/Makefile pidgin/pixmaps/status/11/scalable/Makefile pidgin/pixmaps/status/11/rtl/Makefile pidgin/pixmaps/status/16/Makefile pidgin/pixmaps/status/16/rtl/Makefile pidgin/pixmaps/status/16/scalable/Makefile pidgin/pixmaps/status/22/Makefile pidgin/pixmaps/status/22/rtl/Makefile pidgin/pixmaps/status/22/scalable/Makefile pidgin/pixmaps/status/32/Makefile pidgin/pixmaps/status/32/rtl/Makefile pidgin/pixmaps/status/32/scalable/Makefile pidgin/pixmaps/status/48/Makefile pidgin/pixmaps/status/48/rtl/Makefile pidgin/pixmaps/toolbar/Makefile pidgin/pixmaps/toolbar/16/Makefile pidgin/pixmaps/toolbar/16/scalable/Makefile pidgin/pixmaps/toolbar/22/Makefile pidgin/pixmaps/toolbar/22/scalable/Makefile pidgin/pixmaps/tray/Makefile pidgin/pixmaps/tray/16/Makefile pidgin/pixmaps/tray/16/scalable/Makefile pidgin/pixmaps/tray/22/Makefile pidgin/pixmaps/tray/22/scalable/Makefile pidgin/pixmaps/tray/32/Makefile pidgin/pixmaps/tray/48/Makefile pidgin/plugins/Makefile pidgin/plugins/cap/Makefile pidgin/plugins/gestures/Makefile pidgin/plugins/gevolution/Makefile pidgin/plugins/grypt/Makefile pidgin/plugins/musicmessaging/Makefile pidgin/plugins/perl/Makefile pidgin/plugins/perl/common/Makefile.PL pidgin/plugins/ticker/Makefile libpurple/example/Makefile libpurple/gconf/Makefile libpurple/purple.pc libpurple/purple-uninstalled.pc libpurple/plugins/Makefile libpurple/plugins/mono/Makefile libpurple/plugins/mono/api/Makefile libpurple/plugins/mono/loader/Makefile libpurple/plugins/perl/Makefile libpurple/plugins/perl/common/Makefile.PL libpurple/plugins/ssl/Makefile libpurple/plugins/tcl/Makefile libpurple/Makefile libpurple/protocols/Makefile libpurple/protocols/bonjour/Makefile libpurple/protocols/gg/Makefile libpurple/protocols/irc/Makefile libpurple/protocols/jabber/Makefile libpurple/protocols/msn/Makefile libpurple/protocols/myspace/Makefile libpurple/protocols/novell/Makefile libpurple/protocols/null/Makefile libpurple/protocols/oscar/Makefile libpurple/protocols/qq/Makefile libpurple/protocols/sametime/Makefile libpurple/protocols/silc/Makefile libpurple/protocols/silc10/Makefile libpurple/protocols/simple/Makefile libpurple/protocols/toc/Makefile libpurple/protocols/yahoo/Makefile libpurple/protocols/zephyr/Makefile libpurple/tests/Makefile libpurple/version.h share/Makefile share/sounds/Makefile share/ca-certs/Makefile finch/Makefile finch/libgnt/Makefile finch/libgnt/gnt.pc finch/libgnt/wms/Makefile finch/plugins/Makefile po/Makefile.in pidgin.spec"
+ 
  cat >confcache <<\_ACEOF
  # This file is a shell script that caches the results of configure
- # tests run on this system so they can be shared between configure
-@@ -37754,6 +37754,7 @@
-   "pidgin/plugins/cap/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/cap/Makefile" ;;
-   "pidgin/plugins/gestures/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/gestures/Makefile" ;;
-   "pidgin/plugins/gevolution/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/gevolution/Makefile" ;;
-+  "pidgin/plugins/grypt/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/grypt/Makefile" ;;
-   "pidgin/plugins/musicmessaging/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/musicmessaging/Makefile" ;;
-   "pidgin/plugins/perl/Makefile" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/perl/Makefile" ;;
-   "pidgin/plugins/perl/common/Makefile.PL" ) CONFIG_FILES="$CONFIG_FILES pidgin/plugins/perl/common/Makefile.PL" ;;
-diff -ru pidgin-2.0.2.orig/libpurple/conversation.c pidgin-2.0.2/libpurple/conversation.c
---- pidgin-2.0.2.orig/libpurple/conversation.c	2007-06-14 23:11:51.000000000 -0400
-+++ pidgin-2.0.2/libpurple/conversation.c	2007-07-18 15:13:10.000000000 -0400
-@@ -126,7 +126,7 @@
+@@ -38428,6 +38428,7 @@
+     "pidgin/plugins/cap/Makefile") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/cap/Makefile" ;;
+     "pidgin/plugins/gestures/Makefile") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/gestures/Makefile" ;;
+     "pidgin/plugins/gevolution/Makefile") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/gevolution/Makefile" ;;
++    "pidgin/plugins/grypt/Makefile") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/grypt/Makefile" ;;
+     "pidgin/plugins/musicmessaging/Makefile") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/musicmessaging/Makefile" ;;
+     "pidgin/plugins/perl/Makefile") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/perl/Makefile" ;;
+     "pidgin/plugins/perl/common/Makefile.PL") CONFIG_FILES="$CONFIG_FILES pidgin/plugins/perl/common/Makefile.PL" ;;
+diff -ru pidgin-2.2.0.orig/libpurple/conversation.c pidgin-2.2.0/libpurple/conversation.c
+--- pidgin-2.2.0.orig/libpurple/conversation.c	2007-09-14 00:45:39.000000000 -0400
++++ pidgin-2.2.0/libpurple/conversation.c	2007-09-26 14:03:48.000000000 -0400
+@@ -131,7 +131,7 @@
  
  		purple_signal_emit(purple_conversations_get_handle(), "sending-im-msg",
  						 account,
@@ -30,7 +30,7 @@ diff -ru pidgin-2.0.2.orig/libpurple/conversation.c pidgin-2.0.2/libpurple/conve
  
  		if (sent != NULL && sent[0] != '\0') {
  
-@@ -2048,12 +2048,13 @@
+@@ -2164,12 +2164,13 @@
  						 purple_value_new(PURPLE_TYPE_UINT));
  
  	purple_signal_register(handle, "sending-im-msg",
@@ -47,23 +47,21 @@ diff -ru pidgin-2.0.2.orig/libpurple/conversation.c pidgin-2.0.2/libpurple/conve
  
  	purple_signal_register(handle, "sent-im-msg",
  						 purple_marshal_VOID__POINTER_POINTER_POINTER,
-diff -ru pidgin-2.0.2.orig/libpurple/conversation.h pidgin-2.0.2/libpurple/conversation.h
---- pidgin-2.0.2.orig/libpurple/conversation.h	2007-06-14 23:11:51.000000000 -0400
-+++ pidgin-2.0.2/libpurple/conversation.h	2007-07-18 15:23:08.000000000 -0400
-@@ -116,7 +116,8 @@
- 	PURPLE_MESSAGE_RAW         = 0x0800, /**< "Raw" message - don't
- 	                                        apply formatting         */
- 	PURPLE_MESSAGE_IMAGES      = 0x1000, /**< Message contains images  */
--	PURPLE_MESSAGE_NOTIFY      = 0x2000  /**< Message is a notification */
-+	PURPLE_MESSAGE_NOTIFY      = 0x2000, /**< Message is a notification */
-+	PURPLE_MESSAGE_ENCRYPTED   = 0x4000  /**< Message sent encrypted */
- 
+diff -ru pidgin-2.2.0.orig/libpurple/conversation.h pidgin-2.2.0/libpurple/conversation.h
+--- pidgin-2.2.0.orig/libpurple/conversation.h	2007-09-14 00:45:39.000000000 -0400
++++ pidgin-2.2.0/libpurple/conversation.h	2007-09-26 14:07:28.000000000 -0400
+@@ -121,6 +121,7 @@
+ 	PURPLE_MESSAGE_NO_LINKIFY  = 0x4000, /**< Message should not be auto-
+ 										   linkified */
+ 	PURPLE_MESSAGE_INVISIBLE   = 0x8000, /**< Message should not be displayed */
++ 	PURPLE_MESSAGE_ENCRYPTED   = 0x10000  /**< Message sent encrypted */
  } PurpleMessageFlags;
  
-diff -ru pidgin-2.0.2.orig/libpurple/log.c pidgin-2.0.2/libpurple/log.c
---- pidgin-2.0.2.orig/libpurple/log.c	2007-06-14 23:11:52.000000000 -0400
-+++ pidgin-2.0.2/libpurple/log.c	2007-07-18 15:15:38.000000000 -0400
-@@ -1237,6 +1237,8 @@
+ /**
+diff -ru pidgin-2.2.0.orig/libpurple/log.c pidgin-2.2.0/libpurple/log.c
+--- pidgin-2.2.0.orig/libpurple/log.c	2007-09-14 00:45:39.000000000 -0400
++++ pidgin-2.2.0/libpurple/log.c	2007-09-26 14:03:48.000000000 -0400
+@@ -1351,6 +1351,8 @@
  	if(log->type == PURPLE_LOG_SYSTEM){
  		written += fprintf(data->file, "---- %s @ %s ----<br/>\n", msg_fixed, date);
  	} else {
@@ -72,7 +70,7 @@ diff -ru pidgin-2.0.2.orig/libpurple/log.c pidgin-2.0.2/libpurple/log.c
  		if (type & PURPLE_MESSAGE_SYSTEM)
  			written += fprintf(data->file, "<font size=\"2\">(%s)</font><b> %s</b><br/>\n", date, msg_fixed);
  		else if (type & PURPLE_MESSAGE_RAW)
-@@ -1379,6 +1381,8 @@
+@@ -1493,6 +1495,8 @@
  	if(log->type == PURPLE_LOG_SYSTEM){
  		written += fprintf(data->file, "---- %s @ %s ----\n", stripped, date);
  	} else {
@@ -81,9 +79,9 @@ diff -ru pidgin-2.0.2.orig/libpurple/log.c pidgin-2.0.2/libpurple/log.c
  		if (type & PURPLE_MESSAGE_SEND ||
  			type & PURPLE_MESSAGE_RECV) {
  			if (type & PURPLE_MESSAGE_AUTO_RESP) {
-diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/family_locate.c pidgin-2.0.2/libpurple/protocols/oscar/family_locate.c
---- pidgin-2.0.2.orig/libpurple/protocols/oscar/family_locate.c	2007-06-14 23:11:59.000000000 -0400
-+++ pidgin-2.0.2/libpurple/protocols/oscar/family_locate.c	2007-07-18 15:16:09.000000000 -0400
+diff -ru pidgin-2.2.0.orig/libpurple/protocols/oscar/family_locate.c pidgin-2.2.0/libpurple/protocols/oscar/family_locate.c
+--- pidgin-2.2.0.orig/libpurple/protocols/oscar/family_locate.c	2007-09-14 00:45:40.000000000 -0400
++++ pidgin-2.2.0/libpurple/protocols/oscar/family_locate.c	2007-09-26 14:03:48.000000000 -0400
 @@ -133,6 +133,10 @@
  	 {0x09, 0x46, 0x13, 0x49, 0x4c, 0x7f, 0x11, 0xd1,
  	  0x82, 0x22, 0x44, 0x45, 0x53, 0x54, 0x00, 0x00}},
@@ -95,9 +93,9 @@ diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/family_locate.c pidgin-2.0.
  	/*
  	 * Indeed, there are two of these.  The former appears to be correct,
  	 * but in some versions of winaim, the second one is set.  Either they
-diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c pidgin-2.0.2/libpurple/protocols/oscar/oscar.c
---- pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c	2007-06-14 23:11:59.000000000 -0400
-+++ pidgin-2.0.2/libpurple/protocols/oscar/oscar.c	2007-07-18 15:17:19.000000000 -0400
+diff -ru pidgin-2.2.0.orig/libpurple/protocols/oscar/oscar.c pidgin-2.2.0/libpurple/protocols/oscar/oscar.c
+--- pidgin-2.2.0.orig/libpurple/protocols/oscar/oscar.c	2007-09-14 00:45:40.000000000 -0400
++++ pidgin-2.2.0/libpurple/protocols/oscar/oscar.c	2007-09-26 14:03:48.000000000 -0400
 @@ -64,7 +64,7 @@
  
  #define OSCAR_CONNECT_STEPS 6
@@ -107,7 +105,7 @@ diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c pidgin-2.0.2/libpur
  
  static guint8 features_aim[] = {0x01, 0x01, 0x01, 0x02};
  static guint8 features_icq[] = {0x01, 0x06};
-@@ -706,6 +706,9 @@
+@@ -705,6 +705,9 @@
  			case OSCAR_CAPABILITY_CAMERA:
  				tmp = _("Camera");
  				break;
@@ -117,7 +115,7 @@ diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c pidgin-2.0.2/libpur
  			default:
  				tmp = NULL;
  				break;
-@@ -5500,6 +5503,8 @@
+@@ -5507,6 +5510,8 @@
  			return "hiptop";
  		if (userinfo->capabilities & OSCAR_CAPABILITY_SECUREIM)
  			return "secure";
@@ -126,10 +124,10 @@ diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.c pidgin-2.0.2/libpur
  	}
  	return NULL;
  }
-diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.h pidgin-2.0.2/libpurple/protocols/oscar/oscar.h
---- pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.h	2007-06-14 23:11:59.000000000 -0400
-+++ pidgin-2.0.2/libpurple/protocols/oscar/oscar.h	2007-07-18 15:18:53.000000000 -0400
-@@ -332,7 +332,8 @@
+diff -ru pidgin-2.2.0.orig/libpurple/protocols/oscar/oscar.h pidgin-2.2.0/libpurple/protocols/oscar/oscar.h
+--- pidgin-2.2.0.orig/libpurple/protocols/oscar/oscar.h	2007-09-14 00:45:40.000000000 -0400
++++ pidgin-2.2.0/libpurple/protocols/oscar/oscar.h	2007-09-26 14:03:48.000000000 -0400
+@@ -337,7 +337,8 @@
  	OSCAR_CAPABILITY_ICHATAV              = 0x02000000,
  	OSCAR_CAPABILITY_LIVEVIDEO            = 0x04000000,
  	OSCAR_CAPABILITY_CAMERA               = 0x08000000,
@@ -139,12 +137,12 @@ diff -ru pidgin-2.0.2.orig/libpurple/protocols/oscar/oscar.h pidgin-2.0.2/libpur
  } OscarCapability;
  
  /*
-diff -ru pidgin-2.0.2.orig/pidgin/gtkconv.c pidgin-2.0.2/pidgin/gtkconv.c
---- pidgin-2.0.2.orig/pidgin/gtkconv.c	2007-06-14 23:12:03.000000000 -0400
-+++ pidgin-2.0.2/pidgin/gtkconv.c	2007-07-18 17:07:21.000000000 -0400
-@@ -5243,6 +5243,9 @@
+diff -ru pidgin-2.2.0.orig/pidgin/gtkconv.c pidgin-2.2.0/pidgin/gtkconv.c
+--- pidgin-2.2.0.orig/pidgin/gtkconv.c	2007-09-14 04:33:10.000000000 -0400
++++ pidgin-2.2.0/pidgin/gtkconv.c	2007-09-26 14:03:48.000000000 -0400
+@@ -5464,6 +5464,9 @@
  	if (gtk_text_buffer_get_char_count(gtk_text_view_get_buffer(GTK_TEXT_VIEW(gtkconv->imhtml))))
- 		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", gtk_font_options_all);
+ 		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "<BR>", gtk_font_options_all | GTK_IMHTML_NO_SCROLL);
  
 +	if (flags & PURPLE_MESSAGE_ENCRYPTED)
 +		gtk_imhtml_append_text(GTK_IMHTML(gtkconv->imhtml), "*", gtk_font_options_all);
@@ -152,9 +150,9 @@ diff -ru pidgin-2.0.2.orig/pidgin/gtkconv.c pidgin-2.0.2/pidgin/gtkconv.c
  	/* First message in a conversation. */
  	if (gtkconv->newday == 0)
  		pidgin_conv_calculate_newday(gtkconv, mtime);
-diff -ru pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.am pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.am
---- pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.am	2007-06-14 23:12:05.000000000 -0400
-+++ pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.am	2007-07-18 15:08:34.000000000 -0400
+diff -ru pidgin-2.2.0.orig/pidgin/pixmaps/emblems/16/Makefile.am pidgin-2.2.0/pidgin/pixmaps/emblems/16/Makefile.am
+--- pidgin-2.2.0.orig/pidgin/pixmaps/emblems/16/Makefile.am	2007-05-03 00:29:49.000000000 -0400
++++ pidgin-2.2.0/pidgin/pixmaps/emblems/16/Makefile.am	2007-09-26 14:03:48.000000000 -0400
 @@ -7,6 +7,7 @@
  		female.png \
  		founder.png \
@@ -163,10 +161,10 @@ diff -ru pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.am pidgin-2.0.2/pi
  		game.png \
  		half-operator.png \
  		hiptop.png \
-diff -ru pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.in pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.in
---- pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.in	2007-06-14 23:13:31.000000000 -0400
-+++ pidgin-2.0.2/pidgin/pixmaps/emblems/16/Makefile.in	2007-07-18 15:08:52.000000000 -0400
-@@ -408,6 +408,7 @@
+diff -ru pidgin-2.2.0.orig/pidgin/pixmaps/emblems/16/Makefile.in pidgin-2.2.0/pidgin/pixmaps/emblems/16/Makefile.in
+--- pidgin-2.2.0.orig/pidgin/pixmaps/emblems/16/Makefile.in	2007-09-14 03:31:29.000000000 -0400
++++ pidgin-2.2.0/pidgin/pixmaps/emblems/16/Makefile.in	2007-09-26 14:03:48.000000000 -0400
+@@ -425,6 +425,7 @@
  		female.png \
  		founder.png \
  		free-for-chat.png \
@@ -174,27 +172,27 @@ diff -ru pidgin-2.0.2.orig/pidgin/pixmaps/emblems/16/Makefile.in pidgin-2.0.2/pi
  		game.png \
  		half-operator.png \
  		hiptop.png \
-diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.am pidgin-2.0.2/pidgin/plugins/Makefile.am
---- pidgin-2.0.2.orig/pidgin/plugins/Makefile.am	2007-06-14 23:12:08.000000000 -0400
-+++ pidgin-2.0.2/pidgin/plugins/Makefile.am	2007-07-18 15:09:44.000000000 -0400
+diff -ru pidgin-2.2.0.orig/pidgin/plugins/Makefile.am pidgin-2.2.0/pidgin/plugins/Makefile.am
+--- pidgin-2.2.0.orig/pidgin/plugins/Makefile.am	2007-08-27 22:35:01.000000000 -0400
++++ pidgin-2.2.0/pidgin/plugins/Makefile.am	2007-09-26 14:03:48.000000000 -0400
 @@ -1,4 +1,4 @@
 -DIST_SUBDIRS = cap gestures gevolution musicmessaging perl ticker
 +DIST_SUBDIRS = cap gestures gevolution grypt musicmessaging perl ticker
  
  if BUILD_GEVOLUTION
  GEVOLUTION_DIR = gevolution
-@@ -20,6 +20,7 @@
+@@ -24,6 +24,7 @@
  	$(CAP_DIR) \
- 	gestures \
+ 	$(GESTURE_DIR) \
  	$(GEVOLUTION_DIR) \
 +	grypt \
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
  	ticker
-diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.in pidgin-2.0.2/pidgin/plugins/Makefile.in
---- pidgin-2.0.2.orig/pidgin/plugins/Makefile.in	2007-06-14 23:13:40.000000000 -0400
-+++ pidgin-2.0.2/pidgin/plugins/Makefile.in	2007-07-18 15:10:18.000000000 -0400
-@@ -507,7 +507,7 @@
+diff -ru pidgin-2.2.0.orig/pidgin/plugins/Makefile.in pidgin-2.2.0/pidgin/plugins/Makefile.in
+--- pidgin-2.2.0.orig/pidgin/plugins/Makefile.in	2007-09-14 03:31:36.000000000 -0400
++++ pidgin-2.2.0/pidgin/plugins/Makefile.in	2007-09-26 14:03:48.000000000 -0400
+@@ -524,7 +524,7 @@
  target_cpu = @target_cpu@
  target_os = @target_os@
  target_vendor = @target_vendor@
@@ -203,17 +201,17 @@ diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.in pidgin-2.0.2/pidgin/plugin
  @BUILD_GEVOLUTION_TRUE@GEVOLUTION_DIR = gevolution
  @ENABLE_DBUS_TRUE@MUSICMESSAGING_DIR = musicmessaging
  @ENABLE_CAP_TRUE@CAP_DIR = cap
-@@ -516,6 +516,7 @@
+@@ -534,6 +534,7 @@
  	$(CAP_DIR) \
- 	gestures \
+ 	$(GESTURE_DIR) \
  	$(GEVOLUTION_DIR) \
 +	grypt \
  	$(MUSICMESSAGING_DIR) \
  	$(PERL_DIR) \
  	ticker
-diff -ru pidgin-2.0.2.orig/pidgin/plugins/Makefile.mingw pidgin-2.0.2/pidgin/plugins/Makefile.mingw
---- pidgin-2.0.2.orig/pidgin/plugins/Makefile.mingw	2007-06-14 23:12:08.000000000 -0400
-+++ pidgin-2.0.2/pidgin/plugins/Makefile.mingw	2007-07-18 15:11:51.000000000 -0400
+diff -ru pidgin-2.2.0.orig/pidgin/plugins/Makefile.mingw pidgin-2.2.0/pidgin/plugins/Makefile.mingw
+--- pidgin-2.2.0.orig/pidgin/plugins/Makefile.mingw	2007-06-12 02:13:03.000000000 -0400
++++ pidgin-2.2.0/pidgin/plugins/Makefile.mingw	2007-09-26 14:03:48.000000000 -0400
 @@ -9,6 +9,7 @@
  
  GTKPERL_PLUGIN := ./perl
